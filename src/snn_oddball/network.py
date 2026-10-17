@@ -37,9 +37,15 @@ except Exception:  # pragma: no cover
 b2.prefs.codegen.cpp.extra_compile_args_gcc = ["-O2"]
 
 
-def lif_equations(noise: bool) -> str:
-    """Membrane equation shared by E and I cells (and by the analytic-rate unit test)."""
+def lif_equations(noise: bool, extra: str = "", drive_extra: str = "") -> str:
+    """Membrane equation shared by E and I cells (and by the analytic-rate unit test).
+
+    `extra` appends further state-variable lines and `drive_extra` adds a voltage term to the drive; both
+    default to empty, which gives exactly the equations used in Experiment 1.
+    """
     drive = "E_L - v + Ie - Ii + I_ext - w"
+    if drive_extra:
+        drive += " + " + drive_extra
     if noise:
         drive += " + sigma_noise*sqrt(2*tau_m)*xi"
     return f"""
@@ -48,6 +54,7 @@ def lif_equations(noise: bool) -> str:
     dIi/dt = -Ii/tau_i : volt
     dw/dt = -w/tau_w : volt
     I_ext : volt (constant)
+    {extra}
     """
 
 
@@ -59,11 +66,16 @@ def lif_namespace(p: NetworkParams, sfa_b_mV: float = 0.0) -> dict:
     )
 
 
-def make_lif_group(n, p: NetworkParams, noise: bool, sfa_b_mV: float = 0.0, name="lif"):
+def make_lif_group(n, p: NetworkParams, noise: bool, sfa_b_mV: float = 0.0, name="lif", extra="",
+                   extra_ns=None, reset_extra="", drive_extra=""):
     """A NeuronGroup of LIF cells. Used by the network and by the analytic-rate unit test."""
+    ns = lif_namespace(p, sfa_b_mV)
+    if extra_ns:
+        ns.update(extra_ns)
+    reset = "v = V_reset; w += sfa_b" + (("; " + reset_extra) if reset_extra else "")
     g = b2.NeuronGroup(
-        n, lif_equations(noise), threshold="v > V_th", reset="v = V_reset; w += sfa_b",
-        refractory=p.t_ref_ms * ms, method="euler", namespace=lif_namespace(p, sfa_b_mV), name=name)
+        n, lif_equations(noise, extra, drive_extra), threshold="v > V_th", reset=reset,
+        refractory=p.t_ref_ms * ms, method="euler", namespace=ns, name=name)
     g.v = p.V_reset_mV * mV
     return g
 
