@@ -137,3 +137,27 @@ transitions, and should fail omission unless a timing component is added.
   (0-100 ms, 100 ms baseline) unless the user prefers Parras's. Needs a decision: **default to Parras's
   windows** for comparability.
 - Doubt 4 (matched 10% probability) is now supported by the source.
+
+---
+
+## Mechanism A, revised by the user (2026-10-17)
+
+Corrections to the earlier rough description:
+- Learned transitions **add to** the old expectation; they do not replace it.
+- An "expectation" can be a **pattern or series**, not a single tone (needs a multi-tone sequence memory).
+- Hypothesis to test **first** (A2): on a mismatch the network does **not** form a new prediction directly.
+  It enters a **blank, labile state**: the previous expectation is still faintly remembered, no new
+  prediction can form, activity is high, any input is strongly amplified, and connection formation is
+  strong. The **next input**, together with the previous expectation and the oddball, is used to form the
+  new prediction.
+- **A1** (direct re-prediction, from the earlier description) is kept as a comparison.
+- Wiring and parameters: no user preference. Choose once, document, do not tune to results.
+
+Predictions recorded in advance (testable signatures, to be confirmed or refuted):
+1. The tone immediately after an oddball is amplified under A2 (adaptation alone predicts no such effect).
+2. One-shot learning: after the sequence old-pattern, oddball, next tone has occurred once, a repeat of it
+   is predicted and gives a smaller response.
+3. The sensitised state decays if no input arrives (decay constant chosen once, not tuned).
+
+Open question for the user: should the blank state also start after an **omission** (expected tone absent),
+or only after a wrong tone? Omission detection itself still needs a timing-driven expectation signal.
