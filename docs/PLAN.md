@@ -125,3 +125,15 @@ Open questions before implementation (asked of the user):
 
 Prediction recorded in advance: A should pass ABABAA only if it learns
 transitions, and should fail omission unless a timing component is added.
+
+---
+
+## Update 2026-10-17: Parras 2017 read
+
+- Normalisation resolved: Euclidean norm of (DEV, STD, CTR) per tone, then iMM = DEV-STD,
+  iRS = CTR-STD, iPE = DEV-CTR (all in [-1, 1]). Report these *and* the raw-difference version.
+- Oddball in the source is 90/10, isochronous (about 250-333 ms), 400 tones, 10 tones, 40 presentations
+  of the target per sequence. Response window 0-180 ms, baseline 75 ms. We keep our own windows
+  (0-100 ms, 100 ms baseline) unless the user prefers Parras's. Needs a decision: **default to Parras's
+  windows** for comparability.
+- Doubt 4 (matched 10% probability) is now supported by the source.

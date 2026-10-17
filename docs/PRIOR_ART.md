@@ -4,8 +4,7 @@ Status: **DRAFT, partly upgraded to full text (2026-10-17).** No modelling has b
 
 Update: the user added PDFs to `docs/`. Wacongne 2012 and Carbajal & Malmierca 2018 were read in
 full (entries 1 and 3). Yarden & Nelken 2017 is present but not yet read (entry 7). The Ruhnau 2012
-file is a saved web page with the abstract and introduction only (entry 4). **Parras 2017 is still
-missing.** Three uploaded files are unrelated to this project (see the end of this file).
+file is a saved web page with the abstract and introduction only (entry 4). **Parras 2017 was added later and read (entry 2).** Three uploaded files are unrelated to this project (see the end of this file).
 
 ## How this file was produced, and what that means for trust
 
@@ -103,40 +102,67 @@ the last pages of the Discussion and the references were not read closely).
 
 ## 2. Parras, Nieto-Diego, Carbajal, Valdés-Baizabal, Escera & Malmierca (2017), *Nat Commun* 8:2148
 
-"Neurons along the auditory pathway exhibit a hierarchical organization of
-prediction error." DOI 10.1038/s41467-017-02038-6. PMID 29247159, PMC5732270.
+"Neurons along the auditory pathway exhibit a hierarchical organization of prediction error."
+DOI 10.1038/s41467-017-02038-6. File: `docs/papers/parras2017.pdf` (local only, not in git).
 
-**Verification: ABSTRACT** for the main claims; **SECONDARY** for the index
-definitions (taken from later papers that use the same method).
+**Verification: FULL** (Results, Table 1, Methods "Experimental design" and "Statistical analysis" read;
+the Discussion and the supplementary figures were not read closely).
 
-**Note: this is an empirical study, not a review.** The brief calls it "the
-review by Parras et al. (2017)". The review by the same group that sets out
-the methodology is probably Carbajal & Malmierca (2018), entry 3. I have kept
-both. Please confirm which one you meant.
+**This is an empirical study, not a review.** The review of the same method is entry 3.
 
-What the abstract-level sources state:
-- Single-unit recordings in anaesthetised rats and awake mice, with sequences
-  designed to separate prediction error from repetition suppression.
-- Prediction-error signals are organised hierarchically. They are present in
-  the inferior colliculus and medial geniculate body and grow towards auditory
-  cortex (and from lemniscal to non-lemniscal divisions).
-- The effects hold across species and across anaesthesia vs. wakefulness.
+### Design (Methods)
+- Single-neuron recordings: 210 neurons in anaesthetised rats (inferior colliculus, medial geniculate
+  body, auditory cortex; lemniscal and non-lemniscal divisions), confirmed in awake mice.
+- **10 tones** per neuron. Every sequence is **400 tones**, at a **constant** presentation rate:
+  **3 Hz for cortex, 4 Hz for IC and MGB** (SOA about 333 ms and 250 ms). No jitter.
+- **Oddball**: standard **90%**, deviant **10%** (pseudorandom). The first 10 tones are standards and at
+  least 3 standards precede each deviant. Ascending and descending versions.
+- **Many-standards**: the 10 tones in random order, each equally often, **"a single tone was never
+  repeated"**.
+- **Cascade**: the same 10 tones in ascending or descending order, compared with the matching
+  oddball direction.
+- In every condition the target tone is played **40 times** in 400 (same overall rate). The tone just
+  before a deviant is the same in the oddball and the cascade. Every tone serves as deviant, standard and
+  control for the same neuron.
+- Pauses of about 30 s between sequences; sequence order randomised.
 
-The control and decomposition methodology (**SECONDARY**: from later papers
-that apply the Parras et al. method; to verify):
-- Two controls: **many-standards** (the same 10 tones as the cascade, in
-  random order, each equiprobable) and **cascade** (the 10 tones in a regular
-  ascending or descending order). Later papers describe the cascade as an
-  improvement that controls for refractoriness *and* for the regularity of
-  the sequence.
-- Indices, computed on normalised responses (DEV, STD, CTR):
-  - iMM = DEV − STD (index of neuronal mismatch; analogous to the SSA index)
-  - iRS = CTR − STD (index of repetition suppression)
-  - iPE = DEV − CTR (index of prediction error)
-  - so iMM = iRS + iPE, and each index lies in [−1, 1].
-- **Not yet verified:** the exact normalisation (I have not seen the
-  formula), the oddball deviant probability they used, and their SOA. I will
-  not guess these.
+### Measures and indices (Methods and Results)
+- Response = area under the smoothed spike-density curve above baseline, **0-180 ms** after onset
+  ("baseline-corrected spike count"). Baseline = mean rate in the **75 ms before onset**. Only the **last
+  standard before each deviant** is analysed. Only excitatory responses are analysed.
+- **Normalisation**: Euclidean norm per neuron-tone, N = sqrt(DEV² + STD² + CTR²). Each response is
+  divided by N, so normalised responses lie in 0-1.
+- **iMM = DEV - STD**, **iRS = CTR - STD**, **iPE = DEV - CTR**, all on normalised responses, each in
+  [-1, +1], and **iMM = iRS + iPE**. They state iMM is "quantitatively equivalent" to the usual SSA index
+  (shown in their Supplementary Fig. 2, not read). A normalised difference of this kind is **not**
+  numerically identical to (d - s)/(d + s), so we will report both and say which is which.
+- Results with cascade and many-standards controls were "largely comparable"; they report cascade.
+
+### Results (medians, rat, cascade control; Table 1)
+| Station | iMM | iRS | iPE |
+|---|---|---|---|
+| IC lemniscal | 0.14 | 0.22 | -0.08 |
+| IC non-lemniscal | 0.49 | 0.46 | 0.03 |
+| MGB lemniscal | 0.34 | 0.46 | -0.12 |
+| MGB non-lemniscal | 0.52 | 0.46 | 0.06 |
+| AC lemniscal | 0.50 | 0.39 | 0.11 |
+| AC non-lemniscal | 0.60 | 0.33 | 0.27 |
+
+- Most of the deviant-versus-standard difference in subcortical and lemniscal stations is repetition
+  suppression. Prediction error is near zero or negative there and grows toward cortex and toward
+  non-lemniscal divisions. They write that "prediction error accounted for around two thirds of the iMM"
+  in the strongest condition (this sentence sits next to a subset analysis; check the exact subset before
+  quoting).
+- Ascending deviants at low intensity show larger iPE.
+- A positive iPE is read as predictive activity. The authors also note limitations (not read in full).
+
+### What this means for our model
+- **The deviant probability is 10%**, not 20%, and the timing is **isochronous**. Both support the
+  matched 10% default and the fixed-interval primary design in `PLAN.md`.
+- A purely feedforward adaptation network should give iPE close to 0 (as seen at IC lemniscal) *if* the
+  control matches the refractory state. That is a testable reference, not a proven outcome.
+- The cell-level iPE here is a population-median effect. It does not show that omission or ABABAA
+  responses exist in those neurons. It is evidence about the oddball decomposition only.
 
 ## 3. Carbajal & Malmierca (2018), *Trends in Hearing* 22
 
@@ -280,7 +306,7 @@ protocols and its impairments in schizophrenia." bioRxiv
 | Test | Who frames it as beyond adaptation | Level | Our expectation for a feedforward adaptation-only net |
 |---|---|---|---|
 | Deviant > standard (oddball) | Not claimed to fail: May & Tiitinen, Mill et al. and Yarden & Nelken all produce SSA from adaptation | ABSTRACT | Pass |
-| Deviant > cascade control (iPE > 0) | Parras et al. report iPE > 0 in data, which a pure refractoriness account would not predict | ABSTRACT/SECONDARY | Unclear. To be measured, not assumed. |
+| Deviant > cascade control (iPE > 0) | Parras 2017: median iPE about 0 or negative in lemniscal IC and MGB, positive in cortex (0.11 lemniscal, 0.27 non-lemniscal) | FULL | Unclear. To be measured, not assumed. |
 | Omission response | Wacongne 2012 (model produces it from learned *predictive* currents, not from error). Eissa 2025 (needs rhythmic input). The claim that adaptation fails here is our own logical point, not stated in Wacongne 2012. | FULL / ABSTRACT | No input, so no evoked response. Null expected. |
 | Unexpected repeat in ABAB…AA | Wacongne 2012 (model produces it; paper says habituation predicts a *smaller* response; May & Tiitinen rescue it with higher-order pair-habituating neurons) | FULL | Expected fail. A feedforward adaptation net should respond *less* to the repeated A. |
 | Global context (local–global) | Wacongne 2012: its own model is **blind** to global regularities, as in Bekinschtein 2009 (AAAAB). Not a failure of adaptation. | FULL | Out of scope for Experiment 2 as specified. Noted only. |
