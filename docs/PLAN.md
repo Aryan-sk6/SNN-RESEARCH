@@ -92,3 +92,36 @@ experiment is run. Any later change is logged with its reason.
   Malmierca 2018, Ruhnau 2012 (optional: Eissa 2025, Mill 2011, Yarden &
   Nelken 2017). Prior art stays at ABSTRACT level until they are in
   `docs/papers/`.
+
+---
+
+## Mechanism A: rough description from the user (2026-10-17), NOT YET SPECIFIED
+
+User's description (pasted restatement, accepted as the rough idea):
+
+    Sensory input arrives -> does not match current prediction
+      -> MMN fires, carrying the sensory pattern that caused the mismatch
+      -> that combined signal is used immediately to form an updated expectation
+      -> the new expectation replaces the old one (instantly)
+      -> the next similar input is already expected
+    i.e. MMN = error signal + context carrier + re-prediction trigger in one
+    event; the mismatch spike burst carries the input pattern, which becomes
+    the new prediction template via STDP.
+
+Status: working label "input-carrying error with one-shot re-prediction".
+Making no novelty claim; whether the literature already contains this is
+unverified (see PRIOR_ART.md, Wacongne 2012 learns predictions with STDP).
+
+Open questions before implementation (asked of the user):
+1. Omission: the error carries sensory input, so with no input nothing fires.
+   As described, A is expected to fail omission by construction. Either report
+   that result, or add an input-free, timing-driven component (the fixed
+   interval rule). Which is intended?
+2. "Replace the old expectation" with the last tone would flag every tone in
+   ABAB as an error. Plan: learn transitions (after A expect B), one-shot,
+   from the surprising input. Needs confirmation.
+3. Learning rule, time constants and how the "payload" is wired are
+   unspecified. Will be chosen once, documented, and not tuned to results.
+
+Prediction recorded in advance: A should pass ABABAA only if it learns
+transitions, and should fail omission unless a timing component is added.
