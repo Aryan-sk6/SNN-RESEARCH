@@ -52,11 +52,12 @@ Key to status: **done** = run and reported, **running** = in progress, **planned
 | The introspective observations | One trained human; a hypothesis generator, not evidence | A behavioural/EEG study (a possible follow-up paper) |
 | Any claim about real brains or clinical use | This is a simplified toy model | Out of scope |
 
-## Novelty check (not done yet)
-For each Tier 2 and Tier 3 prediction, run a targeted literature search before the paper claims it is new,
-for example: post-deviant response enhancement; mismatch-triggered plasticity or "labile state" after
-errors; multiple-hypothesis or candidate-pattern accounts of the oddball; ideal-observer sequence models of
-auditory regularity. Until then the README says only "a variant I am testing".
+## Novelty check (first pass done 2026-10-17, see `docs/PRIOR_ART.md` entries 11-13)
+- "Surprise raises plasticity" has precedent (Barry & Gerstner 2024, Faraji et al. 2014, Yu & Dayan 2002 per
+  search summaries). Do not present it as new.
+- No exact hit for the post-oddball tone, the many-candidate state, or jitter-dependence of omission
+  responses, in single searches. Not proof of novelty; deeper searches still needed before claiming it.
+- The README keeps the wording "a variant I am testing" until then.
 
 ## Scope and honesty notes
 - Seventeen-plus experiments is a lot for one paper. A strong paper usually has a tight core. Suggested

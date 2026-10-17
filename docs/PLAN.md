@@ -260,3 +260,18 @@ does not discriminate between them.
 Unsettled, owner's decision: which definition(s) the model should implement as primary (current plan: both,
 as factor M6), and what quantity counts as "error" in the spiking network (spike count of an error
 population? summed current?).
+
+### Update: what counts as "error" in the network (2026-10-17; replaces the spikes-vs-current question, pending owner OK)
+The owner objected that neither spike count nor input current is what the brain treats as error. Search-level
+evidence (`docs/PRIOR_ART.md` entry 12): error is carried by **specific neurons**, in **two signs**, firing for
+a signed difference between predicted and actual activity, scaled by uncertainty. Proposed design for
+Mechanism A and for the readout:
+- Per channel k: a **positive-error population** (fires when input_k exceeds the prediction for k) and a
+  **negative-error population** (fires when the prediction for k exceeds the input: this is the omission
+  response). Each is a subtractive comparison (excitation from one source, inhibition from the other).
+- Uncertainty scales both: when many candidates are active (or the context is random) the error gain falls.
+- The measured quantity is the spike count of these populations (this is also what recordings measure), plus
+  the summed current for the scalp-like proxy. Probability-based definitions (E1, E2, surprise) become
+  analysis-side comparisons only.
+- Consequence for the random-context debate: a flat prediction spread over N channels gives each channel
+  a prediction of 1/N, so error is nonzero but is down-weighted by uncertainty. It is neither E1 nor E2 exactly.

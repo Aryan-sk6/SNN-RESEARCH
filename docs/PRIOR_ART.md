@@ -330,6 +330,67 @@ until each is retrieved and read.
 - Open issue in this literature: how much is genuine probabilistic prediction and how much is low-level
   adaptation. That is the question this repo asks in miniature.
 
+## 12. What the brain treats as a prediction error (search-level only, NOT read; added 2026-10-17)
+
+Provenance: web-search result summaries. None of these was opened in full. They are pointers, not citations.
+- **Error is carried by neurons, in two signs.** Two-photon imaging in mouse posterior parietal cortex
+  found separate positive and negative error neurons in layer 2/3 (stronger or weaker than expected
+  stimuli); positive error responses grew with stimulus variability while negative ones shrank
+  ([PMC12484734](https://pmc.ncbi.nlm.nih.gov/articles/PMC12484734/)). A preprint reports that the two signs
+  map onto transcriptionally distinct layer 2/3 cell types, and cautions that a mismatch response alone does
+  not prove a neuron is an error-coding cell
+  ([bioRxiv](https://www.biorxiv.org/content/10.1101/2022.07.20.500837v1.full)).
+- **Canonical proposal:** error in superficial (layer 2/3) pyramidal cells, predictions in deep-layer cells.
+  Reviews note the evidence is limited, that error units are hard to identify because the predictions are
+  unknown, and that some implementations use one neuron with a separate apical-dendrite compartment holding
+  the error instead of separate error neurons
+  ([review](https://arxiv.org/pdf/2107.12979)).
+- **Circuit implementation (theory):** in an uncertainty-modulated model, layer 2/3 cells represent positive
+  or negative error, SST interneurons do the **subtractive** comparison between prediction and input, and PV
+  interneurons act **divisively** in a variance-related way
+  ([eLife reviewed preprint](https://elifesciences.org/reviewed-preprints/95127v2/reviews)). A 2025 spiking
+  model with two-compartment pyramidal cells and PV, SST and VIP interneurons gets sign-specific errors with
+  fixed weights ([bioRxiv](https://www.biorxiv.org/content/10.1101/2025.11.01.686040v1.full)).
+- **Omission = negative error.** A 2025 PLOS Biology study found rat auditory-cortex neurons that respond to
+  omissions in a predictable sequence, growing with evidence ([PMC12212881](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12212881/)),
+  and a 2026 mouse study reports omission responses time-locked to the expected onset
+  ([DOAJ](https://doaj.org/article/6b3fff0f47fd4ed899cb44f4f9aae85e)). In rats they are reported largely absent
+  under anaesthesia ([ELSC summary](https://elsc.huji.ac.il/research-and-facilities/publications/paper-of-the-month/paper-of-the-month-august-2023-nelkens-lab)),
+  which matters for the anaesthetised Parras recordings.
+- A 2025 preprint, the "Duet" model, uses both positive and negative error neurons and reports that oddball
+  deviance detection depends on both ([bioRxiv](https://www.biorxiv.org/content/10.1101/2025.07.12.664417.full.pdf));
+  a review of omission models is [PMC8844463](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8844463/).
+Summary: the brain does not compute a probability difference; error appears as the **firing of specific
+neurons that carry a signed difference between predicted and actual activity**, scaled by uncertainty.
+
+## 13. Novelty check, first pass (search-level only; added 2026-10-17)
+
+One or two searches per idea. **Not finding something in a search is not evidence that it does not exist.**
+- **"Surprise increases plasticity" already exists.** Barry & Gerstner (PLOS Comput Biol, 2024 per the
+  search summary) present a spiking network in which a mismatch-derived surprise signal gates a three-factor
+  learning rule and raises plasticity after surprise
+  ([PMC10906910](https://pmc.ncbi.nlm.nih.gov/articles/PMC10906910)); Faraji, Preuschoff & Gerstner (2014) set
+  learning rates from surprise and uncertainty
+  ([PMC4125082](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4125082/)); Yu & Dayan (NeurIPS 2002) link
+  norepinephrine to unexpected uncertainty and learning-rate changes
+  ([paper](https://papers.neurips.cc/paper_files/paper/2002/file/758a06618c69880a6cee5314ee42d52f-Paper.pdf)).
+  So the "high-plasticity state after a mismatch" part of A2/A2b has precedent. Whatever is new has to be
+  in the specifics: the many-candidate sequence hypotheses, and their use for the oddball, omission and
+  post-oddball tone.
+- **Post-deviant tone:** no direct hit. Related, and about the *deviant's own* response, not the tone after
+  it: a study in awake freely moving rats reports deviant responses larger than control-condition responses
+  ([PMC5991388](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5991388/)); the same search also summarised a
+  mouse whole-cell study (source link not shown in the result) with a late component 200-400 ms after the tone
+  linked to deviance detection and MMN, and a proposed two-phase activation (adapted circuit reactivated,
+  then delayed reverberating activity). The field is divided on how much is true deviance detection vs
+  adaptation.
+- **Multi-candidate spiking model:** no exact match. Nearest: Wacongne 2012 and the Duet model above.
+- **Timing and omission:** omission responses are time-locked to the expected onset, but no search hit tested
+  jittered timing directly.
+- **Ideal-observer comparison, precision and uncertainty:** exists (entry 11).
+Net: the building blocks are published; a specific combination may still be new. Verify with deeper searches
+before writing "novel".
+
 ## Summary table: which tests is adaptation alone said to fail?
 
 | Test | Who frames it as beyond adaptation | Level | Our expectation for a feedforward adaptation-only net |
