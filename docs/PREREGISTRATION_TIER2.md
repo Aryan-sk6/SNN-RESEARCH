@@ -125,3 +125,14 @@ multiplier and all pass rules are **unchanged**. Re-calibration against the sani
    contains anticipatory negative-error spikes. The primary measure is unchanged; a secondary measure uses the 0-180 ms
    raw PE- count minus a quiet baseline (-250 to -175 ms). The v1 negative results (one-shot, buildup, no passing ablation
 subset) are reported as v1 results and are not erased.
+
+### v2 quick run (5 seeds, after fixes 1-7; no further changes before the full run)
+Results: `results/tier2_summary_quick.md`, `results/fig2_tier2_quick.png`. Headline (preliminary, 5 seeds): the unexpected
+repeat now passes for A1 (9.71 [1.42, 18.00]) and A2b (8.79 [1.05, 16.53]) but not for B (-1.31 [-8.96, 6.35]) or N0; omission
+**fails the pre-registered primary measure** for every network (A2b 3.03 [-2.15, 8.20]) but the anticipation-robust secondary
+measure shows a clear negative-error response for A1 (9.78 [1.56, 18.00]) and A2b (8.30 [2.60, 14.00]) versus about 2 at a
+present tone, and none for B; M1 (tone after the odd one) holds for A2b relative to N0 (10.57 [2.60, 18.54]) with the
+sensory-only part smaller (A2b 4.97 vs N0 1.93); the predicted order of drop-off (A after B > B after B > C after B) is not
+observed; one-shot learning, regularity buildup and the jitter dose-response are not supported; no ablation subset passes both
+tests; A2b's total error in a random context stays high (about 26 per slot) instead of falling. The full run uses the same
+code and constants as v2.
