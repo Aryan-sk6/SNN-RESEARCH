@@ -173,3 +173,62 @@ A2 blank, sensitised state). Consequences recorded in advance:
 - Prediction: under A2 the tone **after an omission** is sensitised, like the tone after an oddball.
 - Adaptation-only and the Wacongne-style replication (B) are unaffected: they get no such detector other
   than what B's own design contains.
+
+---
+
+## Added 2026-10-17: new measures for Experiment 2 (fixed before any Experiment 2 run)
+
+Hypotheses behind them are in `docs/THEORY_NOTES.md`. Every measure below is also taken on the
+**adaptation-only** network so it has a baseline.
+
+### M1. Post-oddball tone
+Sequence A A A A A **B** A A A A A (deviant B). The tone right after the deviant is excluded from the
+Experiment 1 analysis (as in Parras and Wacongne); here it is the object of study.
+- Measure: response to the first A after the B, compared with (i) the last A before the B and (ii) an A
+  several tones after the B.
+- Adaptation-only expectation: a small **rise** (B adds waiting time, so the A cells recover a bit), not a
+  large one. A2/A2b has to exceed that baseline.
+- A2/A2b prediction: a clear amplification beyond that baseline.
+
+### M2. Drop-off after the deviant
+Trial-by-trial response curve in the repeated run after the deviant, for three continuations:
+A A A A A B **A A A...**, A A A A A B **B B B...**, A A A A A B **C C C...**.
+- A2b prediction (from the owner): sharper drop-off for A-after-B than in the initial A run; steepness
+  ordered A after B > B after B > C after B.
+- Adaptation-only prediction: no special sharpening for A-after-B; C restarts a normal drop curve.
+- Also record the **initial** A-run curve. The adaptation functions in the model are exponential and
+  saturating (drop front-loaded, then flattening), not linear. Measured earlier for the repeated tone
+  (3 seeds, short probe): depression 22 -> 17 -> 16 spikes (about 85% of the fall by tones 2-3); spike-frequency
+  adaptation 24 -> 21 -> 23 (small). The full per-trial curve will be saved and plotted.
+
+### M3. Candidate-fit vs no-fit (A2b)
+After the deviant B, the next input is one of: the old tone A, the deviant again (B), a new tone C, or a
+tone outside any plausible candidate. Prediction: inputs that fit a candidate settle sooner (smaller or
+shorter response) than inputs that fit none (larger or longer response).
+
+### M4. Naive vs pre-trained network
+Run M1-M3 in an untrained network and in one pre-trained on varied sequences. Reported as a factor, with
+the pre-training protocol fixed first.
+
+---
+
+## Aryan is confused
+
+Separate from the plan above. Items the owner is unsure about, kept apart on purpose.
+
+### One-shot-learning test (what it is, and what is still unsettled)
+Show the network "old pattern, odd beep, next tone" exactly **once**. Wait a long silence (> 10 s, longer
+than any adaptation lasts; Wacongne et al. used > 10 s gaps for the same reason). Then show the pattern up to
+the odd beep again.
+- If it learned in one shot, the next tone should now be predicted: **smaller response** to it, or
+  **anticipatory activity** before it arrives.
+- Adaptation alone cannot fake this once the gap exceeds its time constants.
+
+Unsettled (needs the owner's decision before it is run):
+1. What counts as "learned": a smaller response to the next tone, anticipatory firing, or both?
+2. The silence must be longer than every adaptation time constant. How long is long enough? (> 10 s is
+   the starting proposal.)
+3. It needs a memory of the recent pattern, which the plain adaptation network does not have. Whether that
+   belongs inside Mechanism A or is a separate component is undecided.
+4. Compared with Wacongne's STDP model, which learns over many trials, "one shot" is a strong claim and may
+   fail. If it fails, that is reported as a result.
