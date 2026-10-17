@@ -69,3 +69,26 @@ experiment is run. Any later change is logged with its reason.
     The repo itself is not renamed.
 12. **Publishing.** I commit locally and won't push until you say so. Pushing
     publishes under your name.
+
+---
+
+## Decisions recorded 2026-10-17
+
+- **Defaults:** user replied "yes run it as that". Interpreted as approval of the
+  defaults in doubts 4-12 above. Not yet confirmed explicitly per item.
+- **Timing (user's rule):** A regular rhythm is required before a missed or
+  displaced tone can count as a prediction-error event. If successive
+  intervals vary arbitrarily, the next onset is not predictable and no error
+  should be expected.
+  - Primary Exp 2 runs (omission, ABABAA): **fixed interval**.
+  - Secondary run: **random intervals**, reported separately and labelled as
+    limited. It is never pooled with the fixed-interval result.
+  - Proposed addition (needs user OK): vary the number of regular intervals
+    before the omission/repeat (1, 2, 4, 8) to test the buildup idea.
+- **Mechanism A:** still not supplied. The timing remark above may be the
+  hypothesis, but that is unconfirmed. Mechanism A stays skipped until the user
+  describes it.
+- **Papers requested from user:** Parras 2017, Wacongne 2012, Carbajal &
+  Malmierca 2018, Ruhnau 2012 (optional: Eissa 2025, Mill 2011, Yarden &
+  Nelken 2017). Prior art stays at ABSTRACT level until they are in
+  `docs/papers/`.
