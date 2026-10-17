@@ -301,6 +301,35 @@ protocols and its impairments in schizophrenia." bioRxiv
   largely do not fit predictive coding. Date and DOI unverified, so
   **excluded from any claim** until verified.
 
+## 11. Random vs regular contexts and uncertainty (search-level only, NOT read; added 2026-10-17)
+
+Provenance: web-search result summaries only. No full text or even full abstract was read, authors are
+not all shown, and details below are what the search summaries said. Use as pointers, not as citations,
+until each is retrieved and read.
+- Deviants in patterned sequences gave larger EEG responses than the same deviants in random sequences, and
+  violations in a volatile, random context were considered less surprising
+  ([Enhanced deviant responses in patterned relative to random sound sequences](https://sciencedirect.com/science/article/pii/S0010945218302843?via=ihub%3D)).
+- A search summary attributes to Garrido, Sahani and Dolan (2013) MEG responses to probe tones that depended
+  on the mean and variance of the frequency context (larger in a low-variance context). Unverified.
+- Sustained and evoked responses can go in opposite directions: a 2024 MEG study reports a larger sustained
+  response for regular sequences and stronger single-tone evoked responses for random ones
+  ([J Neurosci 2024](https://www.jneurosci.org/content/44/14/e1894232024)).
+- Brain responses to complex acoustic patterns show ideal-observer-like sensitivity
+  ([PNAS](https://www.pnas.org/doi/10.1073/pnas.1508523113)). An ideal observer detects a regular-to-random
+  change at once but needs time to tell a real pattern from chance in the other direction
+  ([PMC2488380](https://pmc.ncbi.nlm.nih.gov/articles/PMC2488380),
+  [PMC6672364](https://pmc.ncbi.nlm.nih.gov/articles/PMC6672364)).
+- Reduced prediction-error responses in high-uncertainty musical contexts
+  ([Cortex](https://www.sciencedirect.com/science/article/abs/pii/S0010945219302412)); a caveat in the same
+  summary is that pitch-interval size and low-level adaptation may explain part of it.
+- Theory side: predictive-coding accounts say error is scaled by the **precision** of the prediction, so more
+  variable contexts give lower precision and smaller mismatch responses; precision and error are hard to
+  separate in the MMN ([editorial](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9069060/)). Acetylcholine
+  has been reported to raise the gain of prediction-error responses in rat auditory cortex (same search,
+  not verified).
+- Open issue in this literature: how much is genuine probabilistic prediction and how much is low-level
+  adaptation. That is the question this repo asks in miniature.
+
 ## Summary table: which tests is adaptation alone said to fail?
 
 | Test | Who frames it as beyond adaptation | Level | Our expectation for a feedforward adaptation-only net |

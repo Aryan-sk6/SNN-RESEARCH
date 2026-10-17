@@ -210,6 +210,16 @@ shorter response) than inputs that fit none (larger or longer response).
 Run M1-M3 in an untrained network and in one pre-trained on varied sequences. Reported as a factor, with
 the pre-training protocol fixed first.
 
+### M5. Continuations after the deviant: pattern, cycle, random (added 2026-10-17)
+After A A A A A **B**, continue with: (a) A A A... (old regime), (b) B B B... (new regime), (c) a cycle
+A B C A B C..., (d) a cycle A B C B A B C B..., (e) random tones. Record response vs position after the B and
+fit an exponential decay and its baseline. Owner's predictions: a C right after the B responds more strongly
+than an A; with continued randomness the response decays exponentially; short cycles should be learned
+(response falls faster than under (e)). Also measured: the baseline level reached under (e), compared with
+zero and with the response to a fresh tone (the owner expects zero; the Parras many-standards data suggest a
+non-zero constant, see `docs/THEORY_NOTES.md` section 8). All measures are repeated on the adaptation-only
+network.
+
 ---
 
 ## Aryan is confused
@@ -232,3 +242,12 @@ Unsettled (needs the owner's decision before it is run):
    belongs inside Mechanism A or is a separate component is undecided.
 4. Compared with Wacongne's STDP model, which learns over many trials, "one shot" is a strong claim and may
    fail. If it fails, that is reported as a result.
+
+### Does a random sequence give no prediction error? (logged as a question and as a theory)
+Owner's view: error is the difference between predicted and actual probabilities, so if all outcomes are
+equally likely there is no meaningful error. Assistant's reading: the absolute error stays constant and
+non-zero (1 - 1/N each event); what vanishes is the contrast between events. Real data (many-standards
+control larger than standard in Parras 2017) point away from zero; gain control by precision could also
+shrink responses. Unsettled: which of "constant non-zero error", "error down-weighted to about zero" or
+"decays to a fresh-tone baseline" the model should implement, and what quantity counts as "error" in the
+spiking network (spike count of an error population? summed current?). Decision needed from the owner.
