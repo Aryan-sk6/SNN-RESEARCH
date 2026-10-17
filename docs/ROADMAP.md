@@ -39,6 +39,7 @@ Key to status: **done** = run and reported, **running** = in progress, **planned
 | 18 | **Naive vs trained / development** | Network with no stored patterns vs pre-trained (M4), plus a learning-curve version: how much exposure before the mismatch response appears? Qualitative analogue of "newborn vs adult" only. | planned |
 | 19 | Slower spike-frequency adaptation (sensitivity) | Exp 1 shows it explains almost nothing at tau_w = 300 ms. Report it also at 1000 and 3000 ms, labelled exploratory | waiting for owner |
 | 20 | Fixed-interval oddball (Parras-style) | Comparability with Parras's isochronous design; additive to the cache | optional |
+| 22 | **Cue-triggered retrieval fades with predictability** (owner's note, `THEORY_NOTES.md` section 11) | If stored patterns are in the candidate set, the activation of the retrieved pattern should fall over repeated cue presentations when the cue is predicted, and recover when it is unexpected (dishabituation). Distinguishes the theory from a simple repetition count. | planned, extension (not paper 1) |
 | 21 | Global context (AAAAB) | Does A, like Wacongne's model, stay blind to the global rule, or does its sequence memory pick it up? | optional |
 
 ## Tier 4: stays open (cannot be tested in this repo)
@@ -49,6 +50,7 @@ Key to status: **done** = run and reported, **running** = in progress, **planned
 | Fetus inherits "training" from the mother via nerve connections | No developmental or maternal data exist in a toy network | Developmental neuroscience studies |
 | Real post-oddball sensitisation and real one-shot learning | A simulation shows a mechanism is sufficient, not that the brain uses it | Existing or new neural recordings (single-unit, MEG/EEG) |
 | E1 vs E2 as the brain's error rule | The model can implement both, but data are needed to choose | Recordings in random vs structured contexts with controls |
+| Human memory vividness (first recall vivid, second weaker) | Subjective vividness cannot be measured in a spiking toy network; only the mechanism analogue (item 22) can | Behavioural or neural experiments on people, with predictable vs unexpected re-exposure |
 | The introspective observations | One trained human; a hypothesis generator, not evidence | A behavioural/EEG study (a possible follow-up paper) |
 | Any claim about real brains or clinical use | This is a simplified toy model | Out of scope |
 
