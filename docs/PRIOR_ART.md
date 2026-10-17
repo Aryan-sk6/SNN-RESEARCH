@@ -1,6 +1,11 @@
 # Prior art: adaptation vs. prediction error in oddball paradigms
 
-Status: **DRAFT, incomplete, awaiting review.** No modelling has been done yet.
+Status: **DRAFT, partly upgraded to full text (2026-10-17).** No modelling has been done yet.
+
+Update: the user added PDFs to `docs/`. Wacongne 2012 and Carbajal & Malmierca 2018 were read in
+full (entries 1 and 3). Yarden & Nelken 2017 is present but not yet read (entry 7). The Ruhnau 2012
+file is a saved web page with the abstract and introduction only (entry 4). **Parras 2017 is still
+missing.** Three uploaded files are unrelated to this project (see the end of this file).
 
 ## How this file was produced, and what that means for trust
 
@@ -16,7 +21,7 @@ level:
 
 | Level | Meaning |
 |---|---|
-| **FULL** | Full text read, including methods. *(No entry has this level yet.)* |
+| **FULL** | Full text read, including methods. *(Entries 1 and 3.)* |
 | **ABSTRACT** | Bibliographic record and abstract-level claims seen in search results from the publisher, PubMed Central, or an institutional repository. Claims are limited to what the abstract says. |
 | **SECONDARY** | The claim was seen only in another paper's description of this work. Treat as unverified until promoted. |
 
@@ -32,49 +37,69 @@ hosts above or the PDFs placed in the repo by hand (see "What I need" at the end
 ## 1. Wacongne, Changeux & Dehaene (2012), *J Neurosci* 32(11):3665–3678
 
 "A Neuronal Model of Predictive Coding Accounting for the Mismatch Negativity."
-DOI 10.1523/JNEUROSCI.5003-11.2012. Open copies are listed at
-jneurosci.org, unicog.org and HAL (cea-00842907).
+DOI 10.1523/JNEUROSCI.5003-11.2012. File: `docs/3665.full.pdf`.
 
-**Verification: ABSTRACT** (plus some SECONDARY detail, marked).
+**Verification: FULL** (text extracted from the PDF and read: Methods, Results, start of Discussion;
+the last pages of the Discussion and the references were not read closely).
 
-What the abstract-level sources state:
-- They build a spiking network model **without synaptic habituation** that
-  implements predictive coding, and argue that the MMN reflects active
-  prediction rather than passive synaptic habituation.
-- They list the model's predictions: a frequency-dependent response to rare
-  deviants; **a response to unexpected repeats in alternating sequences
-  (ABABAA…)**; **a lack of sensitivity to the global sequence context**; **a
-  response to sound omission**; and sensitivity of the MMN to NMDA-receptor
-  antagonists.
-- They ran a new MEG experiment in healthy participants that they report
-  supports the prediction account.
-- On omission, a search summary of the full text says the authors state that the
-  omission response "does not have exactly the same computational significance
-  as the classic oddball MMN." *(SECONDARY: quoted in a search summary, not
-  checked against the PDF.)*
+### What the model is (Methods, p. 3666-3667)
+- Spiking network of **Izhikevich** neurons (not LIF), regular-spiking excitatory and fast-spiking
+  inhibitory. AMPA, NMDA and GABA synapses after Brunel & Wang (2001).
+- Per tone column: input (thalamic), **prediction-error** (layer 4) and **predictive**
+  (supragranular) populations, each of **40 neurons**, plus interneurons. A **delay-line memory**
+  per frequency (400 excitatory + 100 inhibitory neurons) holds the identity and elapsed time of
+  past tones; its trace "abruptly vanishes after 400 ms" by assumption.
+- Prediction-error neurons get excitation from the thalamus and inhibition (via interneurons)
+  from the predictive population. They fire when input is not cancelled. Their activity feeds
+  back to the predictive population.
+- **Only plasticity**: STDP (NMDA-dependent, plus a small depression on every presynaptic spike)
+  on synapses from memory neurons to predictive neurons. Parameters given: cp = 60, tau_p = 30 ms,
+  cd = 100, Th = 2.5. They write that the qualitative results were "largely independent of the
+  fine tuning of the parameters".
+- **No synaptic habituation**: "devoid of synaptic habituation".
+- Tone input: extra current 1.9 into the thalamic subpopulation. Noise currents on all populations.
+  Each condition on 5-10 freshly generated networks.
+- Their "MMN" is a **proxy**: difference in summed synaptic currents received by a layer (sMMN),
+  not a spike-count difference.
 
-Mechanism details, all **SECONDARY** and **not yet trustworthy enough to
-implement from**:
-- Layer-4 prediction-error activity = thalamic input minus a prediction
-  arriving from supragranular layers, with the sign flipped by inhibitory
-  interneurons.
-- Associations are learned with an NMDA-dependent STDP rule. One survey says
-  STDP shapes "memory neuron → prediction neuron" synapses and most other
-  weights are random.
-- One survey (Predictive Coding with Spiking Neural Networks: a Survey,
-  arXiv:2409.05386) says the network uses **Izhikevich neurons, not LIF**,
-  with an added NMDA current. This matters for the "replication"
-  (Mechanism B), which you asked to build from LIF neurons.
+### Paradigms simulated and what they show
+| Paradigm | Setup in the paper | Result they report |
+|---|---|---|
+| Oddball, deviant probability | 2000 tones, deviants 5/10/20/30%, **SOA 200 ms**, two non-overlapping tones | sMMN grows as deviants get rarer |
+| Alternation (ABABA...) | A and B alternate, **150 ms**; rare B replaced by A; 1500 alternating pairs in Methods (ISI 200 ms) | the unexpected repeat gives an sMMN: the network "learns to predict that after an A comes a B at 150 ms" |
+| Global context | 150 sequences of AAAAB, ISI 150 ms, 70% AAAAB, 20% AAAAA, 10% AAAA, SOA between sequences 1.2 s | final B still gives an MMN although the sequence is predictable: the model is blind to the global rule, as in Bekinschtein 2009 |
+| Omission | pairs AB, ISI 150 ms, pairs 500 ms apart; 10% omit B; compared with **A alone in a block where A is the only stimulus** | response to the missing B. The paper says this "reflects solely a predictive component and not a prediction error per se" and predicts it should resist NMDA blockade once transitions are learned |
+| Duration / ISI | 150 vs 200 ms sounds | "predictions that are focused in time fail to cancel incoming inputs that are shifted in time", so timing deviants also give a response |
 
-**Important nuance for Experiment 2.** In the abstract, "a lack of
-consideration of the global sequence context" is a prediction **of their
-own model**: a limitation they predict, not a test that adaptation fails.
-So the abstract-level evidence names **omission** and **ABABAA repeats** as
-the phenomena their model produces. It does **not**, at this level, say in so
-many words that "adaptation alone fails these tests". That is an inference
-from their framing (a model *without* habituation that explains them). I
-want to confirm the exact wording in the full text before the README says
-"adaptation alone is claimed to fail X".
+### What it says about adaptation / habituation
+- May & Tiitinen (2010) are cited as arguing synaptic habituation suffices. For the alternation
+  case the paper says May & Tiitinen explain it by **higher-order neurons habituating to the AB
+  pair as a whole**.
+- The alternation result is described as "counter-intuitive for habituation models": a simple
+  stimulus-specific habituation account predicts a **smaller** response to the repeated tone, not
+  a larger one.
+- Their own test: pairs AB 200 ms apart, **more than 10 s** between pairs, rare AA pairs. Habituation
+  predicts a reduced response to the second A; their model predicts an MMN. Five participants,
+  MEG, all showed the MMN-like effect; the BA vs BB controls showed no significant difference.
+  **Caveat:** n = 5 and the controls' trend is discussed by the authors themselves.
+- They state the two hypotheses "are not logically exclusive" and that habituation may contribute.
+  So the paper does **not** claim habituation is absent in real brains.
+- Not found in the paper: any statement that adaptation fails the omission test. That is **our**
+  logical point (no input, so no evoked response), plus the omission literature they cite.
+
+### Directly relevant to the user's timing point
+- Page 3671: the model "predicts that the MMN should reappear as soon as the temporal prediction
+  of B is made impossible, either by spacing the B presentations beyond the capacity of the memory
+  neurons, or by making B appear at irregular time intervals".
+- Caution: in this model a **change** of timing after a regular rhythm is itself an error (see the
+  duration/ISI row). Irregular timing removes the sharp prediction, but a sudden shift away from
+  an established rhythm still counts. This should be tested, not assumed.
+
+### Implications for Mechanism B (the replication)
+- A faithful replication needs Izhikevich neurons, NMDA synapses, a delay-line memory and STDP.
+  Our LIF network with 10 channels will be a **loose** replication. Every departure must be listed.
+- Their omission control is a *different block* (A alone), which differs from our plan to compare
+  omission with baseline. Both comparisons should be reported.
 
 ## 2. Parras, Nieto-Diego, Carbajal, Valdés-Baizabal, Escera & Malmierca (2017), *Nat Commun* 8:2148
 
@@ -115,28 +140,42 @@ that apply the Parras et al. method; to verify):
 
 ## 3. Carbajal & Malmierca (2018), *Trends in Hearing* 22
 
-"The Neuronal Basis of Predictive Coding Along the Auditory Pathway: From the
-Subcortical Roots to Cortical Deviance Detection." DOI
-10.1177/2331216518784822, PMC6053868. A review.
+"The Neuronal Basis of Predictive Coding Along the Auditory Pathway: From the Subcortical Roots to
+Cortical Deviance Detection." DOI 10.1177/2331216518784822. File: `docs/carbajal-malmierca-2018-...pdf`.
+A review.
 
-**Verification: ABSTRACT.**
-- Uses predictive coding to connect SSA and MMN research. Proposes splitting
-  deviance detection into **repetition suppression** and **prediction
-  error**, using the **many-standards** and **cascade** controls from MMN
-  research.
-- Describes gradients of increasing deviance detection from subcortical to
-  cortical stations and from lemniscal to non-lemniscal divisions. Also covers
-  neuromodulation and microcircuits.
-- Concludes that SSA and MMN are likely the micro- and macroscopic signs of
-  the same deviance-detection mechanism. Both are affected by NMDA-receptor
-  manipulation.
+**Verification: FULL for the control and decomposition logic (Figure 1 and the section on controls
+were read); the neurochemistry sections were not read.**
+- SSA is "quantified as the index of change in the firing rate of a neuron in response to a deviant
+  stimulus when compared with its response to that same stimulus played as a standard".
+- The oddball "confounds the effects of adaptation and expectation" (citing Ruhnau 2012).
+- A control must (1) not repeat the target tone, and (2) account for the general state of
+  refractoriness. A "deviant-alone" control (standards muted) is **not** a valid benchmark.
+- **Many-standards**: target tone in a random succession of several equiprobable tones, each with
+  "the same probability of appearance as the deviant of the oddball sequence". The paper warns it
+  "might be somewhat conservative" about prediction error, because random sequences may still
+  generate prediction error and so overestimate repetition suppression.
+- **Cascade**: control tones in an organised ascending or descending frequency succession; each
+  direction is compared with the matching oddball direction. It also controls cross-frequency
+  adaptation and pitch-glide effects.
+- Decomposition (Figure 1c caption): control minus standard = **repetition suppression**;
+  deviant minus control, "if positive", = **prediction error**.
+- Figure 5 caption: indices are computed from **normalised** responses, relative to the control
+  baseline. The normalisation formula is not given in this review.
+- Conclusion: SSA and MMN are likely micro and macro manifestations of one deviance-detection
+  mechanism.
+
+**This matters for our controls.** The many-standards definition fixes the control tone probability
+equal to the oddball **deviant probability**. So a 20% deviant calls for a control of five equiprobable
+tones, and a 10-tone cascade or many-standards sequence matches a 10% deviant. This supports the
+matched-probability default in `PLAN.md`.
 
 ## 4. Ruhnau, Herrmann & Schröger (2012), *Clin Neurophysiol* 123(3):507–512
 
 "Finding the right control: The mismatch negativity under investigation."
-DOI 10.1016/j.clinph.2011.07.035.
+DOI 10.1016/j.clinph.2011.07.035. File: `docs/Some paper.rtf` (a saved web page).
 
-**Verification: ABSTRACT.**
+**Verification: ABSTRACT** (the file holds the abstract, highlights and the start of the introduction only).
 - The standard-minus-deviant MMN subtraction can be biased by differences in
   N1 refractoriness. The earlier "random/equiprobable" control (attributed to
   Schröger & Wolff) is argued to *overestimate* the N1 to the deviant.
@@ -175,9 +214,9 @@ Markov Sequences." PMC3158038.
 ## 7. Yarden & Nelken (2017), *PLoS Comput Biol* 13(3):e1005437
 
 "Stimulus-specific adaptation in a recurrent network model of primary
-auditory cortex." PMC5367837.
+auditory cortex." PMC5367837. File: `docs/file-2.pdf` (received, not yet read).
 
-**Verification: ABSTRACT.**
+**Verification: ABSTRACT** (full text now available locally, still to be read).
 - Most earlier SSA models used depression in *feedforward* thalamocortical
   synapses. Here depression in *recurrent intracortical* synapses produces
   population spikes. SSA appears when deviants, but not standards, trigger
@@ -242,9 +281,9 @@ protocols and its impairments in schizophrenia." bioRxiv
 |---|---|---|---|
 | Deviant > standard (oddball) | Not claimed to fail: May & Tiitinen, Mill et al. and Yarden & Nelken all produce SSA from adaptation | ABSTRACT | Pass |
 | Deviant > cascade control (iPE > 0) | Parras et al. report iPE > 0 in data, which a pure refractoriness account would not predict | ABSTRACT/SECONDARY | Unclear. To be measured, not assumed. |
-| Omission response | Wacongne 2012 (model produces it), Eissa 2025 (needs rhythmic input), Heilbron & Chait (omission as a window) | ABSTRACT | No input, so no evoked response. Null expected. |
-| Unexpected repeat in ABAB…AA | Wacongne 2012 (model produces it) | ABSTRACT | Adaptation predicts the repeated A is *smaller*, not larger. Expected fail. |
-| Global context (local–global) | Wacongne 2011 data. Wacongne 2012 predicts its *own* model is blind to it. | ABSTRACT | Out of scope for Experiment 2 as specified. Noted only. |
+| Omission response | Wacongne 2012 (model produces it from learned *predictive* currents, not from error). Eissa 2025 (needs rhythmic input). The claim that adaptation fails here is our own logical point, not stated in Wacongne 2012. | FULL / ABSTRACT | No input, so no evoked response. Null expected. |
+| Unexpected repeat in ABAB…AA | Wacongne 2012 (model produces it; paper says habituation predicts a *smaller* response; May & Tiitinen rescue it with higher-order pair-habituating neurons) | FULL | Expected fail. A feedforward adaptation net should respond *less* to the repeated A. |
+| Global context (local–global) | Wacongne 2012: its own model is **blind** to global regularities, as in Bekinschtein 2009 (AAAAB). Not a failure of adaptation. | FULL | Out of scope for Experiment 2 as specified. Noted only. |
 
 ## Not included, and why
 
@@ -254,7 +293,13 @@ protocols and its impairments in schizophrenia." bioRxiv
 - The Garagnani, Lieder et al. and Schröger & Wolff original papers:
   mentioned only in passing in search results. Not retrieved, so left out.
 
-## What I need to finish Step 0 properly
+## Files uploaded that are not part of this project
+
+`docs/2025.01.15.633190v1.full.pdf` (an amygdala-cortex fear-memory preprint),
+`docs/2509.26507v1.pdf` (The Dragon Hatchling) and `docs/file.pdf` (Dynamic Phenotypic Clustering in
+Noisy Ecosystems) do not relate to oddball or SSA modelling and are **not used or cited**.
+
+## What I need to finish Step 0 properly (superseded, see top; kept for the record)
 
 1. Either allow these hosts in the environment's network settings
    (`www.jneurosci.org`, `www.unicog.org`, `pmc.ncbi.nlm.nih.gov`,
