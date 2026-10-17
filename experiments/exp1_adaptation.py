@@ -40,7 +40,7 @@ def configs(cfg):
     """(adapt, gap, p, with_controls) tuples."""
     out = [(a, MAIN["gap"], MAIN["p"], True) for a in cfg["main_adapts"]]
     for a in cfg["sweep_adapts"]:
-        out += [(a, g, MAIN["p"], False) for g in cfg["gaps"]]
+        out += [(a, g, MAIN["p"], True) for g in cfg["gaps"]]   # controls do not depend on the gap: reuse the p=0.1 blocks
         out += [(a, MAIN["gap"], p, p in (0.2,)) for p in cfg["ps"]]
     return out
 
@@ -154,20 +154,16 @@ def plot(summary, cfg, path):
              "iPE": ("D", "iPE  deviant - control")}
     for r, a in enumerate(main):
         for j, (k, (m, _)) in enumerate(marks.items()):
-            d = mk(a)[f"{k}_cascade_norm"]
-            pt(a_, d["mean"], dict(mean=r + (j - 1) * 0.22, lo=r + (j - 1) * 0.22, hi=r + (j - 1) * 0.22), COL[a])
-            if np.isfinite(d["lo"]):
-                a_.errorbar(d["mean"], r + (j - 1) * 0.22, xerr=[[d["mean"] - d["lo"]], [d["hi"] - d["mean"]]],
-                            color=COL[a], capsize=3, lw=1.4, fmt=m, ms=6)
-            else:
-                a_.plot(d["mean"], r + (j - 1) * 0.22, m, color=COL[a], ms=6)
+            d, y = mk(a)[f"{k}_cascade_norm"], r + (j - 1) * 0.22
+            xerr = [[d["mean"] - d["lo"]], [d["hi"] - d["mean"]]] if np.isfinite(d["lo"]) else None
+            a_.errorbar(d["mean"], y, xerr=xerr, color=COL[a], capsize=3, lw=1.4, fmt=m, ms=6)
     a_.axvline(0, color="#52514e", lw=0.8)
     a_.set_yticks(range(len(main))); a_.set_yticklabels([NAME[a].replace(" ", "\n", 1) for a in main], fontsize=8)
     a_.invert_yaxis(); a_.set_xlabel("normalised index (cascade control)")
     a_.set_title("b  Decomposition: iMM = iRS + iPE")
     for k, (m, lab) in marks.items():
         a_.plot([], [], m, color="#52514e", ms=6, label=lab)
-    a_.legend(frameon=False, fontsize=7.5, loc="lower right")
+    a_.legend(frameon=False, fontsize=7.5, loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=1)
 
     # (c) omission
     a_ = ax[0, 2]
