@@ -37,7 +37,7 @@ hosts above or the PDFs placed in the repo by hand (see "What I need" at the end
 ## 1. Wacongne, Changeux & Dehaene (2012), *J Neurosci* 32(11):3665–3678
 
 "A Neuronal Model of Predictive Coding Accounting for the Mismatch Negativity."
-DOI 10.1523/JNEUROSCI.5003-11.2012. File: `docs/3665.full.pdf`.
+DOI 10.1523/JNEUROSCI.5003-11.2012. File: `docs/papers/wacongne2012.pdf` (local only, not in git).
 
 **Verification: FULL** (text extracted from the PDF and read: Methods, Results, start of Discussion;
 the last pages of the Discussion and the references were not read closely).
@@ -141,7 +141,7 @@ that apply the Parras et al. method; to verify):
 ## 3. Carbajal & Malmierca (2018), *Trends in Hearing* 22
 
 "The Neuronal Basis of Predictive Coding Along the Auditory Pathway: From the Subcortical Roots to
-Cortical Deviance Detection." DOI 10.1177/2331216518784822. File: `docs/carbajal-malmierca-2018-...pdf`.
+Cortical Deviance Detection." DOI 10.1177/2331216518784822. File: `docs/papers/carbajal_malmierca2018.pdf` (local only).
 A review.
 
 **Verification: FULL for the control and decomposition logic (Figure 1 and the section on controls
@@ -173,7 +173,7 @@ matched-probability default in `PLAN.md`.
 ## 4. Ruhnau, Herrmann & Schröger (2012), *Clin Neurophysiol* 123(3):507–512
 
 "Finding the right control: The mismatch negativity under investigation."
-DOI 10.1016/j.clinph.2011.07.035. File: `docs/Some paper.rtf` (a saved web page).
+DOI 10.1016/j.clinph.2011.07.035. File: `docs/papers/ruhnau2012_webpage.rtf` (local only) (a saved web page).
 
 **Verification: ABSTRACT** (the file holds the abstract, highlights and the start of the introduction only).
 - The standard-minus-deviant MMN subtraction can be biased by differences in
@@ -214,7 +214,7 @@ Markov Sequences." PMC3158038.
 ## 7. Yarden & Nelken (2017), *PLoS Comput Biol* 13(3):e1005437
 
 "Stimulus-specific adaptation in a recurrent network model of primary
-auditory cortex." PMC5367837. File: `docs/file-2.pdf` (received, not yet read).
+auditory cortex." PMC5367837. File: `docs/papers/yarden_nelken2017.pdf` (local only) (received, not yet read).
 
 **Verification: ABSTRACT** (full text now available locally, still to be read).
 - Most earlier SSA models used depression in *feedforward* thalamocortical
@@ -293,11 +293,12 @@ protocols and its impairments in schizophrenia." bioRxiv
 - The Garagnani, Lieder et al. and Schröger & Wolff original papers:
   mentioned only in passing in search results. Not retrieved, so left out.
 
-## Files uploaded that are not part of this project
+## Uploaded files that were removed
 
-`docs/2025.01.15.633190v1.full.pdf` (an amygdala-cortex fear-memory preprint),
-`docs/2509.26507v1.pdf` (The Dragon Hatchling) and `docs/file.pdf` (Dynamic Phenotypic Clustering in
-Noisy Ecosystems) do not relate to oddball or SSA modelling and are **not used or cited**.
+Three uploaded PDFs unrelated to this project (an amygdala-cortex fear-memory preprint, "The Dragon
+Hatchling", and an ecosystems paper) were deleted from the repo at the owner's request. They were
+never used or cited. The relevant papers are kept locally in `docs/papers/`, which is git-ignored.
+Note: the PDFs remain in the git history of commit `5700556` on branch `step0-prior-art`.
 
 ## What I need to finish Step 0 properly (superseded, see top; kept for the record)
 
