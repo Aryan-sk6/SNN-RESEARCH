@@ -40,6 +40,9 @@ Key to status: **done** = run and reported, **running** = in progress, **planned
 | 19 | Slower spike-frequency adaptation (sensitivity) | Exp 1 shows it explains almost nothing at tau_w = 300 ms. Report it also at 1000 and 3000 ms, labelled exploratory | waiting for owner |
 | 20 | Fixed-interval oddball (Parras-style) | Comparability with Parras's isochronous design; additive to the cache | optional |
 | 22 | **Cue-triggered retrieval fades with predictability** (owner's note, `THEORY_NOTES.md` section 11) | If stored patterns are in the candidate set, the activation of the retrieved pattern should fall over repeated cue presentations when the cue is predicted, and recover when it is unexpected (dishabituation). Distinguishes the theory from a simple repetition count. | planned, extension (not paper 1) |
+| 23 | **Leak threshold** (merges with 22) | Two linked sequences S1 (thought) and S2 (memory). Activation of S2 by S1 should be strong on the first strong, surprising presentation of S1 and vanish with repetition as adaptation lowers the drive; restore it by making S1 unexpected again. Adaptation-only vs surprise-gated. | planned, extension |
+| 24 | **Memory-guided learning order: H-a vs H-b** | Implement both orderings (learn then trigger, trigger then learn). Block memory reactivation during learning: H-b predicts slower learning of the new sequence, H-a does not. | planned, extension |
+| 25 | **Foundational learning dose-response** | Trials needed to learn a new sequence that shares elements with 0, 1, 2, 4 pre-learned related sequences, vs the same amount of practice on unrelated sequences (generic-practice control); also measure interference. | planned, extension |
 | 21 | Global context (AAAAB) | Does A, like Wacongne's model, stay blind to the global rule, or does its sequence memory pick it up? | optional |
 
 ## Tier 4: stays open (cannot be tested in this repo)
@@ -50,6 +53,7 @@ Key to status: **done** = run and reported, **running** = in progress, **planned
 | Fetus inherits "training" from the mother via nerve connections | No developmental or maternal data exist in a toy network | Developmental neuroscience studies |
 | Real post-oddball sensitisation and real one-shot learning | A simulation shows a mechanism is sufficient, not that the brain uses it | Existing or new neural recordings (single-unit, MEG/EEG) |
 | E1 vs E2 as the brain's error rule | The model can implement both, but data are needed to choose | Recordings in random vs structured contexts with controls |
+| Single neurons as tokens; thoughts as sequences in real brains; foundational learning in humans | The model uses groups of cells per token and shows sufficiency of a mechanism only | Single-unit/assembly recordings; learning experiments in people with controlled prior knowledge |
 | Human memory vividness (first recall vivid, second weaker) | Subjective vividness cannot be measured in a spiking toy network; only the mechanism analogue (item 22) can | Behavioural or neural experiments on people, with predictable vs unexpected re-exposure |
 | The introspective observations | One trained human; a hypothesis generator, not evidence | A behavioural/EEG study (a possible follow-up paper) |
 | Any claim about real brains or clinical use | This is a simplified toy model | Out of scope |
