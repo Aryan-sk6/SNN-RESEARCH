@@ -105,3 +105,6 @@ NONE = Adaptation()
 SFA = Adaptation(sfa=True)
 STD = Adaptation(depression=True)
 BOTH = Adaptation(sfa=True, depression=True)
+
+
+ADAPT_BY_LABEL = {"none": NONE, "sfa": SFA, "std": STD, "both": BOTH}

@@ -40,12 +40,12 @@ sensitisation, "omission starts the mismatch").
 between). Measure R(A) on the repeated A versus the regular A (an A after a B), events at slots >= 80. Pass =
 repeated larger than regular per the rule. The adaptation-only expectation is *smaller*; a significantly smaller
 response is reported as the adaptation signature.
-**M1 Post-oddball tone.** Episodes: A x n_pre (n_pre uniform 5-8), one B, then A x 5, then 3 s of silence; 12 episodes.
+**M1 Post-oddball tone.** Episodes: A x n_pre (n_pre uniform 6-9), one B, then a continuation of 8 tones, then 3 s of silence (3 s is the gap before the next episode); 10 episodes.
 R of the first A after the B versus the last A before the B; difference compared between networks (difference of
 differences against N0). Prediction (owner, A2b): clearly larger than N0's small recovery rise. Pass = A2b minus N0
 satisfies the pass rule.
-**M2 Drop-off after the odd one.** Same episodes with continuation X x 5 where X = A, B or C (separate blocks).
-Per seed: slope of log(R) against position over positions 1-5 (log of R + 1 to avoid zero), after the B, and the
+**M2 Drop-off after the odd one.** Same episodes with continuation X x 8 where X = A, B or C (separate blocks).
+Per seed: slope of log(R + 1) against position over positions 1-5 after the B, and the
 same slope over positions 1-5 of the initial A run at the start of each episode. Prediction (owner, A2b): the slope
 (steeper = more negative) after the B is steeper than the initial A run, and the order of steepness is
 A after B > B after B > C after B. N0 is the baseline.
@@ -53,7 +53,7 @@ A after B > B after B > C after B. N0 is the baseline.
 at the first post-B position, for X = A (the earlier tone returns), B (repeats), C (new, fits only the generic
 "something new" candidate), and the gate level 1 s after the first post-B onset. Prediction (A2b): total error and gate are
 lower after A and B than after C. Reported for A2b only (N0 and B have no gate).
-**M5 Continuations.** Same episodes with continuations of length 12: (a) A (old regime), (b) B (new regime),
+**M5 Continuations.** Same episodes with continuations of length 8: (a) A (old regime), (b) B (new regime),
 (c) cycle C A B C A B..., (d) cycle C B A B ... (period 4), (e) random among {A,B,C,D}. R per position;
 exponential fit R(pos) = r_inf + (r_1 - r_inf) exp(-lambda (pos-1)) per seed (fits that fail are counted, never
 silently dropped); compare r_inf and lambda across continuation types and with N0 and B. Predictions (owner): C right
@@ -74,7 +74,7 @@ A2b; and the PE+ at the second pair as a fraction of the first.
 **Timing dose-response.** (i) Omission as T1 but with ISI jitter j in {0, 0.1, 0.3, 0.6} (ISI uniform 400 x (1 +/- j)),
 reported separately for each j, never pooled with the fixed-interval result. Prediction (owner): omission response
 shrinks as j grows. (ii) Regularity buildup: episodes of n regular tones then one omitted slot, n in {1,2,4,8},
-5 s silence between episodes, order randomised, 12 episodes per n. Prediction (owner): omission response rises
+5 s silence between episodes, order randomised, 6 episodes per n (reduced from 12 before any run, for compute). Prediction (owner): omission response rises
 with n. A control block checks whether a timing *shift* after a regular rhythm (one tone arriving 150 ms late) produces
 a response (Wacongne et al. predict yes).
 **Ablation (roadmap item 3).** For the T1 and T2 tests, all 12 valid subsets of {T, E, L, G, C} (G needs E and L, C needs

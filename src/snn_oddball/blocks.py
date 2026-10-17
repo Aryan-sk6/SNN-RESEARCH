@@ -27,6 +27,9 @@ def _rng(spec):
 
 
 def run_block(spec: dict) -> dict:
+    if spec.get("kind") == "pred":
+        from .tier2 import run_pred_block
+        return run_pred_block(spec)
     p = P.NetworkParams()
     adapt = ADAPT[spec["adapt"]]
     seed = int(spec["seed"])

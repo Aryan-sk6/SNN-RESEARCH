@@ -85,3 +85,49 @@ Tones are coded as 10 localist tonotopic channels (10 E cells per channel, overl
 deliberate simplification for pure-tone oddball experiments. It is **not** a claim about how concepts are
 represented; for the memory extensions the plan is sparse distributed overlapping ensembles
 (`docs/THEORY_NOTES.md` 12b).
+
+---
+
+# Predictive circuit and mechanism A (Tier 2; `src/snn_oddball/predictive.py`)
+
+All of the following are single a-priori or sanity-calibrated choices. **No value was set to make an omission,
+unexpected-repeat, M1-M6, one-shot or timing result come out a certain way.** Count of free constants of
+mechanism A on top of the core circuit: gate (`a_gate`, `g_max`, `tau_gate_ms`, `b_match`, `kappa_learn`, `k_gain`,
+`k_replace`), candidates (`c_rep_mV`, `c_old_mV`, `c_new_mV`, `w_trace_old_mV`, `tau_regime_ms`), Match cells (`w_match_mV`,
+and the 0.1 factor of E -> Match), about **13 constants** specific to A; the core circuit has about 25 more (shared by B and A).
+
+## Structure (per predictive channel A, B, C, D = channels 3, 6, 8, 1)
+| Item | Value |
+|---|---|
+| prediction cells P, error cells PE+ and PE- | 10 cells each |
+| delay line | 20 lags of 50 ms, 4 cells per lag (tapped delay: E spikes copied with a lag-specific delay, p = 0.5) |
+| no-timing control (T off) | one slow trace group of 5 cells per channel, synaptic decay 250 ms |
+| noise of predictive layers | 1.5 mV (the sensory layer keeps 6 mV) |
+| time step for all Tier 2 runs | **0.5 ms** (Experiment 1 used 0.25 ms; the adaptation-only baseline N0 is re-run at 0.5 ms for Tier 2) |
+| adaptation | both mechanisms on (condition `both`) in every Tier 2 network |
+
+## Sanity-calibrated values (calibration targets fixed before looking at any test)
+| Constant | Value | Calibration target |
+|---|---|---|
+| E -> delay cells weight 22 mV | each delay group fires about once per cell at its own lag, small timing jitter |
+| E -> PE+ 18 mV, P -> PE+ (inhibition) 30 mV, P -> PE- 16 mV, E -> PE- (inhibition) 40 mV | an unpredicted tone drives PE+ to about 60-100% of the sensory spike count; a predicted tone gives mostly no error cell firing; an omitted predicted tone drives PE- |
+| prediction weight bound 20 mV, slow learning rate 0.0004, LTD 0.002 per pre spike | the slow learner builds the right-lag weight over tens of exposures |
+| learning stops once P is itself active (`ptr_thr` 3 spikes within 100 ms) | prevents run-away potentiation while a prediction is already cancelling the error |
+| gate: +0.02 per PE+ spike, cap 2, decay 1500 ms, -0.15 per Match spike | peak about 1 after the first error; settles when predictions fit |
+| gated learning multiplier 3, sensitisation 0.5 per gate unit | gated learner reaches a cancelling prediction within about 3 exposures without large over-prediction (PE- at a present tone below 30% of the naive PE+) |
+| candidate drives 1.5 / 1.5 / 0.4 mV per gate unit | fixed a priori, not calibrated |
+
+## Calibration log
+| # | Change | Reason |
+|---|---|---|
+| 1 | E -> PE+ 2.5 -> 18 mV, E -> delay 4 -> 22 mV | first guesses were silent; error and delay cells did not reach threshold |
+| 2 | prediction weight bound 6 -> 20 mV, learning rate 0.004 -> 0.0004 | P cells could not fire; slow learner was too fast |
+| 3 | separated the four error-cell weights | predicted tone left PE- at 31 spikes (over-prediction mis-cancelled) |
+| 4 | gate +0.06 -> +0.02, cap 3 -> 2, multiplier 40 -> 3; added self-limiting learning | a single gated event saturated the weights and over-predicted |
+| 5 | merged synapse objects; time step 0.25 -> 0.5 ms | 2.4x faster, spike counts within 4% |
+
+## What is NOT claimed
+- B is not a faithful replication of Wacongne et al. (2012): their Izhikevich neurons, NMDA currents, 40/400/100-cell
+  populations and synfire-chain delay lines are replaced by LIF cells, smaller groups and a tapped delay line.
+- The delay line, the error populations and the candidate drives are designed structures; passing a test with them
+  shows sufficiency of a design in a toy network, not that a brain works this way.
