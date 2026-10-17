@@ -391,6 +391,31 @@ One or two searches per idea. **Not finding something in a search is not evidenc
 Net: the building blocks are published; a specific combination may still be new. Verify with deeper searches
 before writing "novel".
 
+## 14. How concepts are represented: distributed ensembles, sparse cells, overlap (search-level only; added 2026-10-17)
+
+Provenance: search summaries only, not opened in full. The owner also supplied a pasted explanation of population
+coding (links to a course page, a Medium post, a YouTube video and an MIT news item); those are **not** used as
+sources here. The pasted text says there are "two primary theories" but only describes the first.
+- **Both a distributed and a sparse picture have support.** Sparse, selective responses are reported in human
+  medial temporal lobe neurons, with the debate being whether they are single "concept" cells or a sparse
+  population code. A two-population model fits MTL data better than a single sparsity level, with a large majority of
+  neurons almost silent ([arXiv:1411.3917](https://arxiv.org/pdf/1411.3917),
+  [arXiv:1508.04241](https://ar5iv.arxiv.org/html/1508.04241)). A 7T fMRI thesis reports evidence for distributed
+  category representations ([Radboud thesis](https://theses.ubn.ru.nl/bitstreams/c919bbb0-b10b-4971-8952-a4f25fbc38b5/download));
+  the retrieved text was truncated. A cited caveat: the specificity of a neuron for a stimulus can never be proven
+  ([Reddy & Kanwisher](https://web-mit-edu.ezproxyberklee.flo.org/bcs/nklab/media/pdfs/Reddy.kanwisher.CON2006.pdf)).
+- **Linking by overlap.** A 2024 Nature Reviews Neuroscience review (per the summary) says memories formed close in
+  time recruit partly the same neurons, which links them while they stay separable, via different dendritic and
+  synaptic allocation ([engram linking review](https://read.qxmd.com/read/38664582/engram-mechanisms-of-memory-linking-and-identity)).
+  A recurrent-network model (Delamare, Tome, Clopath) reports overlaps in hippocampus and amygdala support
+  linking, with inhibition driving competition for allocation
+  ([paper](https://research-explorer.ista.ac.at/download/17092/17095/2024_JourNeuroscience_Delamare.pdf)).
+- **Too much overlap merges memories.** A review of shared concept cells and a FENS abstract on attractor models
+  say overlap supports associative recall only within a critical range; beyond it memories become inseparable
+  ([FENS abstract, not peer-reviewed](https://world-wide.org/fens-26/dynamic-attractor-model-overlapping-45c5d27d)).
+Relevance: overlap-based "leakage" between linked memories (`THEORY_NOTES.md` sections 11-12) is an established kind
+of mechanism; what is untested here is its interaction with adaptation and surprise.
+
 ## Summary table: which tests is adaptation alone said to fail?
 
 | Test | Who frames it as beyond adaptation | Level | Our expectation for a feedforward adaptation-only net |

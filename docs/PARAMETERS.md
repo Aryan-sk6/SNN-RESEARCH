@@ -79,3 +79,9 @@ Response = window count minus baseline count scaled by 180/75, mean over trials,
 | 3 | `w_ei` 2 -> 4 mV | I cells were silent | yes |
 | 4 | `tm_U` 0.3 -> 0.1 | with 0.3 the synapse is depleted inside a single 50 ms pulse (steady-state efficacy about 6%); the first tone's response fell to 16% of the unadapted value | yes |
 | 5 | bug fix: depression variable `x` initialised to 1 | Brian2 initialises to 0, so the first tone saw no input | yes |
+
+## Representation note (2026-10-17)
+Tones are coded as 10 localist tonotopic channels (10 E cells per channel, overlapping input tuning). This is a
+deliberate simplification for pure-tone oddball experiments. It is **not** a claim about how concepts are
+represented; for the memory extensions the plan is sparse distributed overlapping ensembles
+(`docs/THEORY_NOTES.md` 12b).
