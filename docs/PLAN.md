@@ -220,6 +220,13 @@ zero and with the response to a fresh tone (the owner expects zero; the Parras m
 non-zero constant, see `docs/THEORY_NOTES.md` section 8). All measures are repeated on the adaptation-only
 network.
 
+### M6. Error definition as a factor (added 2026-10-17)
+Implement the error readout of Mechanism A under two definitions and compare, with everything else fixed:
+E1 subtractive (error ~ input minus prediction, nonzero for a flat prediction) and E2 owner's
+(error ~ p(top prediction) - p(event), zero for a flat prediction). Predictions: under E2 a random context
+gives a zero error baseline and no contrast between tones; under E1 a constant above zero. Cross-check against
+Parras Table 1 (cascade vs many-standards, a weak hint only). Details: `docs/THEORY_NOTES.md` section 8b.
+
 ---
 
 ## Aryan is confused
@@ -244,10 +251,12 @@ Unsettled (needs the owner's decision before it is run):
    fail. If it fails, that is reported as a result.
 
 ### Does a random sequence give no prediction error? (logged as a question and as a theory)
-Owner's view: error is the difference between predicted and actual probabilities, so if all outcomes are
-equally likely there is no meaningful error. Assistant's reading: the absolute error stays constant and
-non-zero (1 - 1/N each event); what vanishes is the contrast between events. Real data (many-standards
-control larger than standard in Parras 2017) point away from zero; gain control by precision could also
-shrink responses. Unsettled: which of "constant non-zero error", "error down-weighted to about zero" or
-"decays to a fresh-tone baseline" the model should implement, and what quantity counts as "error" in the
-spiking network (spike count of an error population? summed current?). Decision needed from the owner.
+Owner's definition: error = p(most-expected event) - p(event that occurred). Under it a random (flat)
+prediction gives zero error for every event, so no contrast between events. The assistant had used
+error = 1 - p(event), which gives a constant non-zero error; both are valid definitions and they are now
+logged side by side with surprise (-log p) in `docs/THEORY_NOTES.md` section 8b. The assistant also withdrew
+an overreach: the many-standards-above-standard response in Parras 2017 is explained by adaptation alone and
+does not discriminate between them.
+Unsettled, owner's decision: which definition(s) the model should implement as primary (current plan: both,
+as factor M6), and what quantity counts as "error" in the spiking network (spike count of an error
+population? summed current?).
