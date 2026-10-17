@@ -161,3 +161,15 @@ Predictions recorded in advance (testable signatures, to be confirmed or refuted
 
 Open question for the user: should the blank state also start after an **omission** (expected tone absent),
 or only after a wrong tone? Omission detection itself still needs a timing-driven expectation signal.
+
+---
+
+## Decision 2026-10-17: omission starts the mismatch mechanism
+
+User confirmed: the "no input" omission case **should fire the mismatch mechanism** (and so start the
+A2 blank, sensitised state). Consequences recorded in advance:
+- Mechanism A needs an **input-free mismatch detector**: a timing-driven expectation that, at the expected
+  onset, compares "expected tone" with "no input". Its parameters are chosen once and documented.
+- Prediction: under A2 the tone **after an omission** is sensitised, like the tone after an oddball.
+- Adaptation-only and the Wacongne-style replication (B) are unaffected: they get no such detector other
+  than what B's own design contains.
