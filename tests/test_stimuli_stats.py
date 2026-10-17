@@ -60,3 +60,12 @@ def test_mean_ci_nan_handling():
     m1 = mean_ci([4.0])
     assert m1[0] == 4.0 and np.isnan(m1[1]) and np.isnan(m1[2])
     assert mean_ci([np.nan])[3] == 0
+
+
+def test_omission_sequence(rng):
+    seq = S.omission_sequence(6, 200, 0.2, 10, rng)
+    om = np.where(seq.tones == S.OMIT)[0]
+    assert len(om) == 40 and om.min() >= 10 and not np.any(np.diff(om) == 1)
+    assert np.all(seq.labels[om] == "omit") and len(seq.onsets_ms) == 200
+    with pytest.raises(ValueError):
+        S.omission_sequence(6, 200, 0.6, 10, rng)

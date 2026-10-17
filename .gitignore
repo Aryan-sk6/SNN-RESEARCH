@@ -6,3 +6,4 @@ __pycache__/
 .pytest_cache/
 # Brian2 compiled-code cache and large raw outputs
 results/raw/
+results/*.log

@@ -141,3 +141,33 @@ def repeat_tone(tone, n_trials, n_channels, rng, isi_ms=400.0, pulse_ms=50.0) ->
     """The same tone n times (used to test that adaptation lowers the response)."""
     _check_common(n_trials, n_channels, (tone,))
     return _build([tone] * n_trials, ["std"] * n_trials, isi_ms, pulse_ms, rng)
+
+
+def omission_sequence(tone, n_slots, p_omit, n_channels, rng, isi_ms=400.0, pulse_ms=50.0,
+                      first_present=10) -> Sequence:
+    """A repeated tone in which some slots are omitted (silent). Omitted slots keep their onset time
+    (a tone was due) but have tone == OMIT and label 'omit'. The first `first_present` slots are tones
+    and no two omissions are adjacent.
+    """
+    _check_common(n_slots, n_channels, (tone,))
+    if not 0.0 < p_omit < 0.5:
+        raise ValueError(f"p_omit must be in (0, 0.5), got {p_omit}")
+    n_om = int(round(p_omit * n_slots))
+    free = np.arange(first_present, n_slots)
+    if n_om < 1 or len(free) < 2 * n_om:
+        raise ValueError("cannot place that many non-adjacent omissions")
+    chosen = []
+    pool = list(free)
+    while len(chosen) < n_om:
+        k = int(rng.integers(len(pool)))
+        c = pool[k]
+        chosen.append(c)
+        pool = [x for x in pool if abs(x - c) > 1]
+        if not pool and len(chosen) < n_om:
+            raise ValueError("omission placement failed; lower p_omit")
+    tones = np.full(n_slots, tone, dtype=int)
+    labels = np.array(["std"] * n_slots, dtype=object)
+    for c in chosen:
+        tones[c] = OMIT
+        labels[c] = "omit"
+    return _build(tones, labels, isi_ms, pulse_ms, rng)
