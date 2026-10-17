@@ -189,13 +189,26 @@ def parts(res, p, pp, chan, onsets):
     return out
 
 
+def pem_raw(res, pp, chan, onsets, quiet=(-250.0, -175.0)):
+    """Anticipation-robust negative-error measures: raw PE- count in 0-180 ms, and the same minus a quiet
+    baseline (-250..-175 ms, i.e. 200-275 ms after the previous tone, before any predicted onset)."""
+    onsets = np.asarray(onsets, dtype=float)
+    if chan not in pp.pred_channels:
+        z = np.zeros(len(onsets)); return z, z
+    kk = list(pp.pred_channels).index(chan)
+    tt = np.sort(res.pem_t[(res.pem_idx // pp.n_pe) == kk])
+    raw = _cnt(tt, onsets, *WIN).astype(float)
+    scale = (WIN[1] - WIN[0]) / (quiet[1] - quiet[0])
+    return raw, raw - _cnt(tt, onsets, *quiet) * scale
+
+
 def total_error(res, onsets):
     onsets = np.asarray(onsets, dtype=float)
     tt = np.sort(np.concatenate([res.pep_t, res.pem_t]))
     return _cnt(tt, onsets, *WIN).astype(float)
 
 
-def pred_spikes(res, pp, chan, onsets, lo=-100.0, hi=0.0):
+def pred_spikes(res, pp, chan, onsets, lo=-100.0, hi=180.0):
     onsets = np.asarray(onsets, dtype=float)
     if chan not in pp.pred_channels:
         return np.zeros(len(onsets))
@@ -242,7 +255,9 @@ def run_omit(spec):
     return dict(n_omit=len(om), n_pres=len(pres), n_post=len(post),
                 **{f"omit_{k}": _mean(v) for k, v in po.items()}, **{f"pres_{k}": _mean(v) for k, v in pr.items()},
                 **{f"post_{k}": _mean(v) for k, v in pq.items()},
-                omit_P_pre=_mean(pred_spikes(res, pp, A_CH, ons[om])))
+                omit_P_pre=_mean(pred_spikes(res, pp, A_CH, ons[om])),
+                omit_PEm_raw=_mean(pem_raw(res, pp, A_CH, ons[om])[0]), omit_PEm_q=_mean(pem_raw(res, pp, A_CH, ons[om])[1]),
+                pres_PEm_q=_mean(pem_raw(res, pp, A_CH, ons[pres])[1]))
 
 
 def run_aba(spec):
@@ -270,6 +285,7 @@ def run_episodes(spec):
     out = {}
     out["R_init"] = [_mean([parts(res, p, pp, A_CH, ons[[meta["init"][e][k]]])["R"][0] for e in range(n_ep)]) for k in range(6)]
     out["R_pre1"] = _mean(resp(meta["pre1"]))
+    out["E_pre1"] = _mean([parts(res, p, pp, A_CH, ons[[i]])["E"][0] for i in meta["pre1"]])
     out["R_dev"] = _mean(resp(meta["dev"], lambda i: B_CH))
     out["R_post"], out["E_post"], out["err_post"], out["gate_post1_1s"] = [], [], [], None
     for k in range(m):

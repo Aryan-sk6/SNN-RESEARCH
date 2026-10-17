@@ -66,6 +66,7 @@ class PredParams:
     n_pe: int = 10                         # cells per error group
     n_d: int = 4                           # cells per delay group
     n_lags: int = 20                       # delay taps
+    min_lag: int = 4                       # taps below this lag (200 ms) do not predict: the tone's own response lasts ~180 ms
     lag_ms: float = 50.0                   # spacing of the taps
     n_match: int = 5
     n_trace: int = 5
@@ -277,6 +278,7 @@ def run_predictive(seq: Sequence, p: NetworkParams, adapt: Adaptation, mech: Mec
                 a, b = np.meshgrid(cells_E(kk), tcells(kk), indexing="ij")
                 ii.append(a.ravel()); jj.append(b.ravel())
             sED.connect(i=np.concatenate(ii), j=np.concatenate(jj))
+            sED.delay = pp.min_lag * pp.lag_ms * ms     # same causality rule as the delay line
             objs += [sED]
             n_src_per_k = 1
             src_cells = lambda kk, s: tcells(kk)
@@ -287,12 +289,14 @@ def run_predictive(seq: Sequence, p: NetworkParams, adapt: Adaptation, mech: Mec
         use_gate_learn = mech.G
         on_pre = "Ie_post += wp*mV\n wp = clip(wp - cd*(1 + k_rep*Gp_post*%s), 0, w_max)" % ("1" if mech.replace else "0")
         sDP = b2.Synapses(D, P, model="wp : 1", on_pre=on_pre, namespace=plastic_ns, name="sDP")
-        ii, jj = [], []
+        ii, jj, wlabels = [], [], []
         for kk in range(nk):
             for s in range(n_src_per_k):
+                if mech.T and s < pp.min_lag:
+                    continue                      # causality: no prediction from the tone's own response
                 for kd in range(nk):
                     a, b = np.meshgrid(src_cells(kk, s), pcells(kd), indexing="ij")
-                    ii.append(a.ravel()); jj.append(b.ravel())
+                    ii.append(a.ravel()); jj.append(b.ravel()); wlabels.append((kk, s, kd, a.size))
         sDP.connect(i=np.concatenate(ii), j=np.concatenate(jj))
         sDP.wp = pp.w_init
         if mech.L:
@@ -363,7 +367,7 @@ def run_predictive(seq: Sequence, p: NetworkParams, adapt: Adaptation, mech: Mec
                                        dict(w_old=pp.w_trace_old_mV * mV), "s_e_r", 0.5))
                 objs.append(conn_multi(R, P, [(rcells(k), pcells(k)) for k in range(nk)], "Ie_post += c_old*Gp_post", cns, "s_old", 0.5))
 
-        wmon = (sDP, n_src_per_k)
+        wmon = (sDP, n_src_per_k, wlabels)
 
     net = b2.Network(*objs)
     net.run(seq.duration_ms * ms)
@@ -380,11 +384,14 @@ def run_predictive(seq: Sequence, p: NetworkParams, adapt: Adaptation, mech: Mec
     else:
         g_t, g_val = np.array([]), np.array([])
     if wmon is not None:
-        sDP, nspk = wmon
+        sDP, nspk, wlabels = wmon
         w = np.asarray(sDP.wp[:])
-        # reshape mean weights as (source channel, lag, destination channel): same ordering as the connection loops
-        per = (len(w) // (nk * nspk * nk))
-        w_final = w.reshape(nk, nspk, nk, per).mean(axis=3)
+        # mean weight per (source channel, lag, destination channel); skipped lags stay 0
+        w_final = np.zeros((nk, nspk, nk))
+        pos = 0
+        for kk, s, kd, n_ in wlabels:
+            w_final[kk, s, kd] = w[pos:pos + n_].mean()
+            pos += n_
     else:
         w_final = np.zeros((nk, 1, nk))
     return PredResult(e_t, e_idx, pep_t, pep_idx, pem_t, pem_idx, p_t, p_idx, d_t, d_idx, g_t, g_val, w_final, chans,

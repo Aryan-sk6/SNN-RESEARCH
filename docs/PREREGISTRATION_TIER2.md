@@ -94,4 +94,34 @@ Roadmap items 13-26 (ideal observer, cycle length vs memory, context uncertainty
 leak and overlap) come after Tier 2.
 
 ## Change log after the first run
-(none yet)
+
+### v1 quick run (5 seeds, short sequences) and what it exposed
+The v1 quick results are archived in `results/archive/tier2_summary_quick_v1.*`. Headline (preliminary, 5 seeds): omission
+response was small (A2b 2.25 [0.35, 4.15] spikes, 13% of a tone; B and N0 about 0); unexpected repeat passed only for
+A1; one-shot learning, regularity buildup and jitter dose-response were not distinguishable from null; no ablation subset
+passed both tests; M1 (tone after the odd one) was reproduced by A2b **and** by B. Diagnosing why B's negative error was
+exactly zero showed the following **faults in my implementation, not changes to a hypothesis**:
+1. **Acausal self-prediction.** The delay cell at lag 0 (firing with the tone itself) was allowed to learn to predict
+   the same tone, giving a fake cancellation and weakening the true timed prediction, in every same-channel test
+   (omission, A-runs). Fix: delay lags below `min_lag = 2` (100 ms) do not connect to the prediction cells (and the T-off
+   trace is delayed by the same amount).
+2. **Wrong window for anticipatory activity.** Prediction spikes arrive after tone onset (response latency), so the
+   100 ms *before* onset missed them. Fix: window -100 to +180 ms around the expected onset (prediction cells have no
+   direct sensory drive, so this is still predictive activity).
+3. **Aggregation artifact:** for N0 (no error cells) the one-shot "first pair below half" read 1; now not applicable.
+4. **Measurement added:** sensory-only (E) response before the odd tone, so M1's sensitisation can be separated from
+   ordinary prediction error.
+Changes 1-2 were made after seeing the v1 quick results. They are corrections of implementation flaws found by
+inspecting learned weights, not adjustments of a threshold or a gate constant. Gate and candidate constants, the learning
+multiplier and all pass rules are **unchanged**. Re-calibration against the sanity targets was repeated on development seeds
+(100-104) and a different tone, never on the test seeds.
+5. **Causality margin:** the first fix (`min_lag` 2) was insufficient because the tone's own response lasts about 180 ms
+   and the lag-2 delay cell (100 ms) still overlapped it; the rule is now `min_lag = 4` (200 ms), derived from the
+   measurement window.
+6. **Fairness check added (not a change to any test):** the slow core B was trained for only 160 slots whereas Wacongne
+   et al. trained on about 1500 pairs. A *long-training* suite (600 slots, analysed from slot 400) is added for B and A2b for
+   omission and the unexpected repeat. It is reported alongside, not instead of, the pre-registered 160/200-slot tests.
+7. **Secondary omission measure:** because predictions start before the tone, the pre-registered baseline (75 ms before)
+   contains anticipatory negative-error spikes. The primary measure is unchanged; a secondary measure uses the 0-180 ms
+   raw PE- count minus a quiet baseline (-250 to -175 ms). The v1 negative results (one-shot, buildup, no passing ablation
+subset) are reported as v1 results and are not erased.

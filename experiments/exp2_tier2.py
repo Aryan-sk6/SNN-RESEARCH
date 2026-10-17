@@ -26,7 +26,7 @@ from snn_oddball import analysis as A                      # noqa: E402
 from snn_oddball.runner import run_specs, spec_key         # noqa: E402
 from snn_oddball.stats import mean_ci                      # noqa: E402
 
-SUITES = ["omit", "aba", "ep", "oneshot", "buildup", "jitter", "decomp", "random", "ablation", "robust"]
+SUITES = ["omit", "aba", "ep", "oneshot", "buildup", "jitter", "decomp", "random", "ablation", "robust", "long"]
 CONTS = ["A", "B", "C", "cycABC", "cycABCB", "random"]
 NETS_MAIN = ["N0", "B", "A1", "A2b"]
 NETS_3 = ["N0", "B", "A2b"]
@@ -38,9 +38,9 @@ NAME = {"N0": "adaptation only (N0)", "B": "slow predictive core (B)", "A1": "A1
 def settings(quick):
     if quick:
         return dict(seeds=5, omit=100, omit_from=40, aba=120, aba_from=50, n_ep=4, m=8, pairs=8, eps_per_n=3,
-                    decomp=100, random=100, jit=[0.3], robust_draws=10)
+                    decomp=100, random=100, jit=[0.3], robust_draws=10, long=300, long_from=200)
     return dict(seeds=20, omit=160, omit_from=60, aba=200, aba_from=80, n_ep=10, m=8, pairs=12, eps_per_n=6,
-                decomp=200, random=200, jit=[0.1, 0.3, 0.6], robust_draws=40)
+                decomp=200, random=200, jit=[0.1, 0.3, 0.6], robust_draws=40, long=600, long_from=400)
 
 
 def P(**kw):
@@ -111,6 +111,10 @@ def specs_for(suite, cfg, only_seed=None):
             for d in valid_subsets():
                 for ex, ns_, fr in (("omit", cfg["omit"], cfg["omit_from"]), ("aba", cfg["aba"], cfg["aba_from"])):
                     sp.append(P(exp=ex, net=mech_label(d), mech=dict(d), seed=s, n_slots=ns_, analyse_from=fr))
+        elif suite == "long":
+            for n in ("B", "A2b"):
+                sp.append(P(exp="omit", net=n, seed=s, n_slots=cfg["long"], analyse_from=cfg["long_from"]))
+                sp.append(P(exp="aba", net=n, seed=s, n_slots=cfg["long"], analyse_from=cfg["long_from"]))
         elif suite == "robust":
             pass
     if suite == "robust":
@@ -164,6 +168,7 @@ def agg_omit(cfg, get, jitter=None):
         out[n] = dict(omit_R=om, pres_R=pr, omit_PEm=ci([r["omit_PEm"] for r in rows]),
                       post_minus_pres=ci([r["post_R"] - r["pres_R"] for r in rows]),
                       P_pre=ci([r["omit_P_pre"] for r in rows]),
+                      PEm_q=ci([r["omit_PEm_q"] for r in rows]), PEm_q_pres=ci([r["pres_PEm_q"] for r in rows]),
                       pass_=passes(om, pr["mean"]), halfwidth_over_tone=((om["hi"] - om["lo"]) / 2 / pr["mean"]
                                                                        if pr["mean"] else np.nan))
     return out
@@ -187,6 +192,7 @@ def agg_ep(cfg, get):
             rows = [get(P(exp="ep", net=n, seed=s, cont=c, n_ep=cfg["n_ep"], m=cfg["m"])) for s in range(cfg["seeds"])]
             entry = dict(
                 m1=ci([r["R_post"][0] - r["R_pre1"] for r in rows]), pre1=ci([r["R_pre1"] for r in rows]),
+                m1_sensory=ci([r["E_post"][0] - r["E_pre1"] for r in rows]),
                 slope_post=ci([slope(r["R_post"]) for r in rows]), slope_init=ci([slope(r["R_init"]) for r in rows]),
                 slope_diff=ci([slope(r["R_post"]) - slope(r["R_init"]) for r in rows]),
                 err_post1=ci([r["err_post"][0] for r in rows]), gate_1s=ci([r["gate_post1_1s"] for r in rows]),
@@ -213,10 +219,14 @@ def agg_oneshot(cfg, get):
         first_below = []
         for r in rows:
             pe = np.asarray(r["PEp_B"], dtype=float)
-            hit = np.where(pe < 0.5 * max(pe[0], 1e-9))[0]
+            if pe[0] <= 0:                       # no positive error at the first pair (no error cells, or silent): undefined
+                first_below.append(np.nan)
+                continue
+            hit = np.where(pe < 0.5 * pe[0])[0]
             first_below.append(float(hit[0] + 1) if hit.size else float(len(pe) + 1))   # censored: n_pairs + 1
-        pe_curve = [ci([r["PEp_B"][k] / max(r["PEp_B"][0], 1e-9) for r in rows]) for k in range(cfg["pairs"])]
-        out[n] = dict(first_below_half=ci(first_below), frac_pair2=ci([r["PEp_B"][1] / max(r["PEp_B"][0], 1e-9) for r in rows]),
+        ratio = lambda k: [r["PEp_B"][k] / r["PEp_B"][0] if r["PEp_B"][0] > 0 else np.nan for r in rows]
+        pe_curve = [ci(ratio(k)) for k in range(cfg["pairs"])]
+        out[n] = dict(first_below_half=ci(first_below), frac_pair2=ci(ratio(1)),
                       curve=pe_curve, P_pre_late=ci([np.mean(r["P_pre"][4:]) for r in rows]),
                       P_pre_first=ci([r["P_pre"][0] for r in rows]))
     return out
@@ -294,7 +304,19 @@ def agg_robust(cfg, get):
                 note="per-draw single-seed pass uses the effect floor only (no CI possible with one seed per draw)")
 
 
-AGG = dict(omit=agg_omit, aba=agg_aba, ep=agg_ep, oneshot=agg_oneshot, buildup=agg_buildup, jitter=agg_jitter,
+def agg_long(cfg, get):
+    out = {}
+    for n in ("B", "A2b"):
+        om = [get(P(exp="omit", net=n, seed=s, n_slots=cfg["long"], analyse_from=cfg["long_from"])) for s in range(cfg["seeds"])]
+        ab = [get(P(exp="aba", net=n, seed=s, n_slots=cfg["long"], analyse_from=cfg["long_from"])) for s in range(cfg["seeds"])]
+        o, pr = ci([r["omit_R"] for r in om]), ci([r["pres_R"] for r in om])
+        a, rg = ci([r["rep_R"] - r["reg_R"] for r in ab]), ci([r["reg_R"] for r in ab])
+        out[n] = dict(omit=o, pres=pr, omit_PEm_q=ci([r["omit_PEm_q"] for r in om]), aba=a, reg=rg,
+                      pass_omit=passes(o, pr["mean"]), pass_aba=passes(a, rg["mean"]))
+    return out
+
+
+AGG = dict(long=agg_long, omit=agg_omit, aba=agg_aba, ep=agg_ep, oneshot=agg_oneshot, buildup=agg_buildup, jitter=agg_jitter,
            decomp=agg_decomp, random=agg_random, ablation=agg_ablation, robust=agg_robust)
 
 
@@ -401,20 +423,21 @@ def fmt(d):
 def table_md(S, cfg):
     L = [f"# Tier 2 summary ({cfg['seeds']} seeds)", "", "Mean [95% CI over seeds]; R = E + PE+ + PE- spikes in 0-180 ms, baseline-corrected.", ""]
     if "omit" in S:
-        L += ["## T1 omission", "", "| net | omitted slot R | tone present R | pass | CI half-width / tone | PE- at omission | post-omission tone minus tone |", "|---|---|---|---|---|---|---|"]
+        L += ["## T1 omission", "", "| net | omitted slot R | tone present R | pass | CI half-width / tone | PE- at omission | PE- at omission (quiet baseline) | PE- at present tone (quiet baseline) | post-omission tone minus tone |", "|---|---|---|---|---|---|---|---|---|"]
         for n in NETS_MAIN:
             d = S["omit"][n]
-            L.append(f"| {n} | {fmt(d['omit_R'])} | {fmt(d['pres_R'])} | {d['pass_']} | {d['halfwidth_over_tone']:.3f} | {fmt(d['omit_PEm'])} | {fmt(d['post_minus_pres'])} |")
+            L.append(f"| {n} | {fmt(d['omit_R'])} | {fmt(d['pres_R'])} | {d['pass_']} | {d['halfwidth_over_tone']:.3f} | {fmt(d['omit_PEm'])} | {fmt(d['PEm_q'])} | {fmt(d['PEm_q_pres'])} | {fmt(d['post_minus_pres'])} |")
     if "aba" in S:
         L += ["", "## T2 unexpected repeat (A B A B A A)", "", "| net | repeated minus regular | regular R | pass | adaptation signature (repeat smaller) |", "|---|---|---|---|---|"]
         for n in NETS_MAIN:
             d = S["aba"][n]
             L.append(f"| {n} | {fmt(d['diff'])} | {fmt(d['reg_R'])} | {d['pass_']} | {d['adaptation_signature']} |")
     if "ep" in S:
-        L += ["", "## M1 / M2 / M3 / M5 (episodes)", "", "| continuation | net | M1 post1 - pre1 | slope after B | slope initial run | total error post1 | gate 1 s after | r_inf | lambda | fit failures |", "|---|---|---|---|---|---|---|---|---|---|"]
+        L += ["", "## M1 / M2 / M3 / M5 (episodes)", "", "| continuation | net | M1 post1 - pre1 (E only: see M1 table) | slope after B | slope initial run | total error post1 | gate 1 s after | r_inf | lambda | fit failures |", "|---|---|---|---|---|---|---|---|---|---|"]
         for k, v in S["ep"].items():
             c, n = k.split("|")
             L.append(f"| {c} | {n} | {fmt(v['m1'])} | {fmt(v['slope_post'])} | {fmt(v['slope_init'])} | {fmt(v['err_post1'])} | {fmt(v['gate_1s'])} | {fmt(v['r_inf'])} | {fmt(v['lam'])} | {v['fit_failures']} |")
+        L += ["", "M1 sensory-only (E cells) post1 - pre1, continuation A: " + "; ".join(f"{n}: {fmt(S['ep'][f'A|{n}']['m1_sensory'])}" for n in ('N0', 'B', 'A1', 'A2b'))]
         L += ["", "M1 minus N0 (difference of differences): " + "; ".join(f"{c}/{n}: {fmt(S['ep'][f'{c}|{n}']['m1_minus_N0'])}" for c in ("A",) for n in ("B", "A2b"))]
     if "oneshot" in S:
         L += ["", "## One-shot", "", "| net | first pair with PE+ < half of pair 1 (censored at pairs+1) | PE+ pair 2 / pair 1 | P spikes before B, late pairs |", "|---|---|---|---|"]
@@ -447,6 +470,10 @@ def table_md(S, cfg):
                 continue
             L.append(f"| {k} | {fmt(v['omit'])} | {v['pass_omit']} | {fmt(v['aba'])} | {v['pass_aba']} |")
         L.append(f"\nSmallest subsets passing both: {S['ablation']['_smallest_passing_both']}")
+    if "long" in S:
+        L += ["", f"## Long training ({cfg['long']} slots, analysed from {cfg['long_from']}): fairness check for the slow core", "", "| net | omission R | PE- at omission (quiet baseline) | pass | repeat minus regular | pass |", "|---|---|---|---|---|---|"]
+        for n, d in S["long"].items():
+            L.append(f"| {n} | {fmt(d['omit'])} | {fmt(d['omit_PEm_q'])} | {d['pass_omit']} | {fmt(d['aba'])} | {d['pass_aba']} |")
     if "robust" in S:
         r = S["robust"]
         L += ["", "## Robustness (A2b, random constants)", "", f"{r['n_draws']} draws: omission {r['frac_omit']:.2f}, repeat {r['frac_aba']:.2f}, both {r['frac_both']:.2f}. {r['note']}"]
