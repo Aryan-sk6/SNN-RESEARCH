@@ -494,10 +494,21 @@ def main():
     tag = "quick" if args.quick else "full"
     suites = args.only or SUITES
     cache = ROOT / "results" / "raw" / f"tier2_{tag}"
-    specs = list({spec_key(s): s for su in suites for s in specs_for(su, cfg)}.values())
-    res = run_specs(specs, cache, jobs=0 if args.plot_only else args.jobs)
+    to_run = list({spec_key(s): s for su in suites for s in specs_for(su, cfg)}.values())
+    if not args.plot_only:
+        run_specs(to_run, cache, jobs=args.jobs)
+    # aggregate every suite whose blocks are all in the cache (so a partial run never overwrites a fuller summary)
+    res, done = {}, []
+    for su in SUITES:
+        keys = [spec_key(s) for s in specs_for(su, cfg)]
+        if all((cache / f"{k}.json").exists() for k in keys):
+            for k in keys:
+                if k not in res:
+                    res[k] = json.loads((cache / f"{k}.json").read_text())["result"]
+            done.append(su)
     get = lambda s: res[spec_key(s)]
-    S = {su: AGG[su](cfg, get) for su in suites}
+    S = {su: AGG[su](cfg, get) for su in done}
+    print(f"[tier2] suites complete: {done}; missing: {[s for s in SUITES if s not in done]}", flush=True)
     out = ROOT / "results"
     (out / f"tier2_summary_{tag}.json").write_text(json.dumps(dict(config=cfg, summary=S), indent=1, default=lambda o: bool(o) if isinstance(o, (np.bool_,)) else float(o)))
     (out / f"tier2_summary_{tag}.md").write_text(table_md(S, cfg))
