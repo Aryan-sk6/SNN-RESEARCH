@@ -25,3 +25,39 @@ is unchanged; the "both" condition therefore changes only through its adaptation
 - P-s3: A2b keeps a positive unexpected-repeat effect and a positive omission contrast. These could weaken because
   the network is not recalibrated; if they do, that is reported, not fixed.
 Any prediction that fails is reported as failed.
+
+## Results (20 seeds; full table `results/sens_slow_summary.md`)
+
+Experiment 1 main configuration, SSA index and prediction-error component (iPE, normalised; cascade control):
+
+| adaptation | tau_w 300 (main run) | 1000 | 3000 |
+|---|---|---|---|
+| SFA only, SSA index | 0.019 [0.012, 0.026] | 0.12 [0.12, 0.13] | 0.34 [0.33, 0.35] |
+| SFA only, iPE | 0.011 [-0.003, 0.025] | 0.00 [-0.01, 0.02] | 0.02 [0.00, 0.03] |
+| SFA + depression, SSA index | 0.187 [0.178, 0.195] | 0.29 [0.28, 0.29] | 0.45 [0.43, 0.46] |
+| SFA + depression, iPE | -0.000 [-0.011, 0.011] | 0.01 [-0.00, 0.02] | -0.01 [-0.02, 0.01] |
+
+Tier 2 (adaptation = SFA + depression; predictive networks not recalibrated):
+
+| tau_w | unexpected repeat minus regular: N0 / B / A2b | omission D-: N0 / B / A2b | M1 post1 - pre1: N0 / B / A2b |
+|---|---|---|---|
+| 300 (main) | -2.84 / -1.15 / +7.57 | 0 / 0.14 / 5.97 | 2.68 / 6.36 / 10.83 |
+| 1000 | -3.38 / -6.42 / +1.10 [-1.23, 3.43] | 0 / 0 / 1.02 [0.12, 1.91] | 3.51 / 6.92 / 12.19 |
+| 3000 | -3.05 / -4.79 / -5.74 | 0 / 0 / 0 | 3.23 / 4.45 / 8.92 |
+
+### Against the predictions
+- **P-s1 holds.** Slower adaptation raises the SSA index and iMM/iRS a lot (SFA alone 0.02 to 0.34), but iPE stays at
+  about 0 (all CIs within about +/-0.03). Adaptation alone, however slow, still produces no prediction-error component in
+  this model. It does produce a much larger apparent "mismatch" response: this is the answer to the objection that the
+  Experiment 1 result depended on tau_w = 300 ms for the SSA index. At 3000 ms adaptation alone explains a large
+  share of the deviant-versus-standard difference, all of it in the stimulus-specific adaptation (iRS) part.
+- **P-s2 holds.** N0 keeps the adaptation signature on the unexpected repeat (-3.38, -3.05), its omission contrast is
+  exactly 0, and its M1 rise (3.5, 3.2) stays well below A2b's.
+- **P-s3 fails.** A2b's unexpected-repeat effect is no longer clearly positive at 1000 ms (+1.10 [-1.23, 3.43]) and is
+  negative at 3000 ms (-5.74); its omission contrast shrinks to 1.02 at 1000 ms and 0 at 3000 ms. B also becomes more
+  negative. So the main Tier 2 results for the repeat and omission depend on adaptation being fast, at the settings
+  the networks were calibrated for. This is confounded with the lack of recalibration (the predictive weights were
+  set at 300 ms), so it shows that the result is **not robust to this change without re-tuning**; it does not show
+  that the mechanism cannot work with slow adaptation.
+- The tone after the odd one (M1) stays above N0 in A2b at both values (12.19 vs 3.51; 8.92 vs 3.23), the most robust
+  Tier 2 result here.

@@ -93,6 +93,9 @@ Full table, predictions-versus-results and limitations: `docs/EXP1_RESULTS.md`.
 - Both tests pass only with error cells, learning and the gate (TELGC, TELG, ELGC); the repeat alone needs only error cells plus learning.
 Full table, caveats and the pre-registration change log: `docs/TIER2_RESULTS.md`, `docs/PREREGISTRATION_TIER2.md`.
 
+### Sensitivity to slower adaptation (exploratory, `docs/SENSITIVITY_SLOW_ADAPTATION.md`)
+With the decay of spike-frequency adaptation slowed from 300 ms to 1000 and 3000 ms, adaptation alone gives a much larger stimulus-specific adaptation index (0.02 to 0.34) but still no prediction-error component (iPE about 0). The Tier 2 unexpected-repeat and omission effects of mechanism A **do not survive** the change without recalibrating the network (repeat +7.57 at 300 ms, +1.10 [-1.23, 3.43] at 1000, -5.74 at 3000), so those results depend on fast adaptation at the calibrated settings. The tone after the odd one stays above adaptation alone.
+
 ## Limitations (so far)
 - A toy network with single a-priori choices for time constants; only deviants above the standard; one tone-pair geometry per sweep.
 - Frequency-gap and probability sweeps are flat for structural reasons (private depression per channel; fast recovery).
