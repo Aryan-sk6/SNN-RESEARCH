@@ -202,6 +202,22 @@ def pem_raw(res, pp, chan, onsets, quiet=(-250.0, -175.0)):
     return raw, raw - _cnt(tt, onsets, *quiet) * scale
 
 
+def raw_counts(res, p, pp, chan, onsets, lo=0.0, hi=180.0):
+    """Raw (no baseline) spike counts in [lo, hi] ms after each onset: sensory E cells of `chan`, and the PE+ / PE-
+    populations of `chan` (zeros if the channel has no error cells)."""
+    onsets = np.asarray(onsets, dtype=float)
+    out = {}
+    e = np.sort(res.e_t[(res.e_idx // p.n_exc_per_channel) == chan])
+    out["E"] = _cnt(e, onsets, lo, hi).astype(float)
+    if chan in pp.pred_channels:
+        kk = list(pp.pred_channels).index(chan)
+        for name, t, idx in (("PEp", res.pep_t, res.pep_idx), ("PEm", res.pem_t, res.pem_idx)):
+            out[name] = _cnt(np.sort(t[(idx // pp.n_pe) == kk]), onsets, lo, hi).astype(float)
+    else:
+        out["PEp"] = np.zeros(len(onsets)); out["PEm"] = np.zeros(len(onsets))
+    return out
+
+
 def total_error(res, onsets):
     onsets = np.asarray(onsets, dtype=float)
     tt = np.sort(np.concatenate([res.pep_t, res.pem_t]))
@@ -252,7 +268,12 @@ def run_omit(spec):
     post = [i for i in range(first, n) if lab[i] == "tone" and lab[i - 1] == "omit"]
     ons = seq.onsets_ms
     po, pr, pq = parts(res, p, pp, A_CH, ons[om]), parts(res, p, pp, A_CH, ons[pres]), parts(res, p, pp, A_CH, ons[post])
-    return dict(n_omit=len(om), n_pres=len(pres), n_post=len(post),
+    ro, rp = raw_counts(res, p, pp, A_CH, ons[om]), raw_counts(res, p, pp, A_CH, ons[pres])
+    ref = raw_counts(res, p, pp, A_CH, ons[pres], 60.0, 240.0)
+    v3 = dict(v3_PEm_omit=_mean(ro["PEm"]), v3_PEm_pres=_mean(rp["PEm"]),
+              v3_err_omit=_mean(ro["PEp"] + ro["PEm"]), v3_err_pres=_mean(rp["PEp"] + rp["PEm"]),
+              v3_E_omit=_mean(ro["E"]), v3_E_ref=_mean(ref["E"]))
+    return dict(n_omit=len(om), n_pres=len(pres), n_post=len(post), **v3,
                 **{f"omit_{k}": _mean(v) for k, v in po.items()}, **{f"pres_{k}": _mean(v) for k, v in pr.items()},
                 **{f"post_{k}": _mean(v) for k, v in pq.items()},
                 omit_P_pre=_mean(pred_spikes(res, pp, A_CH, ons[om])),
@@ -321,6 +342,9 @@ def run_buildup(spec):
         idx = [i for (nn, i) in meta if nn == n]
         pm = parts(res, p, pp, A_CH, seq.onsets_ms[idx])
         out[f"R_{n}"] = _mean(pm["R"]); out[f"PEm_{n}"] = _mean(pm["PEm"])
+        last = [i - 1 for i in idx]
+        out[f"v3_PEm_{n}"] = _mean(raw_counts(res, p, pp, A_CH, seq.onsets_ms[idx])["PEm"])
+        out[f"v3_PEm_last_{n}"] = _mean(raw_counts(res, p, pp, A_CH, seq.onsets_ms[last])["PEm"])
     return out
 
 

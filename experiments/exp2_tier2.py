@@ -44,6 +44,8 @@ def settings(quick):
 
 
 def P(**kw):
+    if kw.get("exp") in ("omit", "buildup"):
+        kw.setdefault("mv", 3)        # v3 measures (raw contrasts); forces a fresh cache entry
     return dict(kind="pred", **kw)
 
 
@@ -138,6 +140,15 @@ def passes(d, ref):
     return bool(d["lo"] > 0 and d["mean"] >= 0.1 * ref)
 
 
+def passes3(d, floor=1.0):
+    """v3 rule: 95% CI excludes 0 and the mean is at least `floor` spikes per slot."""
+    return bool(np.isfinite(d["lo"]) and d["lo"] > 0 and d["mean"] >= floor)
+
+
+def d3(rows, k_omit, k_ref):
+    return ci([r[k_omit] - r[k_ref] for r in rows])
+
+
 def slope(r, lo=0, hi=5):
     y = np.log(np.maximum(np.asarray(r[lo:hi], dtype=float), 0.0) + 1.0)
     return float(np.polyfit(np.arange(len(y)), y, 1)[0])
@@ -165,7 +176,11 @@ def agg_omit(cfg, get, jitter=None):
                 kw["jitter"] = jitter
             rows.append(get(P(**kw)))
         om, pr = ci([r["omit_R"] for r in rows]), ci([r["pres_R"] for r in rows])
-        out[n] = dict(omit_R=om, pres_R=pr, omit_PEm=ci([r["omit_PEm"] for r in rows]),
+        dm = d3(rows, "v3_PEm_omit", "v3_PEm_pres")
+        out[n] = dict(D_PEm=dm, pass3=passes3(dm), D_err=d3(rows, "v3_err_omit", "v3_err_pres"),
+                      D_E=d3(rows, "v3_E_omit", "v3_E_ref"), PEm_omit_raw=ci([r["v3_PEm_omit"] for r in rows]),
+                      PEm_pres_raw=ci([r["v3_PEm_pres"] for r in rows]),
+                      omit_R=om, pres_R=pr, omit_PEm=ci([r["omit_PEm"] for r in rows]),
                       post_minus_pres=ci([r["post_R"] - r["pres_R"] for r in rows]),
                       P_pre=ci([r["omit_P_pre"] for r in rows]),
                       PEm_q=ci([r["omit_PEm_q"] for r in rows]), PEm_q_pres=ci([r["pres_PEm_q"] for r in rows]),
@@ -236,9 +251,11 @@ def agg_buildup(cfg, get):
     out = {}
     for n in NETS_3:
         rows = [get(P(exp="buildup", net=n, seed=s, ns=[1, 2, 4, 8], eps_per_n=cfg["eps_per_n"])) for s in range(cfg["seeds"])]
-        out[n] = dict(by_n={str(k): ci([r[f"PEm_{k}"] for r in rows]) for k in (1, 2, 4, 8)},
+        dk = lambda r, k: r[f"v3_PEm_{k}"] - r[f"v3_PEm_last_{k}"]
+        out[n] = dict(by_n={str(k): ci([dk(r, k) for r in rows]) for k in (1, 2, 4, 8)},
+                      by_n_v2={str(k): ci([r[f"PEm_{k}"] for r in rows]) for k in (1, 2, 4, 8)},
                       R_by_n={str(k): ci([r[f"R_{k}"] for r in rows]) for k in (1, 2, 4, 8)},
-                      slope=ci([np.polyfit(np.log2([1, 2, 4, 8]), [r[f"PEm_{k}"] for k in (1, 2, 4, 8)], 1)[0] for r in rows]))
+                      slope=ci([np.polyfit(np.log2([1, 2, 4, 8]), [dk(r, k) for k in (1, 2, 4, 8)], 1)[0] for r in rows]))
     return out
 
 
@@ -283,9 +300,9 @@ def agg_ablation(cfg, get):
         for s in range(cfg["seeds"]):
             om.append(get(P(exp="omit", net=lab, mech=dict(d), seed=s, n_slots=cfg["omit"], analyse_from=cfg["omit_from"])))
             ab.append(get(P(exp="aba", net=lab, mech=dict(d), seed=s, n_slots=cfg["aba"], analyse_from=cfg["aba_from"])))
-        o = ci([r["omit_R"] for r in om]); pr = ci([r["pres_R"] for r in om])
+        o = d3(om, "v3_PEm_omit", "v3_PEm_pres"); o2 = ci([r["omit_R"] for r in om])
         a = ci([r["rep_R"] - r["reg_R"] for r in ab]); rg = ci([r["reg_R"] for r in ab])
-        out[lab] = dict(flags=d, omit=o, aba=a, pass_omit=passes(o, pr["mean"]), pass_aba=passes(a, rg["mean"]),
+        out[lab] = dict(flags=d, omit=o, omit_v2=o2, aba=a, pass_omit=passes3(o), pass_aba=passes(a, rg["mean"]),
                         n_components=sum(d.values()))
     both = [k for k, v in out.items() if v["pass_omit"] and v["pass_aba"]]
     out["_smallest_passing_both"] = sorted(both, key=lambda k: (out[k]["n_components"], k))[:3]
@@ -298,7 +315,7 @@ def agg_robust(cfg, get):
         ppd = robust_pp(dr)
         o = get(P(exp="omit", net="A2b", seed=dr, pp=ppd, n_slots=cfg["omit"], analyse_from=cfg["omit_from"], draw=dr))
         a = get(P(exp="aba", net="A2b", seed=dr, pp=ppd, n_slots=cfg["aba"], analyse_from=cfg["aba_from"], draw=dr))
-        rows.append((o["omit_R"] >= 0.1 * o["pres_R"] and o["omit_R"] > 0, a["rep_R"] - a["reg_R"] >= 0.1 * a["reg_R"] and a["rep_R"] > a["reg_R"]))
+        rows.append((o["v3_PEm_omit"] - o["v3_PEm_pres"] >= 1.0, a["rep_R"] - a["reg_R"] >= 0.1 * a["reg_R"] and a["rep_R"] > a["reg_R"]))
     po, pa = np.mean([r[0] for r in rows]), np.mean([r[1] for r in rows])
     return dict(n_draws=len(rows), frac_omit=float(po), frac_aba=float(pa), frac_both=float(np.mean([r[0] and r[1] for r in rows])),
                 note="per-draw single-seed pass uses the effect floor only (no CI possible with one seed per draw)")
@@ -309,10 +326,10 @@ def agg_long(cfg, get):
     for n in ("B", "A2b"):
         om = [get(P(exp="omit", net=n, seed=s, n_slots=cfg["long"], analyse_from=cfg["long_from"])) for s in range(cfg["seeds"])]
         ab = [get(P(exp="aba", net=n, seed=s, n_slots=cfg["long"], analyse_from=cfg["long_from"])) for s in range(cfg["seeds"])]
-        o, pr = ci([r["omit_R"] for r in om]), ci([r["pres_R"] for r in om])
+        o = d3(om, "v3_PEm_omit", "v3_PEm_pres"); pr = ci([r["pres_R"] for r in om])
         a, rg = ci([r["rep_R"] - r["reg_R"] for r in ab]), ci([r["reg_R"] for r in ab])
-        out[n] = dict(omit=o, pres=pr, omit_PEm_q=ci([r["omit_PEm_q"] for r in om]), aba=a, reg=rg,
-                      pass_omit=passes(o, pr["mean"]), pass_aba=passes(a, rg["mean"]))
+        out[n] = dict(omit=o, pres=pr, omit_v2=ci([r["omit_R"] for r in om]), aba=a, reg=rg,
+                      pass_omit=passes3(o), pass_aba=passes(a, rg["mean"]))
     return out
 
 
@@ -346,10 +363,9 @@ def plot_main(S, cfg, path):
         a_ = ax[0, 0]
         for i, n in enumerate(NETS_MAIN):
             d = S["omit"][n]
-            a_.bar(i, d["pres_R"]["mean"], width=0.55, color=COL[n], alpha=0.22, lw=0)
-            err(a_, i, d["omit_R"], COL[n], fmt="o", ms=6)
+            err(a_, i, d["D_PEm"], COL[n], fmt="o", ms=6)
         a_.axhline(0, color="#52514e", lw=0.8); a_.set_xticks(range(4)); a_.set_xticklabels(NETS_MAIN)
-        a_.set_title("T1 omission: dot = omitted slot, pale bar = tone present"); a_.set_ylabel("R (spikes, 0-180 ms)")
+        a_.set_title("T1 omission: negative error, omitted minus present tone"); a_.set_ylabel("PE- spikes, 0-180 ms (v3)")
     if "aba" in S:
         a_ = ax[0, 1]
         for i, n in enumerate(NETS_MAIN):
@@ -401,9 +417,9 @@ def plot_main(S, cfg, path):
         a_ = ax[2, 2]
         js = sorted(S["jitter"].keys(), key=float)
         for n in NETS_3:
-            band(a_, [float(j) for j in js], [S["jitter"][j][n]["omit_R"] for j in js], COL[n], label=n)
+            band(a_, [float(j) for j in js], [S["jitter"][j][n]["D_PEm"] for j in js], COL[n], label=n)
         a_.axhline(0, color="#52514e", lw=0.8); a_.set_xlabel("timing jitter (fraction of the interval)")
-        a_.set_title("Timing: omission response vs jitter"); a_.legend(frameon=False, fontsize=7.5)
+        a_.set_title("Timing: negative-error contrast vs jitter"); a_.legend(frameon=False, fontsize=7.5)
     mode = "quick" if cfg["seeds"] <= 5 else "full"
     fig.suptitle(f"Tier 2 ({cfg['seeds']} seeds, mean and 95% CI, {mode} run)", x=0.01, ha="left", fontsize=11, fontweight="bold")
     fig.text(0.01, 0.005, "Simplified spiking model. Says nothing about real brains or clinical use.", fontsize=7.5, color="#52514e")
@@ -421,12 +437,12 @@ def fmt(d):
 
 
 def table_md(S, cfg):
-    L = [f"# Tier 2 summary ({cfg['seeds']} seeds)", "", "Mean [95% CI over seeds]; R = E + PE+ + PE- spikes in 0-180 ms, baseline-corrected.", ""]
+    L = [f"# Tier 2 summary ({cfg['seeds']} seeds)", "", "Mean [95% CI over seeds]; R = E + PE+ + PE- spikes in 0-180 ms, baseline-corrected (v2 omission measure superseded, see PREREGISTRATION_TIER2 v3).", ""]
     if "omit" in S:
-        L += ["## T1 omission", "", "| net | omitted slot R | tone present R | pass | CI half-width / tone | PE- at omission | PE- at omission (quiet baseline) | PE- at present tone (quiet baseline) | post-omission tone minus tone |", "|---|---|---|---|---|---|---|---|---|"]
+        L += ["## T1 omission (v3 measure: raw counts, omitted minus present-tone slots, 0-180 ms)", "", "| net | D- (PE- omitted minus present) | pass | PE- omitted (raw) | PE- present (raw) | D-err (PE+ and PE-) | D-E (sensory E: omitted minus quiet window) | post-omission tone minus tone | v2 R (superseded) |", "|---|---|---|---|---|---|---|---|---|"]
         for n in NETS_MAIN:
             d = S["omit"][n]
-            L.append(f"| {n} | {fmt(d['omit_R'])} | {fmt(d['pres_R'])} | {d['pass_']} | {d['halfwidth_over_tone']:.3f} | {fmt(d['omit_PEm'])} | {fmt(d['PEm_q'])} | {fmt(d['PEm_q_pres'])} | {fmt(d['post_minus_pres'])} |")
+            L.append(f"| {n} | {fmt(d['D_PEm'])} | {d['pass3']} | {fmt(d['PEm_omit_raw'])} | {fmt(d['PEm_pres_raw'])} | {fmt(d['D_err'])} | {fmt(d['D_E'])} | {fmt(d['post_minus_pres'])} | {fmt(d['omit_R'])} |")
     if "aba" in S:
         L += ["", "## T2 unexpected repeat (A B A B A A)", "", "| net | repeated minus regular | regular R | pass | adaptation signature (repeat smaller) |", "|---|---|---|---|---|"]
         for n in NETS_MAIN:
@@ -445,14 +461,14 @@ def table_md(S, cfg):
             d = S["oneshot"][n]
             L.append(f"| {n} | {fmt(d['first_below_half'])} | {fmt(d['frac_pair2'])} | {fmt(d['P_pre_late'])} |")
     if "buildup" in S:
-        L += ["", "## Regularity buildup (PE- at the omitted slot by number of regular tones)", "", "| net | n=1 | n=2 | n=4 | n=8 | slope per doubling |", "|---|---|---|---|---|---|"]
+        L += ["", "## Regularity buildup (v3: PE- at the omitted slot minus the last regular tone, by number of regular tones)", "", "| net | n=1 | n=2 | n=4 | n=8 | slope per doubling |", "|---|---|---|---|---|---|"]
         for n in NETS_3:
             d = S["buildup"][n]
             L.append(f"| {n} | " + " | ".join(fmt(d['by_n'][str(k)]) for k in (1, 2, 4, 8)) + f" | {fmt(d['slope'])} |")
     if "jitter" in S:
-        L += ["", "## Timing jitter (omission R)", "", "| jitter | " + " | ".join(NETS_3) + " |", "|---|---|---|---|"]
+        L += ["", "## Timing jitter (v3 D-: PE- omitted minus present)", "", "| jitter | " + " | ".join(NETS_3) + " |", "|---|---|---|---|"]
         for j in sorted(S["jitter"], key=float):
-            L.append(f"| {j} | " + " | ".join(fmt(S['jitter'][j][n]['omit_R']) for n in NETS_3) + " |")
+            L.append(f"| {j} | " + " | ".join(fmt(S['jitter'][j][n]['D_PEm']) for n in NETS_3) + " |")
     if "decomp" in S:
         L += ["", "## M6 decomposition (oddball p = 0.25 vs controls, normalised)", "", "| net | DEV | STD | CTR cascade | CTR many | iMM | iRS | iPE (cascade) | iPE (many) |", "|---|---|---|---|---|---|---|---|---|"]
         for n in NETS_3:
@@ -464,16 +480,16 @@ def table_md(S, cfg):
             d = S["random"][n]
             L.append(f"| {n} | {fmt(d['err_first'])} | {fmt(d['err_second'])} | {fmt(d['R_second'])} |")
     if "ablation" in S:
-        L += ["", "## Ablation (components T, E, L, G, C)", "", "| components | omission R | pass | repeat-minus-regular | pass |", "|---|---|---|---|---|"]
+        L += ["", "## Ablation (components T, E, L, G, C)", "", "| components | omission D- (v3) | pass | omission R (v2, superseded) | repeat-minus-regular | pass |", "|---|---|---|---|---|---|"]
         for k, v in S["ablation"].items():
             if k.startswith("_"):
                 continue
-            L.append(f"| {k} | {fmt(v['omit'])} | {v['pass_omit']} | {fmt(v['aba'])} | {v['pass_aba']} |")
+            L.append(f"| {k} | {fmt(v['omit'])} | {v['pass_omit']} | {fmt(v['omit_v2'])} | {fmt(v['aba'])} | {v['pass_aba']} |")
         L.append(f"\nSmallest subsets passing both: {S['ablation']['_smallest_passing_both']}")
     if "long" in S:
-        L += ["", f"## Long training ({cfg['long']} slots, analysed from {cfg['long_from']}): fairness check for the slow core", "", "| net | omission R | PE- at omission (quiet baseline) | pass | repeat minus regular | pass |", "|---|---|---|---|---|---|"]
+        L += ["", f"## Long training ({cfg['long']} slots, analysed from {cfg['long_from']}): fairness check for the slow core", "", "| net | omission D- (v3) | omission R (v2, superseded) | pass | repeat minus regular | pass |", "|---|---|---|---|---|---|"]
         for n, d in S["long"].items():
-            L.append(f"| {n} | {fmt(d['omit'])} | {fmt(d['omit_PEm_q'])} | {d['pass_omit']} | {fmt(d['aba'])} | {d['pass_aba']} |")
+            L.append(f"| {n} | {fmt(d['omit'])} | {fmt(d['omit_v2'])} | {d['pass_omit']} | {fmt(d['aba'])} | {d['pass_aba']} |")
     if "robust" in S:
         r = S["robust"]
         L += ["", "## Robustness (A2b, random constants)", "", f"{r['n_draws']} draws: omission {r['frac_omit']:.2f}, repeat {r['frac_aba']:.2f}, both {r['frac_both']:.2f}. {r['note']}"]
