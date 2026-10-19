@@ -32,8 +32,9 @@ def pred_params(spec) -> PR.PredParams:
     return PR.PredParams(pred_channels=PRED_CHANNELS, **spec.get("pp", {}))
 
 
-def net_params() -> NetworkParams:
-    return NetworkParams(dt_ms=DT_MS)
+def net_params(spec=None) -> NetworkParams:
+    """Network parameters; `spec["net"]` (a dict of NetworkParams fields) overrides defaults (sensitivity runs)."""
+    return NetworkParams(dt_ms=DT_MS, **((spec or {}).get("net") or {}))
 
 
 # ------------------------------------------------------------------ sequence building
@@ -245,7 +246,7 @@ def _mean(x):
 
 
 def _run(spec, seq):
-    p, pp = net_params(), pred_params(spec)
+    p, pp = net_params(spec), pred_params(spec)
     return p, pp, PR.run_predictive(seq, p, ADAPT_BY_LABEL[spec.get("adapt", "both")], mech_from_spec(spec), pp,
                                      int(spec["seed"]))
 
