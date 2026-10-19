@@ -31,7 +31,9 @@ NETS = ["N0", "B", "A2b"]
 
 
 def with_net(spec, tau):
-    return dict(spec, net=dict(tau_w_ms=tau))
+    """Experiment 1 blocks read `net`; the predictive (Tier 2) blocks already use `net` as the network label, so they
+    read the override from `netover`."""
+    return dict(spec, **{("netover" if spec.get("kind") == "pred" else "net"): dict(tau_w_ms=tau)})
 
 
 def exp1_specs(tau):

@@ -33,8 +33,8 @@ def pred_params(spec) -> PR.PredParams:
 
 
 def net_params(spec=None) -> NetworkParams:
-    """Network parameters; `spec["net"]` (a dict of NetworkParams fields) overrides defaults (sensitivity runs)."""
-    return NetworkParams(dt_ms=DT_MS, **((spec or {}).get("net") or {}))
+    """Network parameters; `spec["netover"]` (a dict of NetworkParams fields) overrides defaults (sensitivity runs)."""
+    return NetworkParams(dt_ms=DT_MS, **((spec or {}).get("netover") or {}))
 
 
 # ------------------------------------------------------------------ sequence building
