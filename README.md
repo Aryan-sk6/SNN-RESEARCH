@@ -8,9 +8,8 @@ network, using auditory-style oddball sequences.
 > ("A") is the repository owner's hypothesis, tested here as *a variant I am testing*; whether it is already in the
 > literature has not been established (see `docs/PRIOR_ART.md`).
 
-**Status:** Experiment 1 (adaptation alone) is complete with 20 seeds. Experiment 2 and the Tier 2 experiments are
-built, pre-registered and tested; their full results are pending and are marked as such below. Nothing below
-is claimed beyond what the tables show.
+**Status:** Experiment 1 (adaptation alone) and the Tier 2 experiments are complete with 20 seeds. Nothing below
+is claimed beyond what the tables show; several pre-registered predictions were not supported and are reported as such.
 
 ## The question
 1. **Experiment 1:** what does adaptation alone explain (spike-frequency adaptation, short-term depression)? Using the
@@ -76,10 +75,14 @@ re-run reproduces identical numbers. Figures and tables go to `results/`.
 
 Full table, predictions-versus-results and limitations: `docs/EXP1_RESULTS.md`.
 
-### Experiment 2 and Tier 2 experiments: **results pending**
-Pre-registered in `docs/PREREGISTRATION_TIER2.md` (omission, unexpected repeat, the tone after the odd one, drop-off
-curves, candidate fit, continuations, error definitions, one-shot learning, timing dose-response, ablation,
-robustness). This section will be filled from `results/tier2_summary_full.md`.
+### Experiment 2 and Tier 2 experiments (20 seeds; `results/fig2_tier2_full.png`, `docs/TIER2_RESULTS.md`)
+![Tier 2](results/fig2_tier2_full.png)
+- **Unexpected repeat (ABABAA):** adaptation alone gives a *smaller* repeat response (-2.84 [-3.62, -2.07]); the owner's mechanism A reverses it (A2b +7.57 [3.98, 11.15]). The slow predictive core B fails with normal training and passes with long training (+5.84 [2.15, 9.52]), so A's advantage is speed, not capability.
+- **Omission:** the pre-registered measure is null for every network, A included. A post-hoc quiet-baseline measure shows a clear negative-error response in A (about 7.4 spikes) and only a weak one in B. Exploratory.
+- **Not supported:** the predicted drop-off ordering, one-shot learning, and a rise of the omission response with regularity. Error in random sequences does not decay.
+- **Supported:** a larger response to the tone after the odd one than adaptation gives (A2b minus N0 8.15 [5.78, 10.52]; B also shows 3.68), and lower error/gate when a returning or repeating tone fits a candidate (A2b).
+- No component subset passes both omission and unexpected repeat; the repeat needs only error cells plus learning.
+Full table, caveats and the pre-registration change log: `docs/TIER2_RESULTS.md`, `docs/PREREGISTRATION_TIER2.md`.
 
 ## Limitations (so far)
 - A toy network with single a-priori choices for time constants; only deviants above the standard; one tone-pair geometry per sweep.
@@ -99,7 +102,7 @@ plasticity) are cited only at **abstract or search-summary level** and are marke
 
 ## Documents
 `ARCHITECTURE.md` (file by file) | `docs/PRIOR_ART.md` | `docs/PREREGISTRATION*.md` | `docs/PARAMETERS.md` |
-`docs/EXP1_RESULTS.md` | `docs/PLAN.md` | `docs/ROADMAP.md` | `docs/THEORY_NOTES.md`
+`docs/EXP1_RESULTS.md` | `docs/TIER2_RESULTS.md` | `docs/PLAN.md` | `docs/ROADMAP.md` | `docs/THEORY_NOTES.md`
 
 ## License
 MIT (`LICENSE`). Copyright holder line to be set by the repository owner.
