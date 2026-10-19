@@ -1,15 +1,15 @@
 # Tier 2 summary (20 seeds)
 
-Mean [95% CI over seeds]; R = E + PE+ + PE- spikes in 0-180 ms, baseline-corrected.
+Mean [95% CI over seeds]; R = E + PE+ + PE- spikes in 0-180 ms, baseline-corrected (v2 omission measure superseded, see PREREGISTRATION_TIER2 v3).
 
-## T1 omission
+## T1 omission (v3 measure: raw counts, omitted minus present-tone slots, 0-180 ms)
 
-| net | omitted slot R | tone present R | pass | CI half-width / tone | PE- at omission | PE- at omission (quiet baseline) | PE- at present tone (quiet baseline) | post-omission tone minus tone |
+| net | D- (PE- omitted minus present) | pass | PE- omitted (raw) | PE- present (raw) | D-err (PE+ and PE-) | D-E (sensory E: omitted minus quiet window) | post-omission tone minus tone | v2 R (superseded) |
 |---|---|---|---|---|---|---|---|---|
-| N0 | 0.12 [-0.09, 0.33] | 11.90 [11.40, 12.40] | False | 0.018 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 3.04 [2.52, 3.57] |
-| B | 0.24 [-0.02, 0.51] | 17.01 [16.18, 17.83] | False | 0.015 | 0.16 [-0.05, 0.36] | 0.17 [-0.06, 0.39] | 0.03 [-0.00, 0.06] | 6.81 [6.09, 7.52] |
-| A1 | 0.94 [-1.45, 3.34] | 11.08 [9.34, 12.82] | False | 0.216 | 0.64 [-1.69, 2.96] | 7.43 [5.27, 9.60] | 1.76 [1.05, 2.47] | 13.81 [11.64, 15.98] |
-| A2b | 0.91 [-1.70, 3.52] | 11.03 [9.24, 12.83] | False | 0.236 | 0.59 [-1.94, 3.13] | 7.48 [4.99, 9.97] | 1.44 [0.92, 1.96] | 13.49 [11.54, 15.44] |
+| N0 | 0.00 [0.00, 0.00] | False | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.35 [0.20, 0.51] | 3.04 [2.52, 3.57] | 0.12 [-0.09, 0.33] |
+| B | 0.14 [-0.07, 0.34] | False | 0.17 [-0.06, 0.39] | 0.03 [-0.00, 0.06] | -4.86 [-5.37, -4.35] | 0.38 [0.24, 0.53] | 6.81 [6.09, 7.52] | 0.24 [-0.02, 0.51] |
+| A1 | 5.66 [3.83, 7.49] | True | 7.47 [5.27, 9.66] | 1.81 [1.07, 2.55] | 2.97 [0.94, 5.00] | 0.51 [0.39, 0.64] | 13.81 [11.64, 15.98] | 0.94 [-1.45, 3.34] |
+| A2b | 5.97 [3.80, 8.15] | True | 7.50 [5.00, 9.99] | 1.53 [0.98, 2.07] | 3.26 [0.90, 5.61] | 0.49 [0.33, 0.66] | 13.49 [11.54, 15.44] | 0.91 [-1.70, 3.52] |
 
 ## T2 unexpected repeat (A B A B A A)
 
@@ -57,22 +57,22 @@ M1 minus N0 (difference of differences): A/B: 3.68 [2.05, 5.31]; A/A2b: 8.15 [5.
 | A1 | 9.70 [7.87, 11.53] | 1.16 [0.85, 1.46] | 1.11 [0.37, 1.85] |
 | A2b | 9.60 [8.04, 11.16] | 1.11 [0.89, 1.32] | 1.26 [0.41, 2.11] |
 
-## Regularity buildup (PE- at the omitted slot by number of regular tones)
+## Regularity buildup (v3: PE- at the omitted slot minus the last regular tone, by number of regular tones)
 
 | net | n=1 | n=2 | n=4 | n=8 | slope per doubling |
 |---|---|---|---|---|---|
 | N0 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | B | 0.01 [-0.01, 0.03] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | -0.00 [-0.01, 0.00] |
-| A2b | 0.61 [-0.25, 1.46] | 0.91 [-0.95, 2.77] | 1.54 [0.12, 2.97] | 0.76 [-0.60, 2.11] | 0.11 [-0.23, 0.45] |
+| A2b | 0.97 [0.22, 1.71] | 4.51 [2.61, 6.41] | 1.97 [0.49, 3.45] | 2.05 [1.07, 3.03] | 0.07 [-0.25, 0.39] |
 
-## Timing jitter (omission R)
+## Timing jitter (v3 D-: PE- omitted minus present)
 
 | jitter | N0 | B | A2b |
 |---|---|---|---|
-| 0.0 | 0.12 [-0.09, 0.33] | 0.24 [-0.02, 0.51] | 0.91 [-1.70, 3.52] |
-| 0.1 | 0.16 [-0.08, 0.41] | 0.25 [-0.04, 0.54] | 0.96 [-1.38, 3.29] |
-| 0.3 | 0.11 [-0.14, 0.37] | 0.15 [-0.06, 0.36] | -0.50 [-2.26, 1.25] |
-| 0.6 | 0.19 [-0.01, 0.40] | -0.06 [-0.33, 0.21] | -0.67 [-1.80, 0.46] |
+| 0.0 | 0.00 [0.00, 0.00] | 0.14 [-0.07, 0.34] | 5.97 [3.80, 8.15] |
+| 0.1 | 0.00 [0.00, 0.00] | 0.09 [-0.05, 0.24] | 5.61 [3.97, 7.24] |
+| 0.3 | 0.00 [0.00, 0.00] | 0.01 [-0.02, 0.04] | 4.38 [2.78, 5.98] |
+| 0.6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 3.23 [2.01, 4.44] |
 
 ## M6 decomposition (oddball p = 0.25 vs controls, normalised)
 
@@ -92,30 +92,30 @@ M1 minus N0 (difference of differences): A/B: 3.68 [2.05, 5.31]; A/A2b: 8.15 [5.
 
 ## Ablation (components T, E, L, G, C)
 
-| components | omission R | pass | repeat-minus-regular | pass |
-|---|---|---|---|---|
-| TELGC | 0.91 [-1.70, 3.52] | False | 7.57 [3.98, 11.15] | True |
-| TELG | 0.48 [-2.12, 3.07] | False | 9.07 [5.43, 12.70] | True |
-| TEL | 0.24 [-0.02, 0.51] | False | -1.15 [-2.69, 0.39] | False |
-| TE | 0.09 [-0.08, 0.26] | False | -5.46 [-6.77, -4.15] | False |
-| TL | 0.27 [0.09, 0.45] | False | -2.74 [-3.31, -2.16] | False |
-| T | 0.27 [0.09, 0.45] | False | -2.74 [-3.31, -2.16] | False |
-| ELGC | -24.80 [-29.50, -20.10] | False | 18.06 [10.29, 25.83] | True |
-| ELG | -23.00 [-26.53, -19.48] | False | 12.62 [4.15, 21.09] | True |
-| EL | -14.44 [-19.18, -9.71] | False | 19.82 [15.64, 24.01] | True |
-| E | 0.19 [0.01, 0.38] | False | -7.78 [-9.05, -6.50] | False |
-| L | 0.33 [0.12, 0.53] | False | -2.52 [-3.40, -1.63] | False |
-| none | 0.33 [0.12, 0.53] | False | -2.52 [-3.40, -1.63] | False |
+| components | omission D- (v3) | pass | omission R (v2, superseded) | repeat-minus-regular | pass |
+|---|---|---|---|---|---|
+| TELGC | 5.97 [3.80, 8.15] | True | 0.91 [-1.70, 3.52] | 7.57 [3.98, 11.15] | True |
+| TELG | 5.66 [3.82, 7.51] | True | 0.48 [-2.12, 3.07] | 9.07 [5.43, 12.70] | True |
+| TEL | 0.14 [-0.07, 0.34] | False | 0.24 [-0.02, 0.51] | -1.15 [-2.69, 0.39] | False |
+| TE | 0.00 [0.00, 0.00] | False | 0.09 [-0.08, 0.26] | -5.46 [-6.77, -4.15] | False |
+| TL | 0.00 [0.00, 0.00] | False | 0.27 [0.09, 0.45] | -2.74 [-3.31, -2.16] | False |
+| T | 0.00 [0.00, 0.00] | False | 0.27 [0.09, 0.45] | -2.74 [-3.31, -2.16] | False |
+| ELGC | 1.25 [0.61, 1.90] | True | -24.80 [-29.50, -20.10] | 18.06 [10.29, 25.83] | True |
+| ELG | 0.73 [0.34, 1.11] | False | -23.00 [-26.53, -19.48] | 12.62 [4.15, 21.09] | True |
+| EL | 0.61 [0.13, 1.10] | False | -14.44 [-19.18, -9.71] | 19.82 [15.64, 24.01] | True |
+| E | 0.00 [0.00, 0.00] | False | 0.19 [0.01, 0.38] | -7.78 [-9.05, -6.50] | False |
+| L | 0.00 [0.00, 0.00] | False | 0.33 [0.12, 0.53] | -2.52 [-3.40, -1.63] | False |
+| none | 0.00 [0.00, 0.00] | False | 0.33 [0.12, 0.53] | -2.52 [-3.40, -1.63] | False |
 
-Smallest subsets passing both: []
+Smallest subsets passing both: ['ELGC', 'TELG', 'TELGC']
 
 ## Long training (600 slots, analysed from 400): fairness check for the slow core
 
-| net | omission R | PE- at omission (quiet baseline) | pass | repeat minus regular | pass |
+| net | omission D- (v3) | omission R (v2, superseded) | pass | repeat minus regular | pass |
 |---|---|---|---|---|---|
-| B | 0.51 [-1.08, 2.10] | 3.69 [2.05, 5.34] | False | 5.84 [2.15, 9.52] | True |
-| A2b | -3.57 [-7.50, 0.36] | 8.23 [5.87, 10.60] | False | 12.35 [7.78, 16.93] | True |
+| B | 2.76 [1.48, 4.03] | 0.51 [-1.08, 2.10] | True | 5.84 [2.15, 9.52] | True |
+| A2b | 6.82 [5.00, 8.63] | -3.57 [-7.50, 0.36] | True | 12.35 [7.78, 16.93] | True |
 
 ## Robustness (A2b, random constants)
 
-40 draws: omission 0.38, repeat 0.75, both 0.28. per-draw single-seed pass uses the effect floor only (no CI possible with one seed per draw)
+40 draws: omission 0.82, repeat 0.75, both 0.62. per-draw single-seed pass uses the effect floor only (no CI possible with one seed per draw)

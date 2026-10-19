@@ -78,10 +78,19 @@ Full table, predictions-versus-results and limitations: `docs/EXP1_RESULTS.md`.
 ### Experiment 2 and Tier 2 experiments (20 seeds; `results/fig2_tier2_full.png`, `docs/TIER2_RESULTS.md`)
 ![Tier 2](results/fig2_tier2_full.png)
 - **Unexpected repeat (ABABAA):** adaptation alone gives a *smaller* repeat response (-2.84 [-3.62, -2.07]); the owner's mechanism A reverses it (A2b +7.57 [3.98, 11.15]). The slow predictive core B fails with normal training and passes with long training (+5.84 [2.15, 9.52]), so A's advantage is speed, not capability.
+- **Omission:** the first measure (baseline-subtracted) was unsuitable and was replaced by a raw omitted-minus-present contrast (pre-registered as v3 before the re-run). With it, A shows a clear negative-error response at omitted tones (about 6 spikes), B only with long training, N0 none; the response shrinks with timing jitter but does not grow steadily with regularity.
+- **Not supported:** the pre-registered prediction that SSA depends on deviant probability and on frequency gap. SSA is
+  flat across both (explanations in `docs/EXP1_RESULTS.md`; they are limitations of this simplified architecture).
+
+Full table, predictions-versus-results and limitations: `docs/EXP1_RESULTS.md`.
+
+### Experiment 2 and Tier 2 experiments (20 seeds; `results/fig2_tier2_full.png`, `docs/TIER2_RESULTS.md`)
+![Tier 2](results/fig2_tier2_full.png)
+- **Unexpected repeat (ABABAA):** adaptation alone gives a *smaller* repeat response (-2.84 [-3.62, -2.07]); the owner's mechanism A reverses it (A2b +7.57 [3.98, 11.15]). The slow predictive core B fails with normal training and passes with long training (+5.84 [2.15, 9.52]), so A's advantage is speed, not capability.
 - **Omission:** the pre-registered measure is null for every network, A included. A post-hoc quiet-baseline measure shows a clear negative-error response in A (about 7.4 spikes) and only a weak one in B. Exploratory.
-- **Not supported:** the predicted drop-off ordering, one-shot learning, and a rise of the omission response with regularity. Error in random sequences does not decay.
+- **Not supported:** the predicted drop-off ordering, one-shot learning, and a steady rise of the omission response with regularity. Error in random sequences does not decay.
 - **Supported:** a larger response to the tone after the odd one than adaptation gives (A2b minus N0 8.15 [5.78, 10.52]; B also shows 3.68), and lower error/gate when a returning or repeating tone fits a candidate (A2b).
-- No component subset passes both omission and unexpected repeat; the repeat needs only error cells plus learning.
+- Both tests pass only with error cells, learning and the gate (TELGC, TELG, ELGC); the repeat alone needs only error cells plus learning.
 Full table, caveats and the pre-registration change log: `docs/TIER2_RESULTS.md`, `docs/PREREGISTRATION_TIER2.md`.
 
 ## Limitations (so far)
