@@ -136,3 +136,40 @@ sensory-only part smaller (A2b 4.97 vs N0 1.93); the predicted order of drop-off
 observed; one-shot learning, regularity buildup and the jitter dose-response are not supported; no ablation subset passes both
 tests; A2b's total error in a random context stays high (about 26 per slot) instead of falling. The full run uses the same
 code and constants as v2.
+
+## v3: the omission measure (written before any v3 run)
+
+### What was wrong
+In the v2 full run the pre-registered omission measure R (E + PE+ + PE- in 0-180 ms minus a 75 ms pre-onset baseline,
+scaled) was null for every network, and the ablation subsets without the delay line (EL, ELG, ELGC) gave R of -14 to -25.
+Peri-event spike histograms (50 ms bins, one seed, seed 0, A2b, EL and B; seed 0 is one of the 20 test seeds, so I have
+seen it) show why:
+- In A2b the negative-error cells ramp up from about 100 ms before the expected onset (the prediction cells fire early).
+  The baseline window (-75..0 ms) therefore contains part of the omission response and subtracting it cancels the effect.
+- In the subsets without timing, the prediction and negative-error cells fire a large burst before every slot, tone
+  present or not (about 70 spikes per slot in the 150 ms before the onset). Baseline subtraction then makes R very
+  negative at omitted slots and at present tones alike. The "-25" is a measurement artefact, not an anti-response.
+- B's negative-error cells are essentially silent (0 spikes in the traces), so B has no omission response at this training.
+So the v2 omission, jitter, buildup and ablation-omission results were produced by an unsuitable measure and are
+superseded by v3 below (v2 numbers are kept in `results/archive/v2_*`).
+
+### New measures (fixed here, before the full run)
+No baseline subtraction is used, because the predicted response overlaps the baseline. Instead each omitted slot is
+compared with the present-tone slots of the same run, in the same window.
+- **Primary, D-:** raw PE- spikes of tone A's error population in 0-180 ms after the expected onset, mean over omitted
+  slots minus mean over present-tone slots that follow a tone (analysed slots only). Pass: the 95% CI over seeds excludes
+  0 and the mean is at least 1 spike per slot (absolute floor; it replaces the "10% of tone response" floor, which does
+  not apply to a response that is not a fraction of the tone response).
+- **Secondary, D-err:** the same contrast for PE+ plus PE- (total error).
+- **Secondary, E-omit:** raw E spikes of A's channel in 0-180 ms at omitted slots minus the same count in a reference
+  window 60-240 ms after present tones (quiet window), to see whether a sensory-level omission response exists.
+- Jitter: D- per jitter value. Regularity buildup: D- as omitted slot minus the last regular tone, per n.
+  Ablation and robustness: D- with the same pass rule (robustness is single-seed, so only the floor applies).
+- v2 R measures are still reported, labelled v2.
+
+### Expectations stated now
+N0 has no error cells, so D- = 0 exactly (a check on the pipeline). B is expected near 0 at normal training. A1 and A2b are
+expected positive. Subsets without T are expected to give D- near 0 because their negative error fires at present and
+omitted slots alike (this would be informative: the contrast removes the artefact). Caveat that stays: the negative-error
+cells are built to be suppressed by input, so D- > 0 at omission is partly structural; the informative results are which
+networks and subsets show it, and whether it depends on timing regularity (jitter, buildup).
