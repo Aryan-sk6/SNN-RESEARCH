@@ -193,7 +193,7 @@ def main():
                 st = state[f"calib_{tau}"]
                 L += fmt_calib(tau, [dict(r, cand=tuple(r["cand"])) for r in st["table"]], tuple(st["chosen"])) + [""]
             if f"test_{tau}" in state:
-                L += test_table(tau, state[f"test_{tau}"]["pp"])[1] + [""]
+                L += test_table(float(tau), state[f"test_{tau}"]["pp"])[1] + [""]
         (OUT / "retune_summary.md").write_text("\n".join(L) + "\n")
 
 

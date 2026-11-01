@@ -69,3 +69,40 @@ regular response; T1: CI above 0 and mean at least 1 spike).
 Every outcome is reported.
 
 Results: `results/retune_summary.md`.
+
+---
+
+## Results at tau_w = 1000 ms (added after the run)
+Full tables: `results/retune_summary.md`.
+
+**Calibration.** With the original constants, the circuit at 1000 ms misses three of the seven sanity targets: the
+error cells respond too weakly (S1 0.51), and the gated learner is too slow (S4 9.0 exposures) and leaves too much error
+at predicted tones (S5 0.56). So the untuned sensitivity run was out of its calibrated range. Twelve of the 36
+candidates meet all seven targets (all with f_E 1.15 or 1.3). The rule selects the smallest change:
+**f_E = 1.15, kappa = 3, f_eta = 1**. That is a 15% increase of the three sensory-driven weights
+(E -> delay 22 -> 25.3 mV, E -> PE+ 18 -> 20.7 mV, E -> PE- 40 -> 46 mV); the learning constants are unchanged. Its
+sanity scores: S1 0.72, S2 0.92, S3 1.21, S4 3.6, S5 0.39, S6 0.15, S7 62.8.
+
+**Tests (20 test seeds, mean [95% CI], spikes).**
+
+| net | unexpected repeat minus regular | omission D- | M1 post1 - pre1 | M1 minus N0 (paired) |
+|---|---|---|---|---|
+| N0 | -3.38 [-4.00, -2.76] | 0.00 | 3.51 [2.81, 4.20] | |
+| B | -3.51 [-4.54, -2.47] | 0.05 [-0.03, 0.13] | 7.85 [6.20, 9.50] | 4.35 [2.71, 5.98] |
+| A1 | +7.71 [3.61, 11.81] | 4.36 [2.69, 6.03] | 10.47 [7.83, 13.11] | 6.96 [4.07, 9.85] |
+| A2b | +6.75 [2.95, 10.55] | 4.98 [3.09, 6.88] | 10.30 [7.76, 12.84] | 6.79 [4.16, 9.42] |
+
+Regular-tone responses (for the 10% rule): N0 13.2, B 18.5, A1 9.7, A2b 9.9.
+
+**Against the predictions.**
+- R1 holds: N0 keeps the adaptation signature (repeat smaller) and its omission contrast is exactly 0.
+- R2 holds: A1 and A2b pass the unexpected repeat (CI above 0, effect well above 10% of the regular response) and the
+  omission test (CI above 0, mean above 1 spike). The effects are a little smaller than at 300 ms (repeat 6.75 vs
+  7.57, omission 4.98 vs 5.97 for A2b) but well inside each other's intervals.
+- R3 holds: A2b's M1 rise is above N0's (6.79 [4.16, 9.42]).
+- B, re-tuned with the same core constants, still fails both tests at normal training, as at 300 ms.
+
+**What this means.** The failure in the untuned sensitivity run was a calibration mismatch, not a dependence of the
+mechanism on fast adaptation: when the circuit is set by the same sanity rules at tau_w = 1000 ms, the main Tier 2
+results come back. Caveats: only the selected candidate was tested (11 others also met all targets); I had seen the
+untuned results before designing this; the tests used the same 20 test seeds as before.

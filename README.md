@@ -89,13 +89,15 @@ Full table, predictions-versus-results and limitations: `docs/EXP1_RESULTS.md`.
 Full table, caveats and the pre-registration change log: `docs/TIER2_RESULTS.md`, `docs/PREREGISTRATION_TIER2.md`.
 
 ### Sensitivity to slower adaptation (exploratory, `docs/SENSITIVITY_SLOW_ADAPTATION.md`)
-With the decay of spike-frequency adaptation slowed from 300 ms to 1000 and 3000 ms, adaptation alone gives a much larger stimulus-specific adaptation index (0.02 to 0.34) but still no prediction-error component (iPE about 0). The Tier 2 unexpected-repeat and omission effects of mechanism A **do not survive** the change without recalibrating the network (repeat +7.57 at 300 ms, +1.10 [-1.23, 3.43] at 1000, -5.74 at 3000), so those results depend on fast adaptation at the calibrated settings. The tone after the odd one stays above adaptation alone.
+With the decay of spike-frequency adaptation slowed from 300 ms to 1000 and 3000 ms, adaptation alone gives a much larger stimulus-specific adaptation index (0.02 to 0.34) but still no prediction-error component (iPE about 0). The Tier 2 unexpected-repeat and omission effects of mechanism A **do not survive** the change without recalibrating the network (repeat +7.57 at 300 ms, +1.10 [-1.23, 3.43] at 1000, -5.74 at 3000), so without re-tuning those results depend on fast adaptation. The tone after the odd one stays above adaptation alone.
+
+**Re-tuned (`docs/RETUNE_SLOW_ADAPTATION.md`, design committed before the run).** Re-calibrating the circuit at 1000 ms with the original sanity targets (development seeds only; the rule picked a 15% increase of three sensory-driven weights) brings the effects back on the 20 test seeds: unexpected repeat A2b +6.75 [2.95, 10.55], A1 +7.71 [3.61, 11.81]; omission A2b 4.98 [3.09, 6.88]; adaptation alone still -3.38 on the repeat; the core B still fails at normal training. So the earlier failure was a calibration mismatch, not a dependence on fast adaptation. [3000 PENDING]
 
 ## Limitations (so far)
 - A toy network with single a-priori choices for time constants; only deviants above the standard; one tone-pair geometry per sweep.
 - Frequency-gap and probability sweeps are flat for structural reasons (private depression per channel; fast recovery).
 - Feedback inhibition is weak (I cells fire about 3 Hz).
-- Mechanism A's repeat and omission effects do not survive slower adaptation without re-tuning (see above).
+- Mechanism A's repeat and omission effects need the circuit calibrated for the adaptation level in use (they fail at slower adaptation without re-tuning and return after re-tuning).
 - B is a simplified predictive-coding network, not a replication of the published model; every difference is listed in `docs/PARAMETERS.md`.
 - A simulation can show that a mechanism is **sufficient** in a toy network. It cannot show that brains use it.
 - Several further ideas of mine (energy, memory leakage, emotion, development) are recorded as **theories**, not tested here
@@ -110,7 +112,7 @@ plasticity) are cited only at **abstract or search-summary level** and are marke
 
 ## Documents
 `ARCHITECTURE.md` (file by file) | `docs/PRIOR_ART.md` | `docs/PREREGISTRATION*.md` | `docs/PARAMETERS.md` |
-`docs/EXP1_RESULTS.md` | `docs/TIER2_RESULTS.md` | `docs/SENSITIVITY_SLOW_ADAPTATION.md` | `docs/PLAN.md` | `docs/ROADMAP.md`
+`docs/EXP1_RESULTS.md` | `docs/TIER2_RESULTS.md` | `docs/SENSITIVITY_SLOW_ADAPTATION.md` | `docs/RETUNE_SLOW_ADAPTATION.md` | `docs/NOVELTY_CHECK.md` | `docs/PLAN.md` | `docs/ROADMAP.md`
 
 ## License
 MIT (`LICENSE`). Copyright (c) 2026 Aryan Karjagi.

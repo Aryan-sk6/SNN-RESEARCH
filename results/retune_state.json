@@ -27,5 +27,1105 @@
    "n_met": 7,
    "dist": 0.0
   }
- ]
+ ],
+ "calib_1000": {
+  "table": [
+   {
+    "cand": [
+     1.0,
+     3.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 0.511881796223218,
+     "delay_rate": 0.65328125,
+     "gate_peak": 0.7946007446450423,
+     "fast_exposures": 9.0,
+     "pred_err": 0.5589784313725491,
+     "over_pred": 0.1275598039215686,
+     "slow_exposures": 47.8
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": false,
+     "pred_err": false,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 4,
+    "dist": 0.0
+   },
+   {
+    "cand": [
+     1.0,
+     3.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 0.511881796223218,
+     "delay_rate": 0.65328125,
+     "gate_peak": 0.7946007446450423,
+     "fast_exposures": 6.0,
+     "pred_err": 0.4757254901960784,
+     "over_pred": 0.13951176470588236,
+     "slow_exposures": 35.4
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": false,
+     "pred_err": false,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 4,
+    "dist": 0.6931471805599453
+   },
+   {
+    "cand": [
+     1.0,
+     4.5,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 0.511881796223218,
+     "delay_rate": 0.65328125,
+     "gate_peak": 0.7946007446450423,
+     "fast_exposures": 7.2,
+     "pred_err": 0.5274843137254902,
+     "over_pred": 0.13692254901960782,
+     "slow_exposures": 47.8
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": false,
+     "pred_err": false,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 4,
+    "dist": 0.4054651081081644
+   },
+   {
+    "cand": [
+     1.0,
+     4.5,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 0.511881796223218,
+     "delay_rate": 0.65328125,
+     "gate_peak": 0.7946007446450423,
+     "fast_exposures": 5.0,
+     "pred_err": 0.42957450980392153,
+     "over_pred": 0.18029019607843136,
+     "slow_exposures": 35.4
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": false,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 5,
+    "dist": 1.0986122886681096
+   },
+   {
+    "cand": [
+     1.0,
+     6.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 0.511881796223218,
+     "delay_rate": 0.65328125,
+     "gate_peak": 0.7946007446450423,
+     "fast_exposures": 6.0,
+     "pred_err": 0.5006823529411765,
+     "over_pred": 0.14731470588235293,
+     "slow_exposures": 47.8
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": false,
+     "pred_err": false,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 4,
+    "dist": 0.6931471805599453
+   },
+   {
+    "cand": [
+     1.0,
+     6.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 0.511881796223218,
+     "delay_rate": 0.65328125,
+     "gate_peak": 0.7946007446450423,
+     "fast_exposures": 4.0,
+     "pred_err": 0.39810784313725495,
+     "over_pred": 0.20512058823529408,
+     "slow_exposures": 35.4
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 6,
+    "dist": 1.3862943611198906
+   },
+   {
+    "cand": [
+     1.15,
+     3.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 0.719840201217281,
+     "delay_rate": 0.9171875,
+     "gate_peak": 1.2107878376250707,
+     "fast_exposures": 3.6,
+     "pred_err": 0.3943532668881506,
+     "over_pred": 0.15054584717607972,
+     "slow_exposures": 62.8
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 0.13976194237515863
+   },
+   {
+    "cand": [
+     1.15,
+     3.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 0.719840201217281,
+     "delay_rate": 0.9171875,
+     "gate_peak": 1.2005376057338508,
+     "fast_exposures": 3.0,
+     "pred_err": 0.28680775193798447,
+     "over_pred": 0.20604972314507197,
+     "slow_exposures": 41.0
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 0.8329091229351039
+   },
+   {
+    "cand": [
+     1.15,
+     4.5,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 0.719840201217281,
+     "delay_rate": 0.9171875,
+     "gate_peak": 1.206799821637509,
+     "fast_exposures": 3.6,
+     "pred_err": 0.3224469545957918,
+     "over_pred": 0.15889822812846072,
+     "slow_exposures": 62.8
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 0.545227050483323
+   },
+   {
+    "cand": [
+     1.15,
+     4.5,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 0.719840201217281,
+     "delay_rate": 0.9171875,
+     "gate_peak": 1.1583198246719775,
+     "fast_exposures": 3.0,
+     "pred_err": 0.25292225913621263,
+     "over_pred": 0.263636877076412,
+     "slow_exposures": 41.0
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 1.2383742310432684
+   },
+   {
+    "cand": [
+     1.15,
+     6.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 0.719840201217281,
+     "delay_rate": 0.9171875,
+     "gate_peak": 1.2045362724005177,
+     "fast_exposures": 3.2,
+     "pred_err": 0.2634932447397563,
+     "over_pred": 0.20075382059800662,
+     "slow_exposures": 62.8
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 0.8329091229351039
+   },
+   {
+    "cand": [
+     1.15,
+     6.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 0.719840201217281,
+     "delay_rate": 0.9171875,
+     "gate_peak": 1.1519739306116314,
+     "fast_exposures": 2.8,
+     "pred_err": 0.25551317829457365,
+     "over_pred": 0.27365802879291257,
+     "slow_exposures": 41.0
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 1.5260563034950492
+   },
+   {
+    "cand": [
+     1.3,
+     3.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 0.9376668080349839,
+     "delay_rate": 1.1675,
+     "gate_peak": 1.438081329041888,
+     "fast_exposures": 3.0,
+     "pred_err": 0.2350143035937779,
+     "over_pred": 0.12610456150545324,
+     "slow_exposures": 40.0
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 0.26236426446749106
+   },
+   {
+    "cand": [
+     1.3,
+     3.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 0.9376668080349839,
+     "delay_rate": 1.1675,
+     "gate_peak": 1.3934659728025351,
+     "fast_exposures": 2.8,
+     "pred_err": 0.1767243652780261,
+     "over_pred": 0.20942059270516716,
+     "slow_exposures": 21.8
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 0.9555114450274363
+   },
+   {
+    "cand": [
+     1.3,
+     4.5,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 0.9376668080349839,
+     "delay_rate": 1.1675,
+     "gate_peak": 1.4247193472955273,
+     "fast_exposures": 2.8,
+     "pred_err": 0.25588414089039874,
+     "over_pred": 0.17913552655104595,
+     "slow_exposures": 40.0
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 0.6678293725756554
+   },
+   {
+    "cand": [
+     1.3,
+     4.5,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 0.9376668080349839,
+     "delay_rate": 1.1675,
+     "gate_peak": 1.3626419863171937,
+     "fast_exposures": 2.4,
+     "pred_err": 0.15069260682996605,
+     "over_pred": 0.22867803504380477,
+     "slow_exposures": 21.8
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 1.3609765531356008
+   },
+   {
+    "cand": [
+     1.3,
+     6.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 0.9376668080349839,
+     "delay_rate": 1.1675,
+     "gate_peak": 1.4129921274017603,
+     "fast_exposures": 2.8,
+     "pred_err": 0.19197881280171641,
+     "over_pred": 0.16511001475058107,
+     "slow_exposures": 40.0
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 0.9555114450274363
+   },
+   {
+    "cand": [
+     1.3,
+     6.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 0.9376668080349839,
+     "delay_rate": 1.1675,
+     "gate_peak": 1.3568326247565363,
+     "fast_exposures": 2.4,
+     "pred_err": 0.12971437511174683,
+     "over_pred": 0.28711413820847487,
+     "slow_exposures": 21.8
+    },
+    "met": {
+     "err_gain": true,
+     "delay_rate": true,
+     "gate_peak": true,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 7,
+    "dist": 1.6486586255873816
+   },
+   {
+    "cand": [
+     1.5,
+     3.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 1.1999959254939436,
+     "delay_rate": 1.50921875,
+     "gate_peak": 1.7719380397233144,
+     "fast_exposures": 2.6,
+     "pred_err": 0.11464039691651631,
+     "over_pred": 0.17184807536776142,
+     "slow_exposures": 23.0
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 5,
+    "dist": 0.4054651081081644
+   },
+   {
+    "cand": [
+     1.5,
+     3.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 1.1999959254939436,
+     "delay_rate": 1.50921875,
+     "gate_peak": 1.7065777312329413,
+     "fast_exposures": 2.4,
+     "pred_err": 0.04379779767324801,
+     "over_pred": 0.31676764434741794,
+     "slow_exposures": 12.2
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": true
+    },
+    "n_met": 4,
+    "dist": 1.0986122886681096
+   },
+   {
+    "cand": [
+     1.5,
+     4.5,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 1.1999959254939436,
+     "delay_rate": 1.50921875,
+     "gate_peak": 1.748053600595723,
+     "fast_exposures": 2.4,
+     "pred_err": 0.07800666523389117,
+     "over_pred": 0.23418182627974185,
+     "slow_exposures": 23.0
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 5,
+    "dist": 0.8109302162163288
+   },
+   {
+    "cand": [
+     1.5,
+     4.5,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 1.1999959254939436,
+     "delay_rate": 1.50921875,
+     "gate_peak": 1.6513804767230504,
+     "fast_exposures": 2.4,
+     "pred_err": 0.05456229179981109,
+     "over_pred": 0.4157584283961021,
+     "slow_exposures": 12.2
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": true
+    },
+    "n_met": 4,
+    "dist": 1.5040773967762742
+   },
+   {
+    "cand": [
+     1.5,
+     6.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 1.1999959254939436,
+     "delay_rate": 1.50921875,
+     "gate_peak": 1.7218267304708,
+     "fast_exposures": 2.4,
+     "pred_err": 0.06814218977111412,
+     "over_pred": 0.2923994700615905,
+     "slow_exposures": 23.0
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 5,
+    "dist": 1.0986122886681096
+   },
+   {
+    "cand": [
+     1.5,
+     6.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 1.1999959254939436,
+     "delay_rate": 1.50921875,
+     "gate_peak": 1.5799638290008924,
+     "fast_exposures": 2.4,
+     "pred_err": 0.05795846459253562,
+     "over_pred": 0.462237922268159,
+     "slow_exposures": 12.2
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": true
+    },
+    "n_met": 4,
+    "dist": 1.791759469228055
+   },
+   {
+    "cand": [
+     1.75,
+     3.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 1.537753933703387,
+     "delay_rate": 1.92390625,
+     "gate_peak": 1.9618599214431964,
+     "fast_exposures": 2.4,
+     "pred_err": 0.08611880670111435,
+     "over_pred": 0.2118644877077917,
+     "slow_exposures": 12.2
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": true
+    },
+    "n_met": 5,
+    "dist": 0.5596157879354227
+   },
+   {
+    "cand": [
+     1.75,
+     3.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 1.537753933703387,
+     "delay_rate": 1.92390625,
+     "gate_peak": 1.7857500842633374,
+     "fast_exposures": 2.4,
+     "pred_err": 0.06708858048996236,
+     "over_pred": 0.4718039004433609,
+     "slow_exposures": 6.0
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": false
+    },
+    "n_met": 3,
+    "dist": 1.252762968495368
+   },
+   {
+    "cand": [
+     1.75,
+     4.5,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 1.537753933703387,
+     "delay_rate": 1.92390625,
+     "gate_peak": 1.8962692113932658,
+     "fast_exposures": 2.4,
+     "pred_err": 0.07108990733649044,
+     "over_pred": 0.3262004536089147,
+     "slow_exposures": 12.2
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": true
+    },
+    "n_met": 4,
+    "dist": 0.965080896043587
+   },
+   {
+    "cand": [
+     1.75,
+     4.5,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 1.537753933703387,
+     "delay_rate": 1.92390625,
+     "gate_peak": 1.772461648216662,
+     "fast_exposures": 2.0,
+     "pred_err": 0.0651017383846992,
+     "over_pred": 0.6019596080409058,
+     "slow_exposures": 6.0
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": false
+    },
+    "n_met": 3,
+    "dist": 1.6582280766035322
+   },
+   {
+    "cand": [
+     1.75,
+     6.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 1.537753933703387,
+     "delay_rate": 1.92390625,
+     "gate_peak": 1.8383285650241472,
+     "fast_exposures": 2.4,
+     "pred_err": 0.07169600651557158,
+     "over_pred": 0.39512568230116185,
+     "slow_exposures": 12.2
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": true
+    },
+    "n_met": 4,
+    "dist": 1.252762968495368
+   },
+   {
+    "cand": [
+     1.75,
+     6.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 1.537753933703387,
+     "delay_rate": 1.92390625,
+     "gate_peak": 1.7678206726865036,
+     "fast_exposures": 2.0,
+     "pred_err": 0.05983858048996236,
+     "over_pred": 0.7074300776151282,
+     "slow_exposures": 6.0
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": true,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": false
+    },
+    "n_met": 3,
+    "dist": 1.9459101490553135
+   },
+   {
+    "cand": [
+     2.0,
+     3.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 1.8375037553946978,
+     "delay_rate": 2.3196874999999997,
+     "gate_peak": 1.9367838108358064,
+     "fast_exposures": 2.4,
+     "pred_err": 0.059558442107250434,
+     "over_pred": 0.28597438681585485,
+     "slow_exposures": 6.4
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": false,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": true,
+     "slow_exposures": false
+    },
+    "n_met": 3,
+    "dist": 0.6931471805599453
+   },
+   {
+    "cand": [
+     2.0,
+     3.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 1.8375037553946978,
+     "delay_rate": 2.3196874999999997,
+     "gate_peak": 1.8909915001929352,
+     "fast_exposures": 2.0,
+     "pred_err": 0.050166250669546816,
+     "over_pred": 0.5735490673542144,
+     "slow_exposures": 3.6
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": false,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": false
+    },
+    "n_met": 2,
+    "dist": 1.3862943611198906
+   },
+   {
+    "cand": [
+     2.0,
+     4.5,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 1.8375037553946978,
+     "delay_rate": 2.3196874999999997,
+     "gate_peak": 1.8959212344890584,
+     "fast_exposures": 2.2,
+     "pred_err": 0.06230595216142883,
+     "over_pred": 0.4041777265373233,
+     "slow_exposures": 6.4
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": false,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": false
+    },
+    "n_met": 2,
+    "dist": 1.0986122886681096
+   },
+   {
+    "cand": [
+     2.0,
+     4.5,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 1.8375037553946978,
+     "delay_rate": 2.3196874999999997,
+     "gate_peak": 1.8909991969402795,
+     "fast_exposures": 2.0,
+     "pred_err": 0.03742729380153316,
+     "over_pred": 0.7305504374555465,
+     "slow_exposures": 3.6
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": false,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": false
+    },
+    "n_met": 2,
+    "dist": 1.791759469228055
+   },
+   {
+    "cand": [
+     2.0,
+     6.0,
+     1.0
+    ],
+    "metrics": {
+     "err_gain": 1.8375037553946978,
+     "delay_rate": 2.3196874999999997,
+     "gate_peak": 1.894988833970713,
+     "fast_exposures": 2.0,
+     "pred_err": 0.05667714891599274,
+     "over_pred": 0.5337562934656621,
+     "slow_exposures": 6.4
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": false,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": false
+    },
+    "n_met": 2,
+    "dist": 1.3862943611198906
+   },
+   {
+    "cand": [
+     2.0,
+     6.0,
+     2.0
+    ],
+    "metrics": {
+     "err_gain": 1.8375037553946978,
+     "delay_rate": 2.3196874999999997,
+     "gate_peak": 1.8761673400366772,
+     "fast_exposures": 2.0,
+     "pred_err": 0.029816769184162695,
+     "over_pred": 0.8547787916106883,
+     "slow_exposures": 3.6
+    },
+    "met": {
+     "err_gain": false,
+     "delay_rate": false,
+     "gate_peak": false,
+     "fast_exposures": true,
+     "pred_err": true,
+     "over_pred": false,
+     "slow_exposures": false
+    },
+    "n_met": 2,
+    "dist": 2.0794415416798357
+   }
+  ],
+  "chosen": [
+   1.15,
+   3.0,
+   1.0
+  ]
+ },
+ "test_1000": {
+  "chosen": [
+   1.15,
+   3.0,
+   1.0
+  ],
+  "pp": {
+   "w_ed_mV": 25.299999999999997,
+   "w_e_pe_mV": 20.7,
+   "w_e_pm_mV": 46.0,
+   "kappa_learn": 3.0,
+   "eta": 0.0004
+  },
+  "results": {
+   "N0": {
+    "aba": {
+     "mean": -3.3807519398840165,
+     "lo": -4.000724911651062,
+     "hi": -2.7607789681169708
+    },
+    "omit": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    "m1": {
+     "mean": 3.5090000000000003,
+     "lo": 2.8139496337975354,
+     "hi": 4.204050366202465
+    },
+    "m1s": {
+     "mean": 3.5090000000000003,
+     "lo": 2.8139496337975354,
+     "hi": 4.204050366202465
+    }
+   },
+   "B": {
+    "aba": {
+     "mean": -3.507416010963182,
+     "lo": -4.543018551332391,
+     "hi": -2.4718134705939723
+    },
+    "omit": {
+     "mean": 0.053773310023310025,
+     "lo": -0.025122604311518776,
+     "hi": 0.13266922435813883
+    },
+    "m1": {
+     "mean": 7.853999999999999,
+     "lo": 6.2032809615055235,
+     "hi": 9.504719038494475
+    },
+    "m1s": {
+     "mean": 3.4490000000000003,
+     "lo": 2.5795004017615377,
+     "hi": 4.318499598238462
+    },
+    "m1_minus_n0": {
+     "mean": 4.345000000000001,
+     "lo": 2.7088526513390323,
+     "hi": 5.9811473486609685
+    }
+   },
+   "A1": {
+    "aba": {
+     "mean": 7.713506824761541,
+     "lo": 3.6136132604482407,
+     "hi": 11.81340038907484
+    },
+    "omit": {
+     "mean": 4.359155963487844,
+     "lo": 2.6922896135340433,
+     "hi": 6.0260223134416435
+    },
+    "m1": {
+     "mean": 10.468,
+     "lo": 7.829170324397452,
+     "hi": 13.106829675602548
+    },
+    "m1s": {
+     "mean": 7.1370000000000005,
+     "lo": 6.288822754736508,
+     "hi": 7.985177245263493
+    },
+    "m1_minus_n0": {
+     "mean": 6.9590000000000005,
+     "lo": 4.071751804915302,
+     "hi": 9.846248195084698
+    }
+   },
+   "A2b": {
+    "aba": {
+     "mean": 6.749852856961347,
+     "lo": 2.9518949291521235,
+     "hi": 10.54781078477057
+    },
+    "omit": {
+     "mean": 4.983804709169154,
+     "lo": 3.0925512186432376,
+     "hi": 6.87505819969507
+    },
+    "m1": {
+     "mean": 10.3,
+     "lo": 7.76446652264261,
+     "hi": 12.83553347735739
+    },
+    "m1s": {
+     "mean": 7.081999999999998,
+     "lo": 6.185745690897538,
+     "hi": 7.978254309102458
+    },
+    "m1_minus_n0": {
+     "mean": 6.7909999999999995,
+     "lo": 4.161432391384308,
+     "hi": 9.420567608615691
+    }
+   }
+  }
+ }
 }
