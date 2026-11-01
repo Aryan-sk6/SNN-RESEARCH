@@ -113,4 +113,4 @@ plasticity) are cited only at **abstract or search-summary level** and are marke
 `docs/EXP1_RESULTS.md` | `docs/TIER2_RESULTS.md` | `docs/SENSITIVITY_SLOW_ADAPTATION.md` | `docs/PLAN.md` | `docs/ROADMAP.md` | `docs/THEORY_NOTES.md`
 
 ## License
-MIT (`LICENSE`). Copyright holder line to be set by the repository owner.
+MIT (`LICENSE`). Copyright (c) 2026 Aryan Karjagi.

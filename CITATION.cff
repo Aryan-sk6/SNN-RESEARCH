@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this code or results, please cite it as below."
+title: "Adaptation is not enough: a pre-registered comparison of adaptation and prediction-error mechanisms in a small spiking network"
+authors:
+  - family-names: Karjagi
+    given-names: Aryan
+version: 0.1.0
+date-released: 2026-11-01
+license: MIT
+repository-code: "https://github.com/Aryan-sk6/SNNresearch"

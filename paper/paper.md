@@ -1,6 +1,6 @@
 ---
 title: "Adaptation is not enough: a pre-registered comparison of adaptation and prediction-error mechanisms in a small spiking network"
-author: "[AUTHOR NAME]"
+author: "Aryan Karjagi"
 date: "November 2026 (draft)"
 ---
 
