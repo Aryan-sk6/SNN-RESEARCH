@@ -61,11 +61,15 @@ separately under pre-registered predictions. (ii) A clean negative result: in th
 fast or slow, produces SSA but no prediction-error component and no omission response. (iii) A proposed surprise-gated
 mechanism, with ablations, a robustness sweep over its constants and an honest list of what it does not do.
 
-Surprise-gated plasticity itself is not new: surprise-modulated learning rates have been studied by Yu & Dayan (2002),
-Faraji, Preuschoff & Gerstner (2014) and, in a spiking network with a three-factor rule, Barry & Gerstner (2024).
-What I test is a specific combination (gate plus sensitisation plus candidate predictions) applied to oddball,
-omission and post-deviant responses. I have not yet done a full literature check on that combination, so I do not
-claim it is novel.
+**Relation to prior work.** Surprise-modulated learning rates are well established (Yu & Dayan, 2002; Faraji,
+Preuschoff & Gerstner, 2018; Liakoni et al., 2021), including Bayesian models of the MMN (Lieder et al., 2013) and a
+spiking network with a surprise-gated three-factor rule (Barry & Gerstner, 2024). Holding several sequence predictions
+at once has also been modelled, in spiking sequence networks (Bouhadjar et al., 2022) and as competing interpretations
+of sound sequences (Mill et al., 2013). Other network models produce omission responses (Chien, Maess & Knösche, 2019).
+In a search of about 30 queries (not a systematic review; `docs/NOVELTY_CHECK.md`), I did not find a spiking model in
+which a single mismatch gate jointly boosts plasticity, raises sensory gain and opens several candidate predictions,
+tested on oddball, unexpected-repeat and omission paradigms. I present that combination, not its parts, as the
+contribution.
 
 ## 2. Methods
 
@@ -200,9 +204,13 @@ silenced by input. The more informative result is that the response **falls as t
 3.23 spikes for jitter 0, 0.1, 0.3, 0.6 of the interval; Fig. 3, bottom right), as a timing-based prediction should.
 
 **Tone after the odd one (M1).** The first standard after a deviant is amplified well beyond adaptation's recovery
-rise (A2b − N0 = 8.15 [5.78, 10.52]), and this is the most robust effect across all checks. B shows a smaller version
+rise (A2b − N0 = 8.15 [5.78, 10.52]), and this effect survives every check in this paper. B shows a smaller version
 (3.68 [2.05, 5.31] above N0), so it is not unique to the gate. About 2.6 spikes of A's effect is sensitisation in the
-sensory cells, which the gate does by design.
+sensory cells, which the gate does by design. **This is a model prediction, not a match to data.** Evidence from real
+recordings is mostly negative: EEG studies report no N1 enhancement (Rosburg & Mager, 2021) and no MMN-like effect
+(Coy et al., 2024) for standards after deviants, and intracellular recordings show the first standard after a deviant
+only slightly larger (Hershenhoren et al., 2014). If the size of the effect here were found in recordings, it would
+support a gain mechanism; current evidence suggests real circuits do not show it at this strength.
 
 **Candidate fit (M3).** After a deviant, total error is lower when the next tone fits a candidate (earlier tone
 returns: 9.40; deviant repeats: 4.69) than when it is new (12.35), and so is the gate level (0.37, 0.40 vs 0.46).
@@ -245,7 +253,8 @@ predictive circuit (delay lines, separate error populations, candidate drives) a
 effects depend on the adaptation time constant used for calibration.
 
 **Relation to work on learning.** The gate is a form of surprise-modulated learning rate, an idea with precedent
-in both neuroscience and machine learning (Yu & Dayan, 2002; Faraji et al., 2014; Barry & Gerstner, 2024). The finding
+in both neuroscience and machine learning (Yu & Dayan, 2002; Faraji et al., 2018; Liakoni et al., 2021; Barry &
+Gerstner, 2024). The finding
 that the gate changes *how fast* rather than *whether* a sequence is learned matches that framing: surprise is a
 signal for when to update quickly. Error in a random sequence never settled, which suggests that a gate alone is not
 enough. A system also needs an estimate of how predictable its input is (precision), so it can stop treating noise as
@@ -258,8 +267,9 @@ with one seed per draw; and several cited works read only at abstract level (mar
 
 **Next steps.** (1) Re-tune A at τ_w = 1000 ms on development seeds and repeat the Tier 2 tests, which decides whether
 the main effect is robust. (2) Add a precision or uncertainty term and test whether error in random contexts then falls.
-(3) Compare learning speed against an ideal Bayesian observer. (4) Do a full literature search on the
-gate-plus-candidates combination before any novelty claim.
+(3) Compare learning speed against an ideal Bayesian observer. (4) Test whether the post-deviant gain is reduced
+to the small effect seen in recordings, and what that costs the other tests. (5) Extend the literature search to a
+systematic review and read the key papers in full.
 
 ## Reproducibility
 
@@ -274,26 +284,49 @@ things, the LIF firing rate against the analytic value, determinism under a fixe
 
 ## References
 
-*Verification levels follow `docs/PRIOR_ART.md`: \[F\] full text read; \[A\] abstract or search-summary level only.*
+*Verification levels follow `docs/PRIOR_ART.md` and `docs/NOVELTY_CHECK.md`: \[F\] full text read; \[A\] abstract
+or bibliographic record; \[S\] search-result summary only. Every \[S\] entry must be checked against the publisher's page
+before submission.*
 
-- Barry, M. & Gerstner, W. (2024). *PLoS Computational Biology*. PMC10906910. \[A; full reference to be completed\]
+- Barry, M. L. L. R. & Gerstner, W. (2024). Fast adaptation to rule switching using neuronal surprise. *PLoS
+  Computational Biology*, 20(2), e1011839. doi:10.1371/journal.pcbi.1011839 \[S\]
+- Bouhadjar, Wouters, Diesmann & Tetzlaff (2022). Sequence learning, prediction, and replay in
+  networks of spiking neurons. *PLoS Computational Biology*. PMC9273101. \[S; initials, volume and article number to
+  be checked\]
 - Carbajal, G. V. & Malmierca, M. S. (2018). The neuronal basis of predictive coding along the auditory pathway: from
   the subcortical roots to cortical deviance detection. *Trends in Hearing*, 22. doi:10.1177/2331216518784822 \[F\]
-- Faraji, M., Preuschoff, K. & Gerstner, W. (2014). PMC4125082. \[A; full reference to be completed\]
+- Chien, V. S. C., Maess, B. & Knösche, T. R. (2019). A generic deviance detection principle for cortical On/Off
+  responses, omission response, and mismatch negativity. *Biological Cybernetics*, 113(5–6), 475–494.
+  doi:10.1007/s00422-019-00804-x \[S\]
+- Coy, N., Bendixen, A., Grimm, S., Roeber, U. & Schröger, E. (2024). Conditional deviant repetition in the oddball
+  paradigm modulates processing at the level of P3a but not MMN. *Psychophysiology*, 61(6), e14545.
+  doi:10.1111/psyp.14545 \[S\]
+- Faraji, M. J., Preuschoff, K. & Gerstner, W. (2018). Balancing new against old information: the role of puzzlement
+  surprise in learning. *Neural Computation*, 30(1), 34–83. doi:10.1162/NECO_a_01025 \[S\]
+- Hershenhoren, I., Taaseh, N., Antunes, F. M. & Nelken, I. (2014). Intracellular correlates of stimulus-specific
+  adaptation. *Journal of Neuroscience*, 34(9), 3303–3319. doi:10.1523/JNEUROSCI.2166-13.2014 \[S\]
+- Liakoni, Modirshanechi, Gerstner & Brea (2021). Learning in volatile environments with the Bayes
+  factor surprise. *Neural Computation*, 33(2), 269–340. \[S; initials to be checked\]
+- Lieder, Daunizeau, Garrido, Friston & Stephan (2013). Modelling trial-by-trial changes in
+  the mismatch negativity. *PLoS Computational Biology*, 9(2), e1002911. \[S; initials to be checked\]
 - May, P. J. C. & Tiitinen, H. (2010). Mismatch negativity (MMN), the deviance-elicited auditory deflection,
   explained. *Psychophysiology*, 47(1), 66–122. \[A\]
+- Mill, R. W., Bőhm, T. M., Bendixen, A., Winkler, I. & Denham, S. L. (2013). Modelling the emergence and dynamics of
+  perceptual organisation in auditory streaming. *PLoS Computational Biology*, 9(3), e1002925. \[S\]
 - Mill, R., Coath, M., Wennekers, T. & Denham, S. L. (2011). A neurocomputational model of stimulus-specific adaptation
   to oddball and Markov sequences. *PLoS Computational Biology*, 7(8), e1002117. \[A\]
 - Parras, G. G., Nieto-Diego, J., Carbajal, G. V., Valdés-Baizabal, C., Escera, C. & Malmierca, M. S. (2017). Neurons
   along the auditory pathway exhibit a hierarchical organization of prediction error. *Nature Communications*, 8, 2148.
   doi:10.1038/s41467-017-02038-6 \[F\]
+- Rosburg, T. & Mager, R. (2021). *Hearing Research*, 400, 108140. \[S; title to be checked\]
 - Ruhnau, P., Herrmann, B. & Schröger, E. (2012). Finding the right control: the mismatch negativity under
   investigation. *Clinical Neurophysiology*, 123(3), 507–512. doi:10.1016/j.clinph.2011.07.035 \[A\]
 - Wacongne, C., Changeux, J.-P. & Dehaene, S. (2012). A neuronal model of predictive coding accounting for the
   mismatch negativity. *Journal of Neuroscience*, 32(11), 3665–3678. doi:10.1523/JNEUROSCI.5003-11.2012 \[F\]
 - Yarden, T. S. & Nelken, I. (2017). Stimulus-specific adaptation in a recurrent network model of primary auditory
   cortex. *PLoS Computational Biology*, 13(3), e1005437. \[A\]
-- Yu, A. J. & Dayan, P. (2002). *Advances in Neural Information Processing Systems (NeurIPS)*.
-  papers.neurips.cc/paper_files/paper/2002/file/758a06618c69880a6cee5314ee42d52f-Paper.pdf \[A; full reference to be completed\]
+- Yu, A. J. & Dayan, P. (2002). Expected and unexpected uncertainty: ACh and NE in the neocortex. *Advances in
+  Neural Information Processing Systems 15*, 173–180. \[S; author order to be checked: the NeurIPS listing may put
+  Dayan first, in which case cite as Dayan & Yu (2002)\]
 
 Software: Brian2 2.10.1 spiking neural network simulator (briansimulator.org).
