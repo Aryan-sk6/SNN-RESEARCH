@@ -229,9 +229,9 @@ Parras Table 1 (cascade vs many-standards, a weak hint only). Details are in my 
 
 ---
 
-## Aryan is confused
+## Open questions
 
-Separate from the plan above. Items the owner is unsure about, kept apart on purpose.
+Separate from the plan above. Items I was unsure about, kept apart on purpose.
 
 ### One-shot-learning test (what it is, and what is still unsettled)
 Show the network "old pattern, odd beep, next tone" exactly **once**. Wait a long silence (> 10 s, longer

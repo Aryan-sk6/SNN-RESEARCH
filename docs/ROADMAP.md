@@ -53,8 +53,6 @@ Key to status: **done** = run and reported, **running** = in progress, **planned
 | Theory | Why it cannot be tested here | What would test it |
 |---|---|---|
 | Real brains literally lower "energy" like chemical systems | A simulation defines its own energy; it cannot show what the brain does | Metabolic or imaging data with sequence manipulations |
-| Emotions (fear, shock, surprise) as energy surges or lack | Needs emotion measures, not spike counts | Physiology/behaviour experiments with surprise and arousal measures |
-| Fetus inherits "training" from the mother via nerve connections | No developmental or maternal data exist in a toy network | Developmental neuroscience studies |
 | Real post-oddball sensitisation and real one-shot learning | A simulation shows a mechanism is sufficient, not that the brain uses it | Existing or new neural recordings (single-unit, MEG/EEG) |
 | E1 vs E2 as the brain's error rule | The model can implement both, but data are needed to choose | Recordings in random vs structured contexts with controls |
 | Single neurons as tokens; thoughts as sequences in real brains; foundational learning in humans | The model uses groups of cells per token and shows sufficiency of a mechanism only | Single-unit/assembly recordings; learning experiments in people with controlled prior knowledge |
