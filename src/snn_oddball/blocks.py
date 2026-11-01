@@ -30,6 +30,9 @@ def run_block(spec: dict) -> dict:
     if spec.get("kind") == "pred":
         from .tier2 import run_pred_block
         return run_pred_block(spec)
+    if spec.get("kind") == "retune_calib":
+        from .retune import calib_block
+        return calib_block(spec)
     p = P.NetworkParams(**(spec.get("net") or {}))
     adapt = ADAPT[spec["adapt"]]
     seed = int(spec["seed"])

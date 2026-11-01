@@ -1,0 +1,31 @@
+{
+ "check_300": [
+  {
+   "cand": [
+    1.0,
+    3.0,
+    1.0
+   ],
+   "metrics": {
+    "err_gain": 0.6146041275502157,
+    "delay_rate": 0.87921875,
+    "gate_peak": 0.9459011010352387,
+    "fast_exposures": 4.6,
+    "pred_err": 0.32864900153609833,
+    "over_pred": 0.11491887480798771,
+    "slow_exposures": 69.8
+   },
+   "met": {
+    "err_gain": true,
+    "delay_rate": true,
+    "gate_peak": true,
+    "fast_exposures": true,
+    "pred_err": true,
+    "over_pred": true,
+    "slow_exposures": true
+   },
+   "n_met": 7,
+   "dist": 0.0
+  }
+ ]
+}
