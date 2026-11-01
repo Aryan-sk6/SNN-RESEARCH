@@ -111,3 +111,18 @@ M1 A2b minus N0 (paired): 6.79 [4.16, 9.42]
 
 Targets: err_gain in [0.6, 1.0]; delay_rate in [0.5, 2.0]; gate_peak in [0.5, 1.5]; fast_exposures in [1.0, 5.0]; pred_err in [0.0, 0.4]; over_pred in [0.0, 0.3]; slow_exposures in [10.0, 100.0]. A star marks a missed target.
 
+## Tier 2 at tau_w = 3000 ms with re-tuned constants (20 test seeds)
+
+| net | unexpected repeat minus regular | omission D- (PE- omitted minus present) | M1 post1 - pre1 | M1 sensory-only (E) |
+|---|---|---|---|---|
+| N0 | -3.05 [-3.66, -2.44] | 0.00 [0.00, 0.00] | 3.23 [2.62, 3.83] | 3.23 [2.62, 3.83] |
+| B | -4.87 [-5.69, -4.06] | 0.00 [0.00, 0.00] | 6.09 [4.79, 7.38] | 3.03 [2.38, 3.68] |
+| A1 | 4.19 [0.52, 7.85] | 0.38 [0.13, 0.62] | 9.35 [7.23, 11.46] | 6.36 [5.59, 7.14] |
+| A2b | 3.75 [0.01, 7.49] | 0.56 [0.19, 0.93] | 9.47 [7.51, 11.42] | 6.64 [5.77, 7.52] |
+
+M1 B minus N0 (paired): 2.86 [1.65, 4.07]
+
+M1 A1 minus N0 (paired): 6.12 [4.08, 8.16]
+
+M1 A2b minus N0 (paired): 6.24 [4.11, 8.37]
+

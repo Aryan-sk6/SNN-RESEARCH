@@ -26,7 +26,8 @@ Ablations show error cells, learning and the gate are all needed. Four of my mor
 supported, including one-shot learning and a steady build-up of the omission response with regularity. The gated
 mechanism's main effects disappeared when adaptation was made slower without re-tuning. Re-tuned by the original
 sanity rules (a 15% change to three weights), they return at τ_w = 1000 ms (repeat +6.75 [2.95, 10.55], omission
-4.98 [3.09, 6.88]). The result is therefore a
+4.98 [3.09, 6.88]); at τ_w = 3000 ms only a weak repeat effect returns and the omission effect does not. The result
+is therefore a
 sufficiency result in a toy model: the gate makes learning faster, not something the predictive core cannot do. It
 says nothing about real brains.
 
@@ -270,7 +271,10 @@ All pre-stated predictions hold. Adaptation alone keeps the wrong sign on the re
 repeat and omission tests with effects close to those at 300 ms. The re-tuned core B still fails at normal training.
 **The earlier failure was a calibration mismatch, not a dependence on fast adaptation.** Caveats: I had seen the untuned
 results before designing this; only the selected candidate was tested; and the test seeds are the same as before.
-[3000 PENDING]
+At τ_w = 3000 ms (secondary), the original constants meet only 2 of 7 targets and only 3 candidates meet all seven
+(selected: sensory-driven weights +30%, slow learning rate doubled). After re-tuning, the unexpected repeat passes but
+only just (A2b +3.75 [0.01, 7.49]; A1 +4.19 [0.52, 7.85]), and **the omission test fails** (A2b 0.56 [0.19, 0.93],
+below the 1-spike floor). The mechanism therefore tolerates threefold slower adaptation but degrades at tenfold.
 
 ## 4. Discussion
 
@@ -284,7 +288,8 @@ normal training.
 **What it does not show.** This is a sufficiency result in a toy network: these mechanisms *can* produce these
 signatures here. It does not show that brains use them, and nothing here bears on clinical use. Several parts of the
 predictive circuit (delay lines, separate error populations, candidate drives) are designed structures. The gated
-effects need the circuit to be calibrated for the adaptation level it runs with (§3.4).
+effects need the circuit to be calibrated for the adaptation level it runs with, and at very slow adaptation
+(3000 ms) the omission effect is lost even after re-tuning (§3.4).
 
 **Relation to work on learning.** The gate is a form of surprise-modulated learning rate, an idea with precedent
 in both neuroscience and machine learning (Yu & Dayan, 2002; Faraji et al., 2018; Liakoni et al., 2021; Barry &

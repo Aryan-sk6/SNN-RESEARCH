@@ -11,16 +11,18 @@ expectations quickly.
 
 **What I built.** An open, fully reproducible spiking neural network (120 neurons, Brian2) in which every mechanism can
 be switched on and off on its own:
+
 - two kinds of adaptation;
 - a predictive-coding core with learned predictions and error neurons;
 - my proposal, a **surprise gate**. After a prediction error it briefly speeds up learning, raises sensory gain and
   opens several candidate guesses about what comes next.
 
 I wrote down every prediction and pass rule before running each experiment (pre-registration), ran 20 random seeds per
-condition, and published every result, including the predictions that failed. The repository has 50+ unit tests,
+condition, and published every result, including the predictions that failed. The repository has 79 unit tests,
 one command per figure, and cached, resumable runs.
 
 **What I found.**
+
 1. **Adaptation is not enough.** Adaptation alone reproduces the familiar "bigger response to the rare tone", but
    all of it is repetition suppression. The prediction-error component is zero, and there is no response at all to a
    *missing* tone. This holds even when adaptation is made 10 times slower.
@@ -29,7 +31,7 @@ one command per figure, and cached, resumable runs.
    it right after normal training (+7.6 [4.0, 11.2]). The plain predictive core also gets there, but only with about 3
    times more training. Ablations show that passing both tests needs prediction-error neurons, learning and the gate together.
 3. **Honest limits.** One-shot learning, a predicted drop-off ordering and "accepting randomness" were *not*
-   supported. [RETUNE RESULT: one sentence on whether the effects survive slower adaptation after re-tuning.]
+   supported. When I slowed adaptation 3 times, the effects first disappeared; re-tuning by my original rules (a 15% change to three weights) brought them back. At 10 times slower, only a weak repeat effect returns.
 
 **Why it matters for AI.** Standard training treats each example in much the same way, whether or not it was surprising. This model
 is a small worked example of a different rule: **learn fast exactly when the world surprises you, and keep a few
@@ -41,4 +43,4 @@ can tell surprise from randomness. That is the next step I am building.
 **What this shows about how I work.** I take an idea of my own, turn it into a mechanism that can fail, test it against
 strong baselines, and report it straight, including when it does not work.
 
-*Paper (8 pages) and code:* github.com/Aryan-sk6/SNNresearch, `paper/paper.pdf`.
+*Paper (10 pages) and code:* github.com/Aryan-sk6/SNNresearch, `paper/paper.pdf`.

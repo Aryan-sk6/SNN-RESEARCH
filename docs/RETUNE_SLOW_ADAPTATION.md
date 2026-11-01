@@ -106,3 +106,27 @@ Regular-tone responses (for the 10% rule): N0 13.2, B 18.5, A1 9.7, A2b 9.9.
 mechanism on fast adaptation: when the circuit is set by the same sanity rules at tau_w = 1000 ms, the main Tier 2
 results come back. Caveats: only the selected candidate was tested (11 others also met all targets); I had seen the
 untuned results before designing this; the tests used the same 20 test seeds as before.
+
+## Results at tau_w = 3000 ms (secondary; added after the run)
+
+**Calibration.** The original constants meet only 2 of 7 targets at 3000 ms (S1 0.33, S2 0.27, S4 6.8, S5 0.82 and
+S7 8.4 missed). Three of the 36 candidates meet all seven; the rule selects **f_E = 1.3, kappa = 3, f_eta = 2** (sensory-driven
+weights +30%, slow learning rate doubled). Scores: S1 0.70, S2 0.58, S3 1.32, S4 2.8, S5 0.40, S6 0.15, S7 27.4. Several
+are near the edge of their range, so the circuit is close to the limit of what this grid can calibrate.
+
+| net | unexpected repeat minus regular | omission D- | M1 minus N0 (paired) |
+|---|---|---|---|
+| N0 | -3.05 [-3.66, -2.44] | 0.00 | |
+| B | -4.87 [-5.69, -4.06] | 0.00 | 2.86 [1.65, 4.07] |
+| A1 | +4.19 [0.52, 7.85] | 0.38 [0.13, 0.62] | 6.12 [4.08, 8.16] |
+| A2b | +3.75 [0.01, 7.49] | 0.56 [0.19, 0.93] | 6.24 [4.11, 8.37] |
+
+Regular-tone responses: N0 9.5, B 14.1, A1 6.4, A2b 6.9.
+
+**Against the predictions.** R1 holds. R3 holds. R2 holds only in part: the unexpected repeat passes for A1 and A2b
+(CI above 0, effect above 10% of the regular response), but only just for A2b (lower bound 0.01) and with about half
+the effect size at 300 ms; **omission fails** (CI above 0 but the mean is below the pre-set 1-spike floor for both).
+
+**What this means.** At 1000 ms, re-tuning fully restores the results. At 3000 ms, adaptation is so strong that it
+lasts across several tones; the re-tuned circuit still learns the alternation, weakly, but no longer produces a clear
+omission response. So the mechanism tolerates a threefold slower adaptation but degrades at tenfold, within this grid.
