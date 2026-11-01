@@ -84,7 +84,7 @@ Response = window count minus baseline count scaled by 180/75, mean over trials,
 Tones are coded as 10 localist tonotopic channels (10 E cells per channel, overlapping input tuning). This is a
 deliberate simplification for pure-tone oddball experiments. It is **not** a claim about how concepts are
 represented; for the memory extensions the plan is sparse distributed overlapping ensembles
-(`docs/THEORY_NOTES.md` 12b).
+(described in my private theory notes).
 
 ---
 

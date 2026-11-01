@@ -65,7 +65,6 @@ experiments/*.py        build the specs, aggregate over seeds (stats.py), make f
 | `PARAMETERS.md` | Every constant, how it was chosen, calibration log |
 | `EXP1_RESULTS.md` | Experiment 1 against the pre-registered predictions |
 | `EXP2_DESIGN.md`, `PLAN.md`, `ROADMAP.md` | Design, plan, and what can and cannot be tested |
-| `THEORY_NOTES.md` | My further hypotheses, recorded as stated, not as findings |
 
 ## Invariants worth remembering
 1. **Determinism:** every random draw comes from a seed; blocks are cached by spec hash. Same spec, same numbers.

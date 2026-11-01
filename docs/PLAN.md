@@ -178,7 +178,7 @@ A2 blank, sensitised state). Consequences recorded in advance:
 
 ## Added 2026-10-17: new measures for Experiment 2 (fixed before any Experiment 2 run)
 
-Hypotheses behind them are in `docs/THEORY_NOTES.md`. Every measure below is also taken on the
+Hypotheses behind them are in my private theory notes. Every measure below is also taken on the
 **adaptation-only** network so it has a baseline.
 
 ### M1. Post-oddball tone
@@ -217,7 +217,7 @@ fit an exponential decay and its baseline. Owner's predictions: a C right after 
 than an A; with continued randomness the response decays exponentially; short cycles should be learned
 (response falls faster than under (e)). Also measured: the baseline level reached under (e), compared with
 zero and with the response to a fresh tone (the owner expects zero; the Parras many-standards data suggest a
-non-zero constant, see `docs/THEORY_NOTES.md` section 8). All measures are repeated on the adaptation-only
+non-zero constant, see my private theory notes). All measures are repeated on the adaptation-only
 network.
 
 ### M6. Error definition as a factor (added 2026-10-17)
@@ -225,7 +225,7 @@ Implement the error readout of Mechanism A under two definitions and compare, wi
 E1 subtractive (error ~ input minus prediction, nonzero for a flat prediction) and E2 owner's
 (error ~ p(top prediction) - p(event), zero for a flat prediction). Predictions: under E2 a random context
 gives a zero error baseline and no contrast between tones; under E1 a constant above zero. Cross-check against
-Parras Table 1 (cascade vs many-standards, a weak hint only). Details: `docs/THEORY_NOTES.md` section 8b.
+Parras Table 1 (cascade vs many-standards, a weak hint only). Details are in my private theory notes.
 
 ---
 
@@ -254,7 +254,7 @@ Unsettled (needs the owner's decision before it is run):
 Owner's definition: error = p(most-expected event) - p(event that occurred). Under it a random (flat)
 prediction gives zero error for every event, so no contrast between events. The assistant had used
 error = 1 - p(event), which gives a constant non-zero error; both are valid definitions and they are now
-logged side by side with surprise (-log p) in `docs/THEORY_NOTES.md` section 8b. The assistant also withdrew
+logged side by side with surprise (-log p) in my private theory notes. The assistant also withdrew
 an overreach: the many-standards-above-standard response in Parras 2017 is explained by adaptation alone and
 does not discriminate between them.
 Unsettled, owner's decision: which definition(s) the model should implement as primary (current plan: both,

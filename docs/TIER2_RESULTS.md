@@ -74,4 +74,4 @@ replication of the Wacongne et al. idea, not of their code); A1 and A2b = B plus
 - Post-hoc additions (quiet-baseline PE-, long-training suite, sensory-only M1, N0 NaN handling) are flagged in the
   pre-registration change log.
 - Not implemented: precision scaling, population/ensemble coding (one 10-cell channel per tone), energy or
-  two-system effects. Those theories remain untested here (`docs/THEORY_NOTES.md`).
+  two-system effects. Those theories remain untested here (see `docs/ROADMAP.md`).

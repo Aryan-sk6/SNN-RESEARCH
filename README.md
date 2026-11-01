@@ -99,7 +99,7 @@ With the decay of spike-frequency adaptation slowed from 300 ms to 1000 and 3000
 - B is a simplified predictive-coding network, not a replication of the published model; every difference is listed in `docs/PARAMETERS.md`.
 - A simulation can show that a mechanism is **sufficient** in a toy network. It cannot show that brains use it.
 - Several further ideas of mine (energy, memory leakage, emotion, development) are recorded as **theories**, not tested here
-  (`docs/THEORY_NOTES.md`, `docs/ROADMAP.md`).
+  (`docs/ROADMAP.md`; the notes themselves are kept privately).
 
 ## Prior art (summary; verification levels in `docs/PRIOR_ART.md`)
 Papers read **in full**: Wacongne, Changeux & Dehaene (2012) predictive-coding spiking model of the mismatch
@@ -110,7 +110,7 @@ plasticity) are cited only at **abstract or search-summary level** and are marke
 
 ## Documents
 `ARCHITECTURE.md` (file by file) | `docs/PRIOR_ART.md` | `docs/PREREGISTRATION*.md` | `docs/PARAMETERS.md` |
-`docs/EXP1_RESULTS.md` | `docs/TIER2_RESULTS.md` | `docs/SENSITIVITY_SLOW_ADAPTATION.md` | `docs/PLAN.md` | `docs/ROADMAP.md` | `docs/THEORY_NOTES.md`
+`docs/EXP1_RESULTS.md` | `docs/TIER2_RESULTS.md` | `docs/SENSITIVITY_SLOW_ADAPTATION.md` | `docs/PLAN.md` | `docs/ROADMAP.md`
 
 ## License
 MIT (`LICENSE`). Copyright (c) 2026 Aryan Karjagi.

@@ -413,7 +413,7 @@ sources here. The pasted text says there are "two primary theories" but only des
 - **Too much overlap merges memories.** A review of shared concept cells and a FENS abstract on attractor models
   say overlap supports associative recall only within a critical range; beyond it memories become inseparable
   ([FENS abstract, not peer-reviewed](https://world-wide.org/fens-26/dynamic-attractor-model-overlapping-45c5d27d)).
-Relevance: overlap-based "leakage" between linked memories (`THEORY_NOTES.md` sections 11-12) is an established kind
+Relevance: overlap-based "leakage" between linked memories (my private theory notes) is an established kind
 of mechanism; what is untested here is its interaction with adaptation and surprise.
 
 ## Summary table: which tests is adaptation alone said to fail?

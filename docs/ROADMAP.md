@@ -1,6 +1,6 @@
 # Roadmap: which theories can be tested in simulation, and which stay open
 
-Written 2026-10-17 from `docs/THEORY_NOTES.md` and `docs/PLAN.md`. Nothing here is a result. "Innovative" is
+Written 2026-10-17 from my theory notes (kept privately, not in this repository) and `docs/PLAN.md`. Nothing here is a result. "Innovative" is
 **not** claimed anywhere: the literature has not been checked for these specific ideas (see "Novelty check"
 below). A theory counts as "done" when it has been tested in simulation, pre-registered first, and reported
 honestly, including when it fails.
@@ -42,7 +42,7 @@ Key to status: **done** = run and reported, **running** = in progress, **planned
 | 18 | **Naive vs trained / development** | Network with no stored patterns vs pre-trained (M4), plus a learning-curve version: how much exposure before the mismatch response appears? Qualitative analogue of "newborn vs adult" only. | planned |
 | 19 | Slower spike-frequency adaptation (sensitivity) | Exp 1 shows it explains almost nothing at tau_w = 300 ms. Report it also at 1000 and 3000 ms, labelled exploratory | done (iPE stays 0; A's repeat and omission effects do not survive without re-tuning) |
 | 20 | Fixed-interval oddball (Parras-style) | Comparability with Parras's isochronous design; additive to the cache | optional |
-| 22 | **(redesign needed: uses overlapping ensembles, see THEORY_NOTES 12b)** Cue-triggered retrieval fades with predictability** (my note, `THEORY_NOTES.md` section 11) | If stored patterns are in the candidate set, the activation of the retrieved pattern should fall over repeated cue presentations when the cue is predicted, and recover when it is unexpected (dishabituation). Distinguishes the theory from a simple repetition count. | planned, extension (not paper 1) |
+| 22 | **(redesign needed: uses overlapping ensembles, see my private theory notes)** Cue-triggered retrieval fades with predictability** (my note) | If stored patterns are in the candidate set, the activation of the retrieved pattern should fall over repeated cue presentations when the cue is predicted, and recover when it is unexpected (dishabituation). Distinguishes the theory from a simple repetition count. | planned, extension (not paper 1) |
 | 23 | **Leak threshold** (merges with 22) | Two linked sequences S1 (thought) and S2 (memory). Activation of S2 by S1 should be strong on the first strong, surprising presentation of S1 and vanish with repetition as adaptation lowers the drive; restore it by making S1 unexpected again. Adaptation-only vs surprise-gated. | planned, extension |
 | 24 | **Memory-guided learning order: H-a vs H-b** | Implement both orderings (learn then trigger, trigger then learn). Block memory reactivation during learning: H-b predicts slower learning of the new sequence, H-a does not. | planned, extension |
 | 25 | **Foundational learning dose-response** | Trials needed to learn a new sequence that shares elements with 0, 1, 2, 4 pre-learned related sequences, vs the same amount of practice on unrelated sequences (generic-practice control); also measure interference. | planned, extension |

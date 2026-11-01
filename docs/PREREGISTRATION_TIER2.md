@@ -1,5 +1,7 @@
 # Pre-registration: Tier 2 experiments (written before any Tier 2 result was seen)
 
+*Note added 2026-11-01: `docs/THEORY_NOTES.md`, referred to below, has been moved out of the public repository. The text of this pre-registration is otherwise unchanged.*
+
 Status: committed before running `experiments/exp2_*.py`. Changes after the first run are logged at the bottom.
 Design background: `docs/EXP2_DESIGN.md`, `docs/PLAN.md` (M1-M6), `docs/THEORY_NOTES.md`.
 
