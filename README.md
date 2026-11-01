@@ -5,10 +5,12 @@ network, using auditory-style oddball sequences.
 
 > **This is a simplified model.** It says nothing about real brains and nothing about clinical use. It is a careful
 > replication and comparison of ideas that already have a substantial literature, not a claim of novelty. One mechanism
-> ("A") is the repository owner's hypothesis, tested here as *a variant I am testing*; whether it is already in the
+> ("A") is my own hypothesis, tested here as *a variant I am testing*; whether it is already in the
 > literature has not been established (see `docs/PRIOR_ART.md`).
 
-**Status:** Experiment 1 (adaptation alone) and the Tier 2 experiments are complete with 20 seeds. Nothing below
+**Paper:** [`paper/paper.md`](paper/paper.md) (PDF: [`paper/paper.pdf`](paper/paper.pdf)) is the write-up of everything below.
+
+**Status:** Experiment 1 (adaptation alone), the Tier 2 experiments and a slow-adaptation sensitivity check are complete with 20 seeds. Nothing below
 is claimed beyond what the tables show; several pre-registered predictions were not supported and are reported as such.
 
 ## The question
@@ -18,7 +20,7 @@ is claimed beyond what the tables show; several pre-registered predictions were 
 2. **Experiment 2:** what is the smallest mechanism that must be added to adaptation to produce a response to a
    **missing tone** (omission) and to an **unexpected repeat** in an alternating sequence (A B A B A A)? The
    candidates: the slow predictive core B (a simplified predictive-coding network *in the spirit of* Wacongne, Changeux &
-   Dehaene 2012, **not** a faithful replication), and the owner's mechanism A (A1, A2b).
+   Dehaene 2012, **not** a faithful replication), and my proposed mechanism A (A1, A2b).
 
 ## Setup
 Python 3.11+ (developed on 3.13). Versions are pinned in `requirements.txt` (Brian2 2.10.1, NumPy 2.5.4,
@@ -69,7 +71,8 @@ re-run reproduces identical numbers. Figures and tables go to `results/`.
 - **Omission:** no response above baseline in any condition (at most 0.21 spikes against 11-26 for a present tone;
   CI half-widths 1-2% of the tone response, so the null is informative).
 - **Spike-frequency adaptation explains very little here** (SSA about 0.02): its 300 ms decay is shorter than the
-  450 ms tone interval. A sensitivity analysis with slower decay has not been run.
+  450 ms tone interval. With slower decay (1000 and 3000 ms) the SSA index grows a lot, but the prediction-error
+  component stays at 0 (see "Sensitivity to slower adaptation" below).
 - **Not supported:** the pre-registered prediction that SSA depends on deviant probability and on frequency gap. SSA is
   flat across both (explanations in `docs/EXP1_RESULTS.md`; they are limitations of this simplified architecture).
 
@@ -77,20 +80,12 @@ Full table, predictions-versus-results and limitations: `docs/EXP1_RESULTS.md`.
 
 ### Experiment 2 and Tier 2 experiments (20 seeds; `results/fig2_tier2_full.png`, `docs/TIER2_RESULTS.md`)
 ![Tier 2](results/fig2_tier2_full.png)
-- **Unexpected repeat (ABABAA):** adaptation alone gives a *smaller* repeat response (-2.84 [-3.62, -2.07]); the owner's mechanism A reverses it (A2b +7.57 [3.98, 11.15]). The slow predictive core B fails with normal training and passes with long training (+5.84 [2.15, 9.52]), so A's advantage is speed, not capability.
-- **Omission:** the first measure (baseline-subtracted) was unsuitable and was replaced by a raw omitted-minus-present contrast (pre-registered as v3 before the re-run). With it, A shows a clear negative-error response at omitted tones (about 6 spikes), B only with long training, N0 none; the response shrinks with timing jitter but does not grow steadily with regularity.
-- **Not supported:** the pre-registered prediction that SSA depends on deviant probability and on frequency gap. SSA is
-  flat across both (explanations in `docs/EXP1_RESULTS.md`; they are limitations of this simplified architecture).
-
-Full table, predictions-versus-results and limitations: `docs/EXP1_RESULTS.md`.
-
-### Experiment 2 and Tier 2 experiments (20 seeds; `results/fig2_tier2_full.png`, `docs/TIER2_RESULTS.md`)
-![Tier 2](results/fig2_tier2_full.png)
-- **Unexpected repeat (ABABAA):** adaptation alone gives a *smaller* repeat response (-2.84 [-3.62, -2.07]); the owner's mechanism A reverses it (A2b +7.57 [3.98, 11.15]). The slow predictive core B fails with normal training and passes with long training (+5.84 [2.15, 9.52]), so A's advantage is speed, not capability.
-- **Omission:** the pre-registered measure is null for every network, A included. A post-hoc quiet-baseline measure shows a clear negative-error response in A (about 7.4 spikes) and only a weak one in B. Exploratory.
+- **Unexpected repeat (ABABAA):** adaptation alone gives a *smaller* repeat response (-2.84 [-3.62, -2.07]); mechanism A reverses it (A2b +7.57 [3.98, 11.15]). The slow predictive core B fails with normal training and passes with long training (+5.84 [2.15, 9.52]), so A's advantage is speed, not capability.
+- **Omission:** the first measure (baseline-subtracted) was unsuitable and was replaced by a raw omitted-minus-present contrast, written down as v3 before the re-run (one seed had been inspected; see `docs/PREREGISTRATION_TIER2.md`). With it, A shows a negative-error response at omitted tones (A2b 5.97 [3.80, 8.15] spikes), B only with long training, N0 none. The response shrinks with timing jitter but does not grow steadily with regularity. Because the v3 measure was chosen after the first run, treat this result as exploratory.
+- **Supported:** a larger response to the tone after the odd one than adaptation gives (A2b minus N0 8.15 [5.78, 10.52]; B also shows 3.68), and lower error and gate when a returning or repeating tone fits a candidate (A2b).
 - **Not supported:** the predicted drop-off ordering, one-shot learning, and a steady rise of the omission response with regularity. Error in random sequences does not decay.
-- **Supported:** a larger response to the tone after the odd one than adaptation gives (A2b minus N0 8.15 [5.78, 10.52]; B also shows 3.68), and lower error/gate when a returning or repeating tone fits a candidate (A2b).
-- Both tests pass only with error cells, learning and the gate (TELGC, TELG, ELGC); the repeat alone needs only error cells plus learning.
+- **Ablation:** both tests pass only with error cells, learning and the gate (TELGC, TELG, ELGC); the repeat alone needs only error cells plus learning.
+
 Full table, caveats and the pre-registration change log: `docs/TIER2_RESULTS.md`, `docs/PREREGISTRATION_TIER2.md`.
 
 ### Sensitivity to slower adaptation (exploratory, `docs/SENSITIVITY_SLOW_ADAPTATION.md`)
@@ -100,9 +95,10 @@ With the decay of spike-frequency adaptation slowed from 300 ms to 1000 and 3000
 - A toy network with single a-priori choices for time constants; only deviants above the standard; one tone-pair geometry per sweep.
 - Frequency-gap and probability sweeps are flat for structural reasons (private depression per channel; fast recovery).
 - Feedback inhibition is weak (I cells fire about 3 Hz).
+- Mechanism A's repeat and omission effects do not survive slower adaptation without re-tuning (see above).
 - B is a simplified predictive-coding network, not a replication of the published model; every difference is listed in `docs/PARAMETERS.md`.
 - A simulation can show that a mechanism is **sufficient** in a toy network. It cannot show that brains use it.
-- Several ideas of the owner (energy, memory leakage, emotion, development) are recorded as **theories**, not tested here
+- Several further ideas of mine (energy, memory leakage, emotion, development) are recorded as **theories**, not tested here
   (`docs/THEORY_NOTES.md`, `docs/ROADMAP.md`).
 
 ## Prior art (summary; verification levels in `docs/PRIOR_ART.md`)
@@ -114,7 +110,7 @@ plasticity) are cited only at **abstract or search-summary level** and are marke
 
 ## Documents
 `ARCHITECTURE.md` (file by file) | `docs/PRIOR_ART.md` | `docs/PREREGISTRATION*.md` | `docs/PARAMETERS.md` |
-`docs/EXP1_RESULTS.md` | `docs/TIER2_RESULTS.md` | `docs/PLAN.md` | `docs/ROADMAP.md` | `docs/THEORY_NOTES.md`
+`docs/EXP1_RESULTS.md` | `docs/TIER2_RESULTS.md` | `docs/SENSITIVITY_SLOW_ADAPTATION.md` | `docs/PLAN.md` | `docs/ROADMAP.md` | `docs/THEORY_NOTES.md`
 
 ## License
 MIT (`LICENSE`). Copyright holder line to be set by the repository owner.

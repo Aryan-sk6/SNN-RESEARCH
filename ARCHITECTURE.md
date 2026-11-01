@@ -1,6 +1,6 @@
 # Architecture: what every file does and why
 
-Written so the repository owner can explain each file. The model is a **simplified spiking network**; it says
+A file-by-file guide to the code. The model is a **simplified spiking network**; it says
 nothing about real brains or clinical use.
 
 ## The idea in one paragraph
@@ -8,7 +8,7 @@ A small leaky integrate-and-fire network receives tone pulses. Two kinds of "tir
 independently. Experiment 1 asks what adaptation alone explains in oddball sequences. Experiment 2 asks what must be
 added to adaptation to respond to a **missing** tone and to an **unexpected repeat**: a prediction circuit (error
 cells, a timing delay line, learned predictions), in a slow version (B, loosely Wacongne-style) and in the
-owner's gated, fast-learning versions (A1, A2b). Every experiment runs over many random seeds and reports mean
+proposed gated, fast-learning versions (A1, A2b). Every experiment runs over many random seeds and reports mean
 and 95% confidence interval.
 
 ## Data flow
@@ -65,7 +65,7 @@ experiments/*.py        build the specs, aggregate over seeds (stats.py), make f
 | `PARAMETERS.md` | Every constant, how it was chosen, calibration log |
 | `EXP1_RESULTS.md` | Experiment 1 against the pre-registered predictions |
 | `EXP2_DESIGN.md`, `PLAN.md`, `ROADMAP.md` | Design, plan, and what can and cannot be tested |
-| `THEORY_NOTES.md` | The owner's hypotheses, recorded as stated, not as findings |
+| `THEORY_NOTES.md` | My further hypotheses, recorded as stated, not as findings |
 
 ## Invariants worth remembering
 1. **Determinism:** every random draw comes from a seed; blocks are cached by spec hash. Same spec, same numbers.

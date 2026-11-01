@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <defs>
+    <marker id="ex" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+    <marker id="in" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7"><circle cx="5" cy="5" r="4" fill="#c0392b"/></marker>
+    <marker id="mod" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e67e22"/></marker>
+  </defs>
+  <rect width="760" height="330" fill="#fff"/>
+  <!-- tone input -->
+  <rect x="10" y="140" width="90" height="46" rx="6" fill="#eee" stroke="#555"/>
+  <text x="55" y="160" text-anchor="middle">Tone input</text><text x="55" y="176" text-anchor="middle" font-size="11">Poisson, 10 ch.</text>
+  <!-- E -->
+  <rect x="140" y="130" width="120" height="66" rx="6" fill="#dbe9f7" stroke="#2c6fbb"/>
+  <text x="200" y="152" text-anchor="middle" font-weight="bold">E (sensory)</text>
+  <text x="200" y="168" text-anchor="middle" font-size="11">LIF + adaptation</text>
+  <text x="200" y="183" text-anchor="middle" font-size="11">(SFA, depression)</text>
+  <line x1="100" y1="163" x2="138" y2="163" stroke="#333" stroke-width="1.6" marker-end="url(#ex)"/>
+  <!-- I -->
+  <rect x="160" y="250" width="80" height="36" rx="6" fill="#f5dcdc" stroke="#c0392b"/>
+  <text x="200" y="273" text-anchor="middle">I pool</text>
+  <line x1="190" y1="198" x2="190" y2="248" stroke="#333" stroke-width="1.4" marker-end="url(#ex)"/>
+  <line x1="212" y1="248" x2="212" y2="200" stroke="#c0392b" stroke-width="1.4" marker-end="url(#in)"/>
+  <text x="250" y="232" font-size="11" fill="#555">Experiment 1 network (N0)</text>
+  <!-- delay line -->
+  <rect x="310" y="40" width="130" height="56" rx="6" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="375" y="62" text-anchor="middle" font-weight="bold">T: delay line</text>
+  <text x="375" y="79" text-anchor="middle" font-size="11">20 lags x 50 ms</text>
+  <line x1="240" y1="130" x2="320" y2="98" stroke="#333" stroke-width="1.4" marker-end="url(#ex)"/>
+  <!-- P -->
+  <rect x="500" y="40" width="120" height="56" rx="6" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="560" y="62" text-anchor="middle" font-weight="bold">P: prediction</text>
+  <text x="560" y="79" text-anchor="middle" font-size="11">L: learned weights</text>
+  <line x1="440" y1="68" x2="498" y2="68" stroke="#2e7d32" stroke-width="2.4" marker-end="url(#ex)"/>
+  <!-- PE+ PE- -->
+  <rect x="380" y="150" width="100" height="40" rx="6" fill="#fff3e0" stroke="#555"/>
+  <text x="430" y="175" text-anchor="middle" font-weight="bold">PE+</text>
+  <rect x="540" y="150" width="100" height="40" rx="6" fill="#fff3e0" stroke="#555"/>
+  <text x="590" y="175" text-anchor="middle" font-weight="bold">PE−</text>
+  <line x1="260" y1="165" x2="378" y2="168" stroke="#333" stroke-width="1.4" marker-end="url(#ex)"/>
+  <line x1="545" y1="98" x2="465" y2="148" stroke="#c0392b" stroke-width="1.4" marker-end="url(#in)"/>
+  <line x1="575" y1="98" x2="585" y2="148" stroke="#333" stroke-width="1.4" marker-end="url(#ex)"/>
+  <path d="M260,185 C380,230 520,230 570,192" fill="none" stroke="#c0392b" stroke-width="1.4" marker-end="url(#in)"/>
+  <text x="300" y="148" font-size="11" fill="#555">E: error cells</text>
+  <!-- teach -->
+  <path d="M440,150 C430,120 470,100 500,90" fill="none" stroke="#2e7d32" stroke-dasharray="4 3" stroke-width="1.4" marker-end="url(#ex)"/>
+  <text x="446" y="125" font-size="11" fill="#2e7d32">teach</text>
+  <!-- gate -->
+  <rect x="380" y="260" width="200" height="56" rx="6" fill="#fdebd0" stroke="#e67e22"/>
+  <text x="480" y="282" text-anchor="middle" font-weight="bold">G: mismatch gate (A)</text>
+  <text x="480" y="299" text-anchor="middle" font-size="11">+C: candidate predictions</text>
+  <line x1="430" y1="192" x2="440" y2="258" stroke="#333" stroke-width="1.4" marker-end="url(#ex)"/>
+  <path d="M580,280 C700,260 700,120 622,92" fill="none" stroke="#e67e22" stroke-width="1.6" marker-end="url(#mod)"/>
+  <text x="672" y="200" font-size="11" fill="#e67e22">learning x3,</text>
+  <text x="672" y="214" font-size="11" fill="#e67e22">candidates</text>
+  <path d="M380,295 C300,310 240,250 230,200" fill="none" stroke="#e67e22" stroke-width="1.6" marker-end="url(#mod)"/>
+  <text x="262" y="318" font-size="11" fill="#e67e22">sensitisation</text>
+  <!-- legend -->
+  <line x1="20" y1="20" x2="45" y2="20" stroke="#333" stroke-width="1.4" marker-end="url(#ex)"/><text x="52" y="24" font-size="11">excitation</text>
+  <line x1="20" y1="40" x2="45" y2="40" stroke="#c0392b" stroke-width="1.4" marker-end="url(#in)"/><text x="52" y="44" font-size="11">inhibition</text>
+  <line x1="20" y1="60" x2="45" y2="60" stroke="#e67e22" stroke-width="1.6" marker-end="url(#mod)"/><text x="52" y="64" font-size="11">modulation (A only)</text>
+</svg>

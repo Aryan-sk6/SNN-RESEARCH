@@ -5,41 +5,44 @@ Written 2026-10-17 from `docs/THEORY_NOTES.md` and `docs/PLAN.md`. Nothing here 
 below). A theory counts as "done" when it has been tested in simulation, pre-registered first, and reported
 honestly, including when it fails.
 
+**Status updated 2026-11-01** after the Tier 2 and sensitivity runs; results are in `docs/TIER2_RESULTS.md` and
+`docs/SENSITIVITY_SLOW_ADAPTATION.md`.
+
 Key to status: **done** = run and reported, **running** = in progress, **planned** = designed, not built,
 **open** = cannot be tested in this repo.
 
 ## Tier 1: the core (these make a defensible paper on their own)
 | # | Experiment | Question | Status |
 |---|---|---|---|
-| 1 | Exp 1: adaptation alone (oddball, controls, SSA index, decomposition, omission check) | What does adaptation explain? | running |
-| 2 | Exp 2: omission and ABABAA for adaptation-only, A (A1, A2b) and B (Wacongne-style) | What is the smallest mechanism to add? | planned |
-| 3 | **Ablation of Mechanism A**: remove one part at a time (candidate generator, blank/hyperactive gain, learning, timing signal) and rerun Exp 2 | Which part is actually necessary? This is the "smallest mechanism" question made precise. | planned |
-| 4 | **Robustness**: sample A's free parameters over wide ranges and report how often each test passes | Does the result survive without tuning? Reports the number of free parameters. | planned |
+| 1 | Exp 1: adaptation alone (oddball, controls, SSA index, decomposition, omission check) | What does adaptation explain? | done |
+| 2 | Exp 2: omission and ABABAA for adaptation-only, A (A1, A2b) and B (Wacongne-style) | What is the smallest mechanism to add? | done |
+| 3 | **Ablation of Mechanism A**: remove one part at a time (candidate generator, blank/hyperactive gain, learning, timing signal) and rerun Exp 2 | Which part is actually necessary? This is the "smallest mechanism" question made precise. | done |
+| 4 | **Robustness**: sample A's free parameters over wide ranges and report how often each test passes | Does the result survive without tuning? Reports the number of free parameters. | done |
 
-## Tier 2: the signature predictions of your theory (what makes it different from adaptation and from B)
-| # | Experiment | Prediction (yours unless marked) | Status |
+## Tier 2: the signature predictions of my theory (what makes it different from adaptation and from B)
+| # | Experiment | Prediction (mine unless marked) | Status |
 |---|---|---|---|
-| 5 | M1 post-oddball tone | The tone right after the odd one is amplified beyond the small adaptation recovery rise | planned |
-| 6 | M2 drop-off after the oddball | Sharper drop-off for A-after-B than in the first A-run; steepness A after B > B after B > C after B | planned |
-| 7 | M3 candidate fit vs no fit | Inputs that fit a candidate settle sooner than inputs that fit none | planned |
-| 8 | M5 continuations | C after B is stronger than A; random continuation decays exponentially to a baseline; short cycles are learned | planned |
-| 9 | M6 error definition | Your definition (best guess minus event) vs mine (1 minus event): random context gives zero vs constant error | planned |
-| 10 | One-shot learning (under "Aryan is confused") | After seeing old pattern, odd beep, next tone once and a >10 s gap, the next tone is predicted | planned, 4 open questions |
-| 11 | **Omission fires the mismatch** | Omitted tone triggers the same mismatch and blank/hyperactive state; the tone after an omission is amplified | planned |
-| 12 | **Timing dose-response** (your timing rule) | Omission/ABABAA response shrinks as timing jitter grows (0, 10, 30, 60%); and rises with the number of regular intervals first (1, 2, 4, 8). Also: does a timing shift after a regular rhythm count as an error (Wacongne says yes)? | planned |
+| 5 | M1 post-oddball tone | The tone right after the odd one is amplified beyond the small adaptation recovery rise | done (supported; B also shows part of it) |
+| 6 | M2 drop-off after the oddball | Sharper drop-off for A-after-B than in the first A-run; steepness A after B > B after B > C after B | done (not supported) |
+| 7 | M3 candidate fit vs no fit | Inputs that fit a candidate settle sooner than inputs that fit none | done (supported for A2b) |
+| 8 | M5 continuations | C after B is stronger than A; random continuation decays exponentially to a baseline; short cycles are learned | done (not supported / inconclusive) |
+| 9 | M6 error definition | Definition E1 (best guess minus event) vs E2 (1 minus event): random context gives zero vs constant error | partly: decomposition (iPE) run; the two error definitions not compared |
+| 10 | One-shot learning  | After seeing old pattern, odd beep, next tone once and a >10 s gap, the next tone is predicted | done (not supported) |
+| 11 | **Omission fires the mismatch** | Omitted tone triggers the same mismatch and blank/hyperactive state; the tone after an omission is amplified | done (supported with the v3 measure; exploratory) |
+| 12 | **Timing dose-response** (my timing rule) | Omission/ABABAA response shrinks as timing jitter grows (0, 10, 30, 60%); and rises with the number of regular intervals first (1, 2, 4, 8). Also: does a timing shift after a regular rhythm count as an error (Wacongne says yes)? | done (jitter: supported; buildup: not supported) |
 
 ## Tier 3: new experiments I would add (extensions; each is optional)
 | # | Experiment | Why it is worth it | Status |
 |---|---|---|---|
 | 13 | **Ideal-observer benchmark** | Build a tiny Bayesian sequence learner and compare how many repeats the network needs to detect a cycle with how many an ideal observer needs. Search-level literature says human brain responses look ideal-observer-like, and detecting regularity in random input needs time. Cheap to build, strongly falsifiable. | planned |
-| 14 | **Cycle length vs memory window** | Cycles of period 2, 3, 4, 6, 8 against the network's memory length. Prediction: there is a critical length beyond which the sequence looks "random" to the model. This gives "random" an operational meaning in your cycle idea (A B C B A B C B...). | planned |
+| 14 | **Cycle length vs memory window** | Cycles of period 2, 3, 4, 6, 8 against the network's memory length. Prediction: there is a critical length beyond which the sequence looks "random" to the model. This gives "random" an operational meaning in my cycle idea (A B C B A B C B...). | planned |
 | 15 | **Context uncertainty (precision)** | Oddball response as the surrounding context gets more random. Qualitative target from search-level literature: the same deviant gets a smaller response in a random context. Compare with and without an error-weight (precision) mechanism. | planned |
-| 16 | **Energy accounting** | Define energy = total activity (spikes + synaptic current). Measure it over time after a surprise for fit vs no-fit, and under persistent unpredictability: does it escalate, saturate or recover? Tests your two-system claim in the only form the model allows. | planned |
+| 16 | **Energy accounting** | Define energy = total activity (spikes + synaptic current). Measure it over time after a surprise for fit vs no-fit, and under persistent unpredictability: does it escalate, saturate or recover? Tests my two-system claim in the only form the model allows. | planned |
 | 17 | **Recovery time constant** | How long until the high-energy state relaxes after resolution? A single fixed constant is chosen once; here it is swept to show the effect does not depend on it. | planned |
 | 18 | **Naive vs trained / development** | Network with no stored patterns vs pre-trained (M4), plus a learning-curve version: how much exposure before the mismatch response appears? Qualitative analogue of "newborn vs adult" only. | planned |
-| 19 | Slower spike-frequency adaptation (sensitivity) | Exp 1 shows it explains almost nothing at tau_w = 300 ms. Report it also at 1000 and 3000 ms, labelled exploratory | waiting for owner |
+| 19 | Slower spike-frequency adaptation (sensitivity) | Exp 1 shows it explains almost nothing at tau_w = 300 ms. Report it also at 1000 and 3000 ms, labelled exploratory | done (iPE stays 0; A's repeat and omission effects do not survive without re-tuning) |
 | 20 | Fixed-interval oddball (Parras-style) | Comparability with Parras's isochronous design; additive to the cache | optional |
-| 22 | **(redesign needed: uses overlapping ensembles, see THEORY_NOTES 12b)** Cue-triggered retrieval fades with predictability** (owner's note, `THEORY_NOTES.md` section 11) | If stored patterns are in the candidate set, the activation of the retrieved pattern should fall over repeated cue presentations when the cue is predicted, and recover when it is unexpected (dishabituation). Distinguishes the theory from a simple repetition count. | planned, extension (not paper 1) |
+| 22 | **(redesign needed: uses overlapping ensembles, see THEORY_NOTES 12b)** Cue-triggered retrieval fades with predictability** (my note, `THEORY_NOTES.md` section 11) | If stored patterns are in the candidate set, the activation of the retrieved pattern should fall over repeated cue presentations when the cue is predicted, and recover when it is unexpected (dishabituation). Distinguishes the theory from a simple repetition count. | planned, extension (not paper 1) |
 | 23 | **Leak threshold** (merges with 22) | Two linked sequences S1 (thought) and S2 (memory). Activation of S2 by S1 should be strong on the first strong, surprising presentation of S1 and vanish with repetition as adaptation lowers the drive; restore it by making S1 unexpected again. Adaptation-only vs surprise-gated. | planned, extension |
 | 24 | **Memory-guided learning order: H-a vs H-b** | Implement both orderings (learn then trigger, trigger then learn). Block memory reactivation during learning: H-b predicts slower learning of the new sequence, H-a does not. | planned, extension |
 | 25 | **Foundational learning dose-response** | Trials needed to learn a new sequence that shares elements with 0, 1, 2, 4 pre-learned related sequences, vs the same amount of practice on unrelated sequences (generic-practice control); also measure interference. | planned, extension |
@@ -68,7 +71,7 @@ Key to status: **done** = run and reported, **running** = in progress, **planned
 
 ## Scope and honesty notes
 - Seventeen-plus experiments is a lot for one paper. A strong paper usually has a tight core. Suggested
-  split: **paper 1** = Tier 1 plus items 5, 7, 11, 12 (the omission/ABABAA story with your mechanism);
+  split: **paper 1** = Tier 1 plus items 5, 7, 11, 12 (the omission/ABABAA story with my mechanism);
   **paper 2 or an extended repo** = the rest.
 - The real work is **building Mechanism A**: candidate units, gating, plasticity and the timing detector in
   Brian2, three variants (A1, A2, A2b) plus the Wacongne-style B. The experiments after that are mostly

@@ -7,3 +7,4 @@ __pycache__/
 # Brian2 compiled-code cache and large raw outputs
 results/raw/
 results/*.log
+paper/paper.html
