@@ -437,9 +437,8 @@ of mechanism; what is untested here is its interaction with adaptation and surpr
 ## Uploaded files that were removed
 
 Three uploaded PDFs unrelated to this project (an amygdala-cortex fear-memory preprint, "The Dragon
-Hatchling", and an ecosystems paper) were deleted from the repo at the owner's request. They were
-never used or cited. The relevant papers are kept locally in `docs/papers/`, which is git-ignored.
-Note: the PDFs remain in the git history of commit `5700556` on branch `step0-prior-art`.
+Hatchling", and an ecosystems paper) were deleted from the repo at my request. They were
+never used or cited. The relevant papers are kept locally in `docs/papers/`, which is git-ignored; no paper PDFs are part of this repository.
 
 ## What I need to finish Step 0 properly (superseded, see top; kept for the record)
 
