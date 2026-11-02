@@ -19,7 +19,7 @@ DT_MS = 0.5
 WIN = (0.0, 180.0)
 BASE = (-75.0, 0.0)
 
-NETS = {"N0": None, "B": PR.B_MECH, "A1": PR.A1_MECH, "A2b": PR.A2B_MECH}
+NETS = {"N0": None, "B": PR.B_MECH, "A1": PR.A1_MECH, "A2b": PR.A2B_MECH, "A2bP": PR.A2BP_MECH, "BP": PR.BP_MECH}
 
 
 def mech_from_spec(spec):

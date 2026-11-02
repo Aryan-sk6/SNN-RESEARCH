@@ -47,16 +47,19 @@ class Mech:
     C: bool = False         # candidate predictions while the gate is up
     replace: bool = False   # A1: old predictions are depressed while the gate is up
     slow_eta: bool = True   # learning rate outside the gate window: B-like slow rate (False: none)
+    prec: bool = False      # Experiment 15: precision, a slow estimate of recent error that turns down error-cell gain
 
     @property
     def label(self) -> str:
         flags = "".join(c for c, f in zip("TELGC", (self.T, self.E, self.L, self.G, self.C)) if f)
-        return flags + ("+rep" if self.replace else "")
+        return flags + ("+rep" if self.replace else "") + ("+P" if self.prec else "")
 
 
 B_MECH = Mech()
 A1_MECH = Mech(G=True, replace=True)
 A2B_MECH = Mech(G=True, C=True)
+A2BP_MECH = Mech(G=True, C=True, prec=True)   # Experiment 15
+BP_MECH = Mech(prec=True)                      # Experiment 15
 
 
 @dataclass(frozen=True)
@@ -111,6 +114,12 @@ class PredParams:
     w_trace_old_mV: float = 1.5
     tau_regime_ms: float = 3000.0
 
+    # precision (Experiment 15): Pi += a_prec per error spike (PE+ or PE-), decays with tau_prec; every input to the
+    # error cells is scaled by 1 / (1 + k_prec * Pi). Values set by the calibration in docs/PREREGISTRATION_EXP13_15.md.
+    a_prec: float = 0.002
+    k_prec: float = 1.0
+    tau_prec_ms: float = 10000.0
+
     def with_(self, **kw) -> "PredParams":
         return replace(self, **kw)
 
@@ -133,6 +142,8 @@ class PredResult:
     pred_channels: tuple
     duration_ms: float
     pp: PredParams
+    pi_t: np.ndarray = None    # precision trace (Experiment 15), empty if off
+    pi_val: np.ndarray = None
 
 
 def _blocks(n_groups, per):
@@ -153,6 +164,8 @@ def run_predictive(seq: Sequence, p: NetworkParams, adapt: Adaptation, mech: Mec
             raise ValueError("replacement happens inside the gate window; it needs G")
         if mech.G and not mech.L:
             raise ValueError("the gate acts on learning; G needs L")
+        if mech.prec and not mech.E:
+            raise ValueError("precision scales the error cells; prec needs E")
     chans = tuple(int(c) for c in pp.pred_channels)
     if len(set(chans)) != len(chans) or not all(0 <= c < p.n_channels for c in chans):
         raise ValueError("pred_channels must be distinct valid channels")
@@ -227,7 +240,7 @@ def run_predictive(seq: Sequence, p: NetworkParams, adapt: Adaptation, mech: Mec
         return s
 
     gate_ns = dict(tau_gate=pp.tau_gate_ms * ms, a_gate=pp.a_gate, g_max=pp.g_max, b_match=pp.b_match)
-    mPEp = mPEm = mP = mG = mD = None
+    mPEp = mPEm = mP = mG = mD = mPi = None
     wmon = None
     if mech is not None:
         # prediction cells P, with teach trace and gate copy
@@ -309,17 +322,34 @@ def run_predictive(seq: Sequence, p: NetworkParams, adapt: Adaptation, mech: Mec
         objs += [mP, mD]
 
         if mech.E:
-            PEp = make_lif_group(nk * npe, pq, noise=True, name="PEp")
-            PEm = make_lif_group(nk * npe, pq, noise=True, name="PEm")
+            pex = "gpi : 1" if mech.prec else ""
+            PEp = make_lif_group(nk * npe, pq, noise=True, name="PEp", extra=pex)
+            PEm = make_lif_group(nk * npe, pq, noise=True, name="PEm", extra=pex)
             PEp.v = "E_L"; PEm.v = "E_L"
             objs += [PEp, PEm]
             ecells = lambda kk: np.arange(kk * npe, (kk + 1) * npe)
             wns = dict(w_e=pp.w_e_pe_mV * mV, w_p=pp.w_p_pe_mV * mV, w_pm=pp.w_p_pm_mV * mV, w_em=pp.w_e_pm_mV * mV)
             kks = range(nk)
-            objs.append(conn_multi(E, PEp, [(cells_E(k), ecells(k)) for k in kks], "Ie_post += w_e", wns, "s_e_pep", pp.p_pe))
-            objs.append(conn_multi(P, PEp, [(pcells(k), ecells(k)) for k in kks], "Ii_post += w_p", wns, "s_p_pep", pp.p_pe))
-            objs.append(conn_multi(P, PEm, [(pcells(k), ecells(k)) for k in kks], "Ie_post += w_pm", wns, "s_p_pem", pp.p_pe))
-            objs.append(conn_multi(E, PEm, [(cells_E(k), ecells(k)) for k in kks], "Ii_post += w_em", wns, "s_e_pem", pp.p_pe))
+            g_ = "*gpi_post" if mech.prec else ""
+            objs.append(conn_multi(E, PEp, [(cells_E(k), ecells(k)) for k in kks], "Ie_post += w_e" + g_, wns, "s_e_pep", pp.p_pe))
+            objs.append(conn_multi(P, PEp, [(pcells(k), ecells(k)) for k in kks], "Ii_post += w_p" + g_, wns, "s_p_pep", pp.p_pe))
+            objs.append(conn_multi(P, PEm, [(pcells(k), ecells(k)) for k in kks], "Ie_post += w_pm" + g_, wns, "s_p_pem", pp.p_pe))
+            objs.append(conn_multi(E, PEm, [(cells_E(k), ecells(k)) for k in kks], "Ii_post += w_em" + g_, wns, "s_e_pem", pp.p_pe))
+            if mech.prec:
+                pns = dict(tau_prec=pp.tau_prec_ms * ms, a_prec=pp.a_prec, k_prec=pp.k_prec)
+                Prec = b2.NeuronGroup(1, "dPi/dt = -Pi/tau_prec : 1", method="euler", namespace=pns, name="Prec")
+                Prec.Pi = 0
+                objs.append(Prec)
+                for src, nm in ((PEp, "s_pep_prec"), (PEm, "s_pem_prec")):
+                    s_ = b2.Synapses(src, Prec, on_pre="Pi_post += a_prec", namespace=pns, name=nm)
+                    s_.connect()
+                    objs.append(s_)
+                for tgt, nm in ((PEp, "s_prec_pep"), (PEm, "s_prec_pem")):
+                    s_ = b2.Synapses(Prec, tgt, model="gpi_post = 1/(1 + k_prec*Pi_pre) : 1 (summed)", namespace=pns, name=nm)
+                    s_.connect()
+                    objs.append(s_)
+                mPi = b2.StateMonitor(Prec, "Pi", record=0, dt=record_gate_ms * ms, name="pimon")
+                objs.append(mPi)
             # error teaches the prediction cells of the same channel
             objs.append(conn_multi(PEp, P, [(ecells(k), pcells(k)) for k in kks], "teach_post += w_teach",
                                    dict(w_teach=pp.w_teach), "s_teach"))
@@ -394,5 +424,9 @@ def run_predictive(seq: Sequence, p: NetworkParams, adapt: Adaptation, mech: Mec
             pos += n_
     else:
         w_final = np.zeros((nk, 1, nk))
+    if mPi is not None:
+        pi_t, pi_val = np.asarray(mPi.t / ms), np.asarray(mPi.Pi[0])
+    else:
+        pi_t, pi_val = np.array([]), np.array([])
     return PredResult(e_t, e_idx, pep_t, pep_idx, pem_t, pem_idx, p_t, p_idx, d_t, d_idx, g_t, g_val, w_final, chans,
-                      float(seq.duration_ms), pp)
+                      float(seq.duration_ms), pp, pi_t, pi_val)

@@ -120,3 +120,27 @@ def test_baseline_network_has_no_error_cells():
     assert len(res.pep_t) == 0 and len(res.pem_t) == 0 and len(res.e_t) > 0
     parts = T.parts(res, P5, PP, T.B_CH, _alt(3).onsets_ms[1::2])
     assert np.all(parts["PEp"] == 0) and np.all(parts["R"] == parts["E"])
+
+
+# ---------------------------------------------------------------- precision (Experiment 15)
+def test_precision_with_zero_strength_changes_nothing():
+    seq = _alt(4)
+    a = PR.run_predictive(seq, P5, BOTH, PR.A2B_MECH, PP, 3)
+    b = PR.run_predictive(seq, P5, BOTH, PR.A2BP_MECH, PP.with_(k_prec=0.0), 3)
+    assert np.array_equal(a.pep_t, b.pep_t) and np.array_equal(a.pem_t, b.pem_t) and np.array_equal(a.e_t, b.e_t)
+
+
+def test_precision_lowers_error_and_needs_error_cells():
+    seq = T.seq_random(40, np.random.default_rng(0))
+    a = PR.run_predictive(seq, P5, BOTH, PR.A2B_MECH, PP, 3)
+    b = PR.run_predictive(seq, P5, BOTH, PR.A2BP_MECH, PP.with_(a_prec=0.005, k_prec=4.0), 3)
+    assert len(b.pep_t) + len(b.pem_t) < len(a.pep_t) + len(a.pem_t) and b.pi_val.max() > 0
+    with pytest.raises(ValueError):
+        PR.run_predictive(seq, P5, BOTH, PR.Mech(E=False, prec=True), PP, 3)
+
+
+def test_ideal_observer():
+    from snn_oddball import exp13_15 as X
+    p, s = X.observer_surprise([3, 6, 3, 6, 3])
+    assert p[0] == 0.25 and p[1] == 0.25 and p[3] == 0.4 and np.allclose(s, -np.log2(p))
+    assert X.observer_exposures_alternation() == 6.0
