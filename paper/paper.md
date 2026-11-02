@@ -354,40 +354,42 @@ things, the LIF firing rate against the analytic value, determinism under a fixe
 ## References
 
 *Verification levels follow `docs/PRIOR_ART.md` and `docs/NOVELTY_CHECK.md`: \[F\] full text read; \[A\] abstract
-or bibliographic record; \[S\] search-result summary only. Every \[S\] entry must be checked against the publisher's page
-before submission.*
+or bibliographic record; \[P\] title, authors and volume confirmed against the publisher's own listing (via
+site-restricted search on 2026-11-02; the page itself could not be opened from the build environment).*
 
 - Barry, M. L. L. R. & Gerstner, W. (2024). Fast adaptation to rule switching using neuronal surprise. *PLoS
-  Computational Biology*, 20(2), e1011839. doi:10.1371/journal.pcbi.1011839 \[S\]
+  Computational Biology*, 20(2), e1011839. doi:10.1371/journal.pcbi.1011839 \[P\]
 - Bouhadjar, Wouters, Diesmann & Tetzlaff (2022). Sequence learning, prediction, and replay in
-  networks of spiking neurons. *PLoS Computational Biology*. PMC9273101. \[S; initials, volume and article number to
-  be checked\]
+  networks of spiking neurons. *PLoS Computational Biology*, 18(6), e1010233. doi:10.1371/journal.pcbi.1010233 \[P; first-name
+  initials not confirmed\]
 - Carbajal, G. V. & Malmierca, M. S. (2018). The neuronal basis of predictive coding along the auditory pathway: from
   the subcortical roots to cortical deviance detection. *Trends in Hearing*, 22. doi:10.1177/2331216518784822 \[F\]
 - Chien, V. S. C., Maess, B. & Knösche, T. R. (2019). A generic deviance detection principle for cortical On/Off
   responses, omission response, and mismatch negativity. *Biological Cybernetics*, 113(5–6), 475–494.
-  doi:10.1007/s00422-019-00804-x \[S\]
+  doi:10.1007/s00422-019-00804-x \[P\]
 - Coy, N., Bendixen, A., Grimm, S., Roeber, U. & Schröger, E. (2024). Conditional deviant repetition in the oddball
   paradigm modulates processing at the level of P3a but not MMN. *Psychophysiology*, 61(6), e14545.
-  doi:10.1111/psyp.14545 \[S\]
+  doi:10.1111/psyp.14545 \[P\]
 - Faraji, M. J., Preuschoff, K. & Gerstner, W. (2018). Balancing new against old information: the role of puzzlement
-  surprise in learning. *Neural Computation*, 30(1), 34–83. doi:10.1162/NECO_a_01025 \[S\]
+  surprise in learning. *Neural Computation*, 30(1), 34–83. doi:10.1162/NECO_a_01025 \[P\]
 - Hershenhoren, I., Taaseh, N., Antunes, F. M. & Nelken, I. (2014). Intracellular correlates of stimulus-specific
-  adaptation. *Journal of Neuroscience*, 34(9), 3303–3319. doi:10.1523/JNEUROSCI.2166-13.2014 \[S\]
-- Liakoni, Modirshanechi, Gerstner & Brea (2021). Learning in volatile environments with the Bayes
-  factor surprise. *Neural Computation*, 33(2), 269–340. \[S; initials to be checked\]
+  adaptation. *Journal of Neuroscience*, 34(9), 3303–3319. doi:10.1523/JNEUROSCI.2166-13.2014 \[P\]
+- Liakoni, V., Modirshanechi, A., Gerstner, W. & Brea, J. (2021). Learning in volatile environments with the Bayes
+  factor surprise. *Neural Computation*, 33(2), 269–340. \[P\]
 - Lieder, Daunizeau, Garrido, Friston & Stephan (2013). Modelling trial-by-trial changes in
-  the mismatch negativity. *PLoS Computational Biology*, 9(2), e1002911. \[S; initials to be checked\]
+  the mismatch negativity. *PLoS Computational Biology*, 9(2), e1002911. doi:10.1371/journal.pcbi.1002911 \[P; first-name
+  initials not confirmed\]
 - May, P. J. C. & Tiitinen, H. (2010). Mismatch negativity (MMN), the deviance-elicited auditory deflection,
   explained. *Psychophysiology*, 47(1), 66–122. \[A\]
 - Mill, R. W., Bőhm, T. M., Bendixen, A., Winkler, I. & Denham, S. L. (2013). Modelling the emergence and dynamics of
-  perceptual organisation in auditory streaming. *PLoS Computational Biology*, 9(3), e1002925. \[S\]
+  perceptual organisation in auditory streaming. *PLoS Computational Biology*, 9(3), e1002925. \[P\]
 - Mill, R., Coath, M., Wennekers, T. & Denham, S. L. (2011). A neurocomputational model of stimulus-specific adaptation
   to oddball and Markov sequences. *PLoS Computational Biology*, 7(8), e1002117. \[A\]
 - Parras, G. G., Nieto-Diego, J., Carbajal, G. V., Valdés-Baizabal, C., Escera, C. & Malmierca, M. S. (2017). Neurons
   along the auditory pathway exhibit a hierarchical organization of prediction error. *Nature Communications*, 8, 2148.
   doi:10.1038/s41467-017-02038-6 \[F\]
-- Rosburg, T. & Mager, R. (2021). *Hearing Research*, 400, 108140. \[S; title to be checked\]
+- Rosburg, T. & Mager, R. (2021). The reduced auditory evoked potential component N1 after repeated stimulation:
+  refractoriness hypothesis vs. habituation account. *Hearing Research*, 400, 108140. \[P\]
 - Ruhnau, P., Herrmann, B. & Schröger, E. (2012). Finding the right control: the mismatch negativity under
   investigation. *Clinical Neurophysiology*, 123(3), 507–512. doi:10.1016/j.clinph.2011.07.035 \[A\]
 - Wacongne, C., Changeux, J.-P. & Dehaene, S. (2012). A neuronal model of predictive coding accounting for the
@@ -395,7 +397,7 @@ before submission.*
 - Yarden, T. S. & Nelken, I. (2017). Stimulus-specific adaptation in a recurrent network model of primary auditory
   cortex. *PLoS Computational Biology*, 13(3), e1005437. \[A\]
 - Yu, A. J. & Dayan, P. (2002). Expected and unexpected uncertainty: ACh and NE in the neocortex. *Advances in
-  Neural Information Processing Systems 15*, 173–180. \[S; author order to be checked: the NeurIPS listing may put
-  Dayan first, in which case cite as Dayan & Yu (2002)\]
+  Neural Information Processing Systems 15*, 173–180. \[P; author order as on the paper's own PDF (Yu first); the
+  NeurIPS index page lists Dayan first\]
 
 Software: Brian2 2.10.1 spiking neural network simulator (briansimulator.org).

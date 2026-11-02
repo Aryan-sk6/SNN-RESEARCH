@@ -15,6 +15,12 @@ Deepens `docs/PRIOR_ART.md` section 13. Produced by an automated literature sear
 - **Not finding something is not evidence that it does not exist.** This was about 30 searches, not a systematic
   review. Query lists are given so the gaps can be re-searched.
 
+**Update 2026-11-02.** The references used in the paper were re-checked with site-restricted searches of the publishers'
+own pages (PLOS, MIT Press, Springer, Wiley, J Neurosci, ScienceDirect, NeurIPS). Titles, authors, volumes and DOIs match
+the entries in `paper/paper.md`, which now marks them \[P\]. Yu & Dayan (2002): the paper's own PDF lists **Yu first**;
+the NeurIPS index page lists Dayan first; the paper cites it as on the PDF. Publisher pages still cannot be opened
+directly from this environment.
+
 ## 1. Verdict
 
 **Clear precedent exists for:**
