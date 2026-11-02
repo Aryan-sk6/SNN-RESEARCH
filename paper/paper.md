@@ -78,7 +78,7 @@ contribution.
 
 ## 2. Methods
 
-All code, parameters and pre-registrations are in the repository. Simulations use Brian2 2.10.1.
+All code, parameters and pre-registrations are at github.com/Aryan-sk6/SNN-RESEARCH. Simulations use Brian2 2.10.1.
 Every random draw is seeded, so re-running a command reproduces identical numbers.
 
 ### 2.1 Network

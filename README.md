@@ -1,6 +1,6 @@
 # snn-oddball
 
-[![tests](https://github.com/Aryan-sk6/SNNresearch/actions/workflows/tests.yml/badge.svg)](https://github.com/Aryan-sk6/SNNresearch/actions/workflows/tests.yml)
+[![tests](https://github.com/Aryan-sk6/SNN-RESEARCH/actions/workflows/tests.yml/badge.svg)](https://github.com/Aryan-sk6/SNN-RESEARCH/actions/workflows/tests.yml)
 
 A small, reproducible comparison of **stimulus adaptation** and **prediction-error mechanisms** in a spiking neural
 network, using auditory-style oddball sequences.

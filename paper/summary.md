@@ -43,4 +43,4 @@ stops reacting to pure noise: in random input it keeps making confident guesses 
 My first fix, a single global "how surprising has the world been" signal, silenced all errors and broke learning.
 So precision has to be specific to what is being predicted. That is the next thing I am building.
 
-*Paper (10 pages) and code:* github.com/Aryan-sk6/SNNresearch, `paper/paper.pdf`.
+*Paper (10 pages) and code:* github.com/Aryan-sk6/SNN-RESEARCH, `paper/paper.pdf`.
