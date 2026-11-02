@@ -18,7 +18,7 @@ be switched on and off on its own:
   opens several candidate guesses about what comes next.
 
 I wrote down every prediction and pass rule before running each experiment (pre-registration), ran 20 random seeds per
-condition, and published every result, including the predictions that failed. The repository has 79 unit tests,
+condition, and published every result, including the predictions that failed. The repository has 82 unit tests,
 one command per figure, and cached, resumable runs.
 
 **What I found.**
