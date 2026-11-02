@@ -29,15 +29,18 @@ one command per figure, and cached, resumable runs.
 2. **Surprise gating buys speed, not new abilities.** Two tests separate adaptation from expectation: an unexpected
    repeat (ABAB**AA**) and a missing tone. Adaptation gets the repeat backwards (−2.8 spikes). The surprise gate gets
    it right after normal training (+7.6 [4.0, 11.2]). The plain predictive core also gets there, but only with about 3
-   times more training. Ablations show that passing both tests needs prediction-error neurons, learning and the gate together.
+   times more training. Against a perfect Bayesian learner on the same task, the gate learns in about the same number
+   of examples (5 vs 6); the plain core needs about 8 times more. Ablations show that passing both tests needs prediction-error neurons, learning and the gate together.
 3. **Honest limits.** One-shot learning, a predicted drop-off ordering and "accepting randomness" were *not*
-   supported. When I slowed adaptation 3 times, the effects first disappeared; re-tuning by my original rules (a 15% change to three weights) brought them back. At 10 times slower, only a weak repeat effect returns.
+   supported, and a first attempt at fixing the noise problem (a global precision signal) failed by silencing all
+   error. When I slowed adaptation 3 times, the effects first disappeared; re-tuning by my original rules (a 15% change to three weights) brought them back. At 10 times slower, only a weak repeat effect returns.
 
 **Why it matters for AI.** Standard training treats each example in much the same way, whether or not it was surprising. This model
 is a small worked example of a different rule: **learn fast exactly when the world surprises you, and keep a few
 competing hypotheses open while you do**. That is the core of sample-efficient, continual learning: adapt to a change
 in a handful of examples without overwriting everything else. The failures are informative too. The gate alone never
-stops reacting to pure noise, so a system also needs a sense of how predictable its input is (precision) before it
-can tell surprise from randomness. That is the next step I am building.
+stops reacting to pure noise: in random input it keeps making confident guesses that a perfect learner would not.
+My first fix, a single global "how surprising has the world been" signal, silenced all errors and broke learning.
+So precision has to be specific to what is being predicted. That is the next thing I am building.
 
 *Paper (10 pages) and code:* github.com/Aryan-sk6/SNNresearch, `paper/paper.pdf`.

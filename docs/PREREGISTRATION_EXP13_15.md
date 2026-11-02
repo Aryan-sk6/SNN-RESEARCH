@@ -75,3 +75,46 @@ any network run; the naive level is 1 - 1/4).
 ---
 
 Any prediction that fails is reported as failed. Results: `results/exp13_15_summary.md`.
+
+---
+
+## Results (added after the run; tables `results/exp13_15_summary.md`)
+
+### Experiment 15: precision, failed
+
+**Calibration.** No candidate met both targets. The precision gain came out almost the same in the regular and the
+random context for every setting (for example 0.59 vs 0.57 for the selected a_prec = 0.005, k_prec = 4; 0.84 vs 0.74
+for a_prec = 0.002, k_prec = 1). The rule selected a_prec = 0.005, k_prec = 4 (met PT2 only; random gain closest to 0.5).
+
+| test | prediction | result | verdict |
+|---|---|---|---|
+| Random context, error change (2nd minus 1st half) | A2bP below 0, and below A2b | A2bP -0.33 [-0.40, -0.27]; A2b +0.26 [-1.22, 1.74]; difference -0.59 [-2.09, 0.90] | **Partly**: falls for A2bP, but not reliably more than A2b |
+| Probe D, random minus regular context | A2bP below 0, and below A2b | A2bP -0.07 [-0.38, 0.24]; A2b +1.53 [0.65, 2.41]; difference -1.59 [-2.44, -0.75] | **Not supported** (A2bP shows no context effect) |
+| No harm (T2 repeat, T1 omission) | both pass | repeat -3.88 [-4.47, -3.29]; omission 0.00 | **Fails badly**: both main results are lost |
+
+**Why.** With a single global precision variable, the feedback loop sets its own level. Low gain means fewer error
+spikes, which means lower Pi, so every context ends up at about the same error rate (A2bP context error 1.61 per tone
+in the regular context, 1.68 in the random one, against 4.67 and 23.76 for A2b). The mechanism acts as global gain
+control: it silences error everywhere, including the errors the network needs to learn the alternation and to signal
+the repeat and the omission. Context-specific precision needs something this version lacks, for example a precision
+estimate per channel or one driven by how reliable predictions have been rather than by raw error counts. That is a
+redesign, not a parameter change, and is left for future work. Unexpected side observation: without precision, A2b's
+error to the probe D is *larger* in the random context (+1.53), the opposite of the qualitative literature pattern.
+
+### Experiment 13: ideal observer, supported
+
+| test | prediction | result | verdict |
+|---|---|---|---|
+| Exposures to learn the alternation | A2b <= 12; B > 30 (observer: 6) | A2b 5.10 [4.23, 5.97] (0.85 x observer); B 49.4 [38.3, 60.5] (8.2 x; 1 seed censored at 100) | **Supported** |
+| Tone-by-tone error vs observer surprise (Spearman r) | B, A2b above 0; N0 not | B 0.15 [0.09, 0.22]; A2b 0.16 [0.09, 0.23]; N0 -0.17 [-0.26, -0.09] | **Supported** (correlations weak) |
+| Observer surprise in a random context (descriptive) | stays near 2 bits | 2.11 then 2.05 bits | As expected |
+
+- A2b is slightly *faster* than this observer. That is not a contradiction: the observer starts with no idea which of
+  four tones comes next, whereas the gate's candidates build in a bias towards "the tone repeats" and "the earlier tone
+  returns", which happens to fit an alternation. A2b is fast because of that built-in bias, not because it beats
+  Bayesian inference. B is about 8 times slower than the observer.
+- The correlations are positive but weak: the network's error follows the observer's surprise in direction, not
+  closely tone by tone. Adaptation alone correlates negatively, as expected.
+- An ideal learner also does not reduce its surprise in a random sequence (about 2 bits throughout). So "error does
+  not settle in random input" (M5) is partly what any learner would do; Experiment 9 shows the network's specific
+  problem is over-confident guesses, which an ideal learner does not make.

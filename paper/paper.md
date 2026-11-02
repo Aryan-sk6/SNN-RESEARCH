@@ -26,8 +26,10 @@ Ablations show error cells, learning and the gate are all needed. Four of my mor
 supported, including one-shot learning and a steady build-up of the omission response with regularity. The gated
 mechanism's main effects disappeared when adaptation was made slower without re-tuning. Re-tuned by the original
 sanity rules (a 15% change to three weights), they return at τ_w = 1000 ms (repeat +6.75 [2.95, 10.55], omission
-4.98 [3.09, 6.88]); at τ_w = 3000 ms only a weak repeat effect returns and the omission effect does not. The result
-is therefore a
+4.98 [3.09, 6.88]); at τ_w = 3000 ms only a weak repeat effect returns and the omission effect does not. Follow-up
+experiments show that the gated network learns about as fast as an ideal Bayesian learner, while the core is about 8
+times slower. In random input, however, it makes over-confident guesses, and a simple global precision mechanism added to
+fix this silenced all error and failed. The result is therefore a
 sufficiency result in a toy model: the gate makes learning faster, not something the predictive core cannot do. It
 says nothing about real brains.
 
@@ -276,6 +278,34 @@ At τ_w = 3000 ms (secondary), the original constants meet only 2 of 7 targets a
 only just (A2b +3.75 [0.01, 7.49]; A1 +4.19 [0.52, 7.85]), and **the omission test fails** (A2b 0.56 [0.19, 0.93],
 below the 1-spike floor). The mechanism therefore tolerates threefold slower adaptation but degrades at tenfold.
 
+### 3.5 Follow-up experiments: ideal observer, error definitions and precision
+
+Three further experiments were pre-registered after the main results (`docs/PREREGISTRATION_EXP13_15.md`,
+`docs/PREREGISTRATION_EXP9.md`) and run on the same 20 test seeds.
+
+**Benchmark against an ideal learner (supported).** A Bayesian learner that predicts each tone from the previous one
+(uniform prior over the four tones, perfect memory) needs 6 exposures to learn the alternation A B A B. With the same
+criterion, A2b needs 5.10 [4.23, 5.97] and the core B 49.4 [38.3, 60.5], about 8 times the ideal. A2b is slightly faster
+than the ideal learner only because its candidates build in a bias towards "the tone repeats" or "the earlier tone
+returns", which fits an alternation; the ideal learner starts without that bias. Tone by tone, the network's error
+rises with the ideal learner's surprise, but weakly (Spearman r 0.16 [0.09, 0.23] for A2b, 0.15 for B), while adaptation
+alone goes the other way (−0.17). In a random sequence, the ideal learner's surprise also stays at chance (about 2 bits),
+so failing to reduce error there (M5) is partly what any learner does.
+
+**Two definitions of error (one prediction failed).** I compared a subtractive error, E1 = 1 − p(event), with my own
+definition, E2 = p(top guess) − p(event), which is zero when the prediction is flat. Both were read from the prediction
+cells before each tone. Both rise sharply for the unexpected repeat. In a random sequence E1 stays at 0.74, as
+predicted. But E2 is 0.27 [0.24, 0.29], not near zero as I had predicted, although the ideal learner's E2 is 0.08. **The
+network keeps making confident guesses in random input**; an ideal learner spreads its prediction out.
+
+**Precision (failed).** I added one slow variable that tracks recent error and turns down the gain of all error cells.
+No setting met both calibration targets, because the gain came out almost the same in regular and random contexts.
+In the tests it lowered error everywhere, so that error per tone was about 1.7 in both contexts. It showed no
+context-dependent deviant response, and it **destroyed the main results** (unexpected repeat −3.88, omission 0). A
+single global precision signal acts as gain control: it silences the errors the network needs in order to learn.
+Making precision specific to context, for example per channel or driven by how reliable predictions have been, is a
+redesign left for future work.
+
 ## 4. Discussion
 
 **What this shows.** In this network, adaptation, whether fast or slow, synaptic or intrinsic, produces a large
@@ -295,16 +325,17 @@ effects need the circuit to be calibrated for the adaptation level it runs with,
 in both neuroscience and machine learning (Yu & Dayan, 2002; Faraji et al., 2018; Liakoni et al., 2021; Barry &
 Gerstner, 2024). The finding
 that the gate changes *how fast* rather than *whether* a sequence is learned matches that framing: surprise is a
-signal for when to update quickly. Error in a random sequence never settled, which suggests that a gate alone is not
-enough. A system also needs an estimate of how predictable its input is (precision), so it can stop treating noise as
-surprise.
+signal for when to update quickly. Error in a random sequence never settled, and the network's guesses there are
+over-confident compared with an ideal learner (§3.5). So a gate alone is not enough: a system also needs an estimate of
+how predictable its input is (precision). My first, global version of precision failed by silencing all error, which
+suggests precision has to be specific to what is being predicted.
 
 **Limitations.** One small architecture with single a-priori time constants; deviants only above the standard; weak
 feedback inhibition (inhibitory cells fire about 3 Hz); spike counts rather than an EEG-like signal; one 10-cell
 channel per tone rather than distributed coding; the omission measure revised after a first run; robustness tested
 with one seed per draw; and several cited works read only at abstract level (marked in `docs/PRIOR_ART.md`).
 
-**Next steps.** (1) Test all candidate settings that meet the targets, not only the selected one. (2) Add a precision or uncertainty term and test whether error in random contexts then falls.
+**Next steps.** (1) Test all candidate settings that meet the targets, not only the selected one. (2) Redesign precision so it is specific to each channel or tied to prediction reliability, and test whether error in random contexts then falls without losing the main results.
 (3) Compare learning speed against an ideal Bayesian observer. (4) Test whether the post-deviant gain is reduced
 to the small effect seen in recordings, and what that costs the other tests. (5) Extend the literature search to a
 systematic review and read the key papers in full.

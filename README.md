@@ -93,6 +93,11 @@ With the decay of spike-frequency adaptation slowed from 300 ms to 1000 and 3000
 
 **Re-tuned (`docs/RETUNE_SLOW_ADAPTATION.md`, design committed before the run).** Re-calibrating the circuit at 1000 ms with the original sanity targets (development seeds only; the rule picked a 15% increase of three sensory-driven weights) brings the effects back on the 20 test seeds: unexpected repeat A2b +6.75 [2.95, 10.55], A1 +7.71 [3.61, 11.81]; omission A2b 4.98 [3.09, 6.88]; adaptation alone still -3.38 on the repeat; the core B still fails at normal training. So the earlier failure was a calibration mismatch, not a dependence on fast adaptation. At 3000 ms (secondary), re-tuning brings back only a weak repeat effect (A2b +3.75 [0.01, 7.49]) and the omission effect does **not** return (0.56 [0.19, 0.93], below the 1-spike floor): the mechanism tolerates threefold slower adaptation but degrades at tenfold.
 
+### Follow-up experiments (`docs/PREREGISTRATION_EXP13_15.md`, `docs/PREREGISTRATION_EXP9.md`; 20 seeds)
+- **Ideal-observer benchmark (supported):** a Bayesian learner needs 6 exposures to learn the alternation; A2b needs 5.1 [4.2, 6.0], the core B 49.4 (about 8 times the ideal). Network error tracks the observer's surprise weakly (r about 0.16); adaptation alone goes the other way.
+- **Two error definitions (one prediction failed):** in random input my definition E2 (top guess minus event) is 0.27 for A2b, not near zero as predicted, although it is 0.08 for the ideal observer: the network makes over-confident guesses.
+- **Precision (failed):** a single global precision signal could not be calibrated to tell regular from random contexts, silenced all error, and destroyed the repeat and omission results. It needs a redesign.
+
 ## Limitations (so far)
 - A toy network with single a-priori choices for time constants; only deviants above the standard; one tone-pair geometry per sweep.
 - Frequency-gap and probability sweeps are flat for structural reasons (private depression per channel; fast recovery).
