@@ -30,6 +30,9 @@ def run_block(spec: dict) -> dict:
     if spec.get("kind") == "pred":
         from .tier2 import run_pred_block
         return run_pred_block(spec)
+    if spec.get("kind") == "x9":
+        from .exp9 import run_block as rb9
+        return rb9(spec)
     if spec.get("kind") == "x1315":
         from .exp13_15 import run_block as rb
         return rb(spec)
