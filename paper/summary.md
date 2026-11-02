@@ -40,7 +40,4 @@ in a handful of examples without overwriting everything else. The failures are i
 stops reacting to pure noise, so a system also needs a sense of how predictable its input is (precision) before it
 can tell surprise from randomness. That is the next step I am building.
 
-**What this shows about how I work.** I take an idea of my own, turn it into a mechanism that can fail, test it against
-strong baselines, and report it straight, including when it does not work.
-
 *Paper (10 pages) and code:* github.com/Aryan-sk6/SNNresearch, `paper/paper.pdf`.
