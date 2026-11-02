@@ -34,3 +34,25 @@ same generators and seeds):
   random context.
 
 Any prediction that fails is reported as failed. Results: `results/exp9_summary.md`.
+
+---
+
+## Results (added after the run; table `results/exp9_summary.md`)
+
+| source | random E1 | random E2 | silent share | repeat minus regular, E1 | repeat minus regular, E2 |
+|---|---|---|---|---|---|
+| B | 0.750 [0.750, 0.750] | 0.000 | 1.00 | 0.27 [0.18, 0.37] | 0.29 [0.16, 0.42] |
+| A2b | 0.744 [0.734, 0.755] | 0.265 [0.239, 0.292] | 0.23 | 0.81 [0.73, 0.88] | 0.83 [0.71, 0.94] |
+| ideal observer | 0.751 [0.747, 0.754] | 0.079 [0.072, 0.085] | 0 | 0.78 | 0.64 |
+
+- **P9-1 fails.** A2b's E2 in the random context is 0.27, not near zero (upper bound 0.29 > 0.1). Its prediction cells
+  are active before 77% of the tones, so this is informative: the network keeps making confident guesses in random
+  input, and they are usually wrong.
+- **P9-2 holds.** E1 stays at about 0.74.
+- **P9-3 holds.** Both definitions give a much larger error for the repeated A than for the regular A.
+- B's prediction cells are silent before every tone in the random context, so its E2 = 0 there is the trivial case
+  named in the caveat, not evidence.
+- The ideal observer's E2 in the random context is 0.08, near zero: **the E2 prediction holds for an ideal learner,
+  but not for this network.** An ideal learner spreads its prediction out when the input is random; A2b's gate and
+  candidates keep producing confident predictions. This is the same failure as M5 (error does not settle in a random
+  context), seen through a different measure, and is what the precision component of Experiment 15 is meant to address.
